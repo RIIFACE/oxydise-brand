@@ -1,13 +1,20 @@
-import { Inter } from 'next/font/google';
+import { Urbanist, Manrope } from 'next/font/google';
 import './globals.css';
 import { brand } from '@/lib/brand.config';
 import Sidebar from '@/components/Sidebar';
 
-const sans = Inter({
+const sans = Manrope({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-sans',
-  weight: ['400', '500', '600', '700'],
+  weight: ['400', '500', '600'],
+});
+
+const display = Urbanist({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-display',
+  weight: ['500', '600', '700'],
 });
 
 export const metadata = {
@@ -25,7 +32,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={sans.variable}>
+    <html lang="en" className={`${sans.variable} ${display.variable}`}>
       <body className="bg-bg text-ink font-sans">
         <div className="flex min-h-screen">
           <Sidebar />
