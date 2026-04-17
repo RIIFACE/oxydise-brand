@@ -1,21 +1,13 @@
-import { Fraunces, Inter } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import './globals.css';
 import { brand } from '@/lib/brand.config';
-import SiteNav from '@/components/SiteNav';
-import Footer from '@/components/Footer';
-
-const display = Fraunces({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-display',
-  weight: ['400', '500', '600', '700'],
-});
+import Sidebar from '@/components/Sidebar';
 
 const sans = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-sans',
-  weight: ['400', '500', '600'],
+  weight: ['400', '500', '600', '700'],
 });
 
 export const metadata = {
@@ -33,12 +25,15 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${display.variable} ${sans.variable}`}>
-      <body className="font-sans relative">
-        <div className="relative z-10 flex min-h-screen flex-col">
-          <SiteNav />
-          <main className="flex-1">{children}</main>
-          <Footer />
+    <html lang="en" className={sans.variable}>
+      <body className="bg-bg text-ink font-sans">
+        <div className="flex min-h-screen">
+          <Sidebar />
+          <main className="flex-1 min-w-0">
+            <div className="mx-auto max-w-5xl px-8 py-12 md:px-12 md:py-16">
+              {children}
+            </div>
+          </main>
         </div>
       </body>
     </html>

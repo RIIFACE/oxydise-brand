@@ -7,22 +7,28 @@ export default function VoicePage() {
   return (
     <>
       <SectionHeader
-        eyebrow="04 Voice"
+        eyebrow="04 · Voice"
         title="How we sound."
         description="Three principles that shape every headline, button, and email."
       />
 
-      <section className="mx-auto max-w-6xl space-y-4 px-6 pb-24">
+      <section className="space-y-4">
         {brand.voice.principles.map((p, i) => (
-          <article key={p.name} className="rounded-xl border border-border bg-surface p-8">
+          <article key={p.name} className="rounded-xl border border-line bg-bg p-8">
             <div className="flex items-start gap-6">
-              <div className="w-10 shrink-0 font-mono text-xs text-muted">0{i + 1}</div>
+              <div className="w-10 shrink-0 font-mono text-[11px] text-muted">
+                0{i + 1}
+              </div>
               <div className="flex-1">
-                <h2 className="font-display text-3xl">{p.name}</h2>
-                <p className="mt-2 max-w-2xl text-muted">{p.description}</p>
+                <h2 className="text-[22px] font-semibold tracking-[-0.015em] text-ink">
+                  {p.name}
+                </h2>
+                <p className="mt-2 max-w-2xl text-[15px] leading-[1.55] text-muted">
+                  {p.description}
+                </p>
 
-                <div className="mt-6 grid gap-4 md:grid-cols-2">
-                  <Example tone="do" text={p.do} />
+                <div className="mt-6 grid gap-3 md:grid-cols-2">
+                  <Example tone="do"   text={p.do} />
                   <Example tone="dont" text={p.dont} />
                 </div>
               </div>
@@ -39,17 +45,22 @@ function Example({ tone, text }) {
   return (
     <div
       className={`rounded-lg border p-5 ${
-        isDo ? 'border-primary/40 bg-primary/5' : 'border-accent/40 bg-accent/5'
+        isDo
+          ? 'border-line bg-panel'
+          : 'border-accent/25 bg-accent/5'
       }`}
     >
       <p
-        className={`mb-2 font-mono text-[11px] uppercase tracking-widest ${
+        className={`mb-2 flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.08em] ${
           isDo ? 'text-primary' : 'text-accent'
         }`}
       >
-        {isDo ? '✓ Do' : '× Don\'t'}
+        <span className={`inline-flex h-4 w-4 items-center justify-center rounded-full text-[10px] ${isDo ? 'bg-primary/15' : 'bg-accent/15'}`}>
+          {isDo ? '✓' : '×'}
+        </span>
+        {isDo ? 'Do' : "Don't"}
       </p>
-      <p className="font-display text-lg leading-snug">{text}</p>
+      <p className="text-[16px] leading-[1.45] text-ink">{text}</p>
     </div>
   );
 }

@@ -7,25 +7,28 @@ export default function ComponentsPage() {
   return (
     <>
       <SectionHeader
-        eyebrow="05 Components"
+        eyebrow="05 · Components"
         title="Building blocks."
         description="A minimal set of UI primitives rendered in brand."
       />
 
-      <section className="mx-auto max-w-6xl space-y-12 px-6 pb-24">
+      <div className="space-y-10">
         {/* Buttons */}
         <Block title="Buttons">
           <div className="flex flex-wrap gap-3">
-            <button className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-bg hover:bg-primary/90">
+            <button className="inline-flex h-10 items-center rounded-lg bg-ink px-5 text-[14px] font-medium text-bg transition-opacity hover:opacity-90">
               Primary
             </button>
-            <button className="rounded-md border border-border bg-surface px-5 py-2.5 text-sm font-medium text-text hover:border-primary">
+            <button className="inline-flex h-10 items-center rounded-lg border border-line bg-bg px-5 text-[14px] font-medium text-ink transition-colors hover:bg-surface">
               Secondary
             </button>
-            <button className="rounded-md bg-accent px-5 py-2.5 text-sm font-medium text-text hover:bg-accent/90">
+            <button className="inline-flex h-10 items-center rounded-lg bg-primary px-5 text-[14px] font-medium text-white transition-opacity hover:opacity-90">
+              Accent
+            </button>
+            <button className="inline-flex h-10 items-center rounded-lg bg-accent/10 px-5 text-[14px] font-medium text-accent transition-colors hover:bg-accent/15">
               Destructive
             </button>
-            <button className="rounded-md px-5 py-2.5 text-sm font-medium text-muted hover:text-text">
+            <button className="inline-flex h-10 items-center rounded-lg px-5 text-[14px] font-medium text-muted transition-colors hover:text-ink">
               Ghost
             </button>
           </div>
@@ -33,18 +36,18 @@ export default function ComponentsPage() {
 
         {/* Cards */}
         <Block title="Cards">
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="rounded-xl border border-border bg-surface p-6">
-              <p className="font-mono text-[11px] uppercase tracking-widest text-primary">Feature</p>
-              <h3 className="mt-3 font-display text-2xl">Materials that last.</h3>
-              <p className="mt-2 text-sm text-muted">
-                We source with patience. Shortcuts compound, and we'd rather build once.
+          <div className="grid gap-3 md:grid-cols-2">
+            <div className="rounded-xl border border-line bg-bg p-6">
+              <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-primary">Feature</p>
+              <h3 className="mt-3 text-[20px] font-semibold tracking-[-0.015em] text-ink">Materials that last.</h3>
+              <p className="mt-2 text-[14px] leading-[1.55] text-muted">
+                We source with patience. Shortcuts compound, and we&apos;d rather build once.
               </p>
             </div>
-            <div className="rounded-xl border border-border bg-surface p-6">
-              <p className="font-mono text-[11px] uppercase tracking-widest text-accent">Note</p>
-              <h3 className="mt-3 font-display text-2xl">Field report</h3>
-              <p className="mt-2 text-sm text-muted">
+            <div className="rounded-xl border border-line bg-bg p-6">
+              <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-accent">Note</p>
+              <h3 className="mt-3 text-[20px] font-semibold tracking-[-0.015em] text-ink">Field report</h3>
+              <p className="mt-2 text-[14px] leading-[1.55] text-muted">
                 After two years in salt air, the finish settles into a quieter green.
               </p>
             </div>
@@ -55,28 +58,28 @@ export default function ComponentsPage() {
         <Block title="Form inputs">
           <form className="max-w-md space-y-4">
             <label className="block">
-              <span className="mb-1.5 block text-xs font-medium uppercase tracking-widest text-muted">
+              <span className="mb-1.5 block text-[12px] font-medium text-ink">
                 Email
               </span>
               <input
                 type="email"
                 placeholder="you@oxydise.com"
-                className="w-full rounded-md border border-border bg-bg px-3 py-2 text-text placeholder:text-muted/60 focus:border-primary focus:outline-none"
+                className="h-10 w-full rounded-lg border border-line bg-bg px-3 text-[14px] text-ink placeholder:text-muted/70 focus:border-primary focus:outline-none"
               />
             </label>
             <label className="block">
-              <span className="mb-1.5 block text-xs font-medium uppercase tracking-widest text-muted">
+              <span className="mb-1.5 block text-[12px] font-medium text-ink">
                 Message
               </span>
               <textarea
                 rows={3}
                 placeholder="Tell us what you're building…"
-                className="w-full rounded-md border border-border bg-bg px-3 py-2 text-text placeholder:text-muted/60 focus:border-primary focus:outline-none"
+                className="w-full rounded-lg border border-line bg-bg px-3 py-2 text-[14px] text-ink placeholder:text-muted/70 focus:border-primary focus:outline-none"
               />
             </label>
             <button
               type="button"
-              className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-bg hover:bg-primary/90"
+              className="inline-flex h-10 items-center rounded-lg bg-ink px-5 text-[14px] font-medium text-bg transition-opacity hover:opacity-90"
             >
               Send
             </button>
@@ -86,18 +89,18 @@ export default function ComponentsPage() {
         {/* Badges */}
         <Block title="Badges">
           <div className="flex flex-wrap gap-2">
-            <span className="rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+            <span className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-[12px] font-medium text-primary">
               New
             </span>
-            <span className="rounded-full border border-accent/40 bg-accent/10 px-3 py-1 text-xs font-medium text-accent">
+            <span className="inline-flex items-center rounded-full bg-accent/10 px-2.5 py-0.5 text-[12px] font-medium text-accent">
               Live
             </span>
-            <span className="rounded-full border border-border bg-surface px-3 py-1 text-xs font-medium text-muted">
+            <span className="inline-flex items-center rounded-full border border-line bg-panel px-2.5 py-0.5 text-[12px] font-medium text-muted">
               Draft
             </span>
           </div>
         </Block>
-      </section>
+      </div>
     </>
   );
 }
@@ -105,8 +108,8 @@ export default function ComponentsPage() {
 function Block({ title, children }) {
   return (
     <section>
-      <h2 className="mb-5 font-display text-2xl">{title}</h2>
-      <div className="rounded-xl border border-border bg-surface/40 p-6 md:p-8">
+      <h2 className="mb-4 text-[15px] font-semibold tracking-[-0.01em] text-ink">{title}</h2>
+      <div className="rounded-xl border border-line bg-panel p-6 md:p-8">
         {children}
       </div>
     </section>

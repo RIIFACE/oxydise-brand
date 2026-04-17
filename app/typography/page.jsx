@@ -4,35 +4,49 @@ import { brand } from '@/lib/brand.config';
 export const metadata = { title: `Typography — ${brand.name}` };
 
 export default function TypographyPage() {
-  const { display, sans, scale } = brand.typography;
+  const { sans, scale } = brand.typography;
 
   return (
     <>
       <SectionHeader
-        eyebrow="03 Typography"
+        eyebrow="03 · Typography"
         title="Type system."
-        description="Two families. One for editorial moments, one for everything else."
+        description="One family. Inter, set in the Apple-style system stack as a fallback. Clear, direct, functional."
       />
 
-      {/* Families */}
-      <section className="mx-auto max-w-6xl px-6 pb-16">
-        <div className="grid gap-4 md:grid-cols-2">
-          <FamilyCard family={display} role="Display" preview="Built with patience." />
-          <FamilyCard family={sans}    role="Sans"    preview="Clear, direct, functional." sans />
+      {/* Family */}
+      <section className="mb-14">
+        <div className="rounded-xl border border-line bg-bg p-8">
+          <div className="flex items-center justify-between">
+            <p className="text-[11px] font-medium uppercase tracking-[0.06em] text-muted">Sans</p>
+            <p className="font-mono text-[11px] text-muted">
+              {sans.weights.join(' · ')}
+            </p>
+          </div>
+          <p className="mt-6 text-[72px] font-semibold leading-none tracking-[-0.035em] text-ink">
+            {sans.family}
+          </p>
+          <p className="mt-4 max-w-2xl text-[18px] leading-[1.5] text-ink/80">
+            The quick brown fox jumps over the lazy dog. Built with patience.
+          </p>
+          <p className="mt-6 text-[13.5px] text-muted">{sans.usage}</p>
+          <p className="mt-1 font-mono text-[11.5px] text-muted/80">
+            fallback: {sans.fallback}
+          </p>
         </div>
       </section>
 
       {/* Scale */}
-      <section className="mx-auto max-w-6xl px-6 pb-16">
-        <h2 className="mb-6 font-display text-2xl">Scale</h2>
-        <div className="divide-y divide-border rounded-xl border border-border bg-surface/60">
+      <section className="mb-14">
+        <h2 className="mb-4 text-[15px] font-semibold tracking-[-0.01em] text-ink">Scale</h2>
+        <div className="divide-y divide-line overflow-hidden rounded-xl border border-line bg-bg">
           {scale.map((step) => (
             <div key={step.name} className="flex items-baseline gap-6 px-6 py-5">
-              <div className="w-20 shrink-0 font-mono text-[11px] uppercase tracking-widest text-muted">
+              <div className="w-24 shrink-0 font-mono text-[11px] uppercase tracking-[0.06em] text-muted">
                 {step.name}
               </div>
               <div
-                className="flex-1 truncate font-display"
+                className="flex-1 truncate text-ink"
                 style={{
                   fontSize: step.size,
                   lineHeight: step.line,
@@ -50,45 +64,22 @@ export default function TypographyPage() {
         </div>
       </section>
 
-      {/* Sample paragraph */}
-      <section className="mx-auto max-w-6xl px-6 pb-24">
-        <h2 className="mb-6 font-display text-2xl">In context</h2>
-        <div className="rounded-xl border border-border bg-surface p-8 md:p-12">
-          <p className="mb-2 font-mono text-xs uppercase tracking-widest text-primary">Sample</p>
-          <h3 className="font-display text-4xl leading-tight tracking-tightest">
-            We believe the most durable things are made slowly, from good materials, by people
-            who care what happens after the handoff.
+      {/* Sample */}
+      <section>
+        <h2 className="mb-4 text-[15px] font-semibold tracking-[-0.01em] text-ink">In context</h2>
+        <div className="rounded-xl border border-line bg-panel p-8 md:p-12">
+          <p className="mb-2 text-[11px] font-medium uppercase tracking-[0.08em] text-primary">Sample</p>
+          <h3 className="text-[34px] font-semibold leading-[1.15] tracking-[-0.025em] text-ink md:text-[40px]">
+            We believe the most durable things are made slowly, from good materials,
+            by people who care what happens after the handoff.
           </h3>
-          <p className="mt-6 max-w-2xl text-lg text-muted">
-            That belief shows up everywhere — from how we write a product description to the
-            way a button animates under a cursor. This page is a record of the small decisions
-            that, taken together, form the brand.
+          <p className="mt-5 max-w-2xl text-[16px] leading-[1.55] text-muted">
+            That belief shows up everywhere — from how we write a product description to
+            the way a button animates under a cursor. This page is a record of the small
+            decisions that, taken together, form the brand.
           </p>
         </div>
       </section>
     </>
-  );
-}
-
-function FamilyCard({ family, role, preview, sans }) {
-  return (
-    <div className="rounded-xl border border-border bg-surface p-6">
-      <div className="flex items-center justify-between">
-        <p className="font-mono text-[11px] uppercase tracking-widest text-primary">{role}</p>
-        <p className="font-mono text-[11px] text-muted">{family.weights.join(' · ')}</p>
-      </div>
-      <p
-        className={`mt-6 text-5xl leading-none tracking-tight ${sans ? 'font-sans' : 'font-display'}`}
-      >
-        {family.family}
-      </p>
-      <p className={`mt-4 text-xl ${sans ? 'font-sans' : 'font-display'} text-text`}>
-        {preview}
-      </p>
-      <p className="mt-4 text-sm text-muted">{family.usage}</p>
-      <p className="mt-2 font-mono text-[11px] text-muted">
-        fallback: {family.fallback}
-      </p>
-    </div>
   );
 }

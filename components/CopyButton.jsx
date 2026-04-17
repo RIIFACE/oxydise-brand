@@ -17,13 +17,13 @@ export default function CopyButton({ value, label, className = '' }) {
     <button
       type="button"
       onClick={onCopy}
-      className={`inline-flex items-center gap-1.5 rounded-md border border-border bg-surface px-2 py-1 font-mono text-[11px] text-muted transition-colors hover:border-primary hover:text-text ${className}`}
+      className={`inline-flex items-center gap-1.5 rounded-md border border-line bg-bg px-2 py-1 font-mono text-[11px] text-muted transition-colors hover:border-ink/20 hover:bg-surface hover:text-ink ${className}`}
       aria-label={`Copy ${label || value}`}
     >
       <span>{copied ? 'Copied' : label || value}</span>
       <svg width="10" height="10" viewBox="0 0 16 16" fill="none" aria-hidden>
         {copied ? (
-          <path d="M3 8l3 3 7-7" stroke="#4FA69C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M3 8l3 3 7-7" stroke="#0071E3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         ) : (
           <>
             <rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.2" />

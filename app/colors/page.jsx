@@ -10,37 +10,37 @@ export default function ColorsPage() {
   return (
     <>
       <SectionHeader
-        eyebrow="02 Colors"
+        eyebrow="02 · Colors"
         title="The palette."
-        description="Seven tokens, each with a specific job. Click any value to copy it."
+        description="Eight tokens, each with a specific job. Click any value to copy it."
       />
 
-      <section className="mx-auto max-w-6xl px-6 pb-16">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <section className="mb-14">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {tokens.map(([token, color]) => (
             <ColorSwatch key={token} token={token} color={color} />
           ))}
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 pb-24">
-        <h2 className="mb-4 font-display text-2xl">Usage</h2>
-        <div className="overflow-hidden rounded-xl border border-border">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-surface">
+      <section>
+        <h2 className="mb-4 text-[15px] font-semibold tracking-[-0.01em] text-ink">Usage</h2>
+        <div className="overflow-hidden rounded-xl border border-line">
+          <table className="w-full text-left text-[13.5px]">
+            <thead className="bg-panel">
               <tr>
-                <th className="px-5 py-3 font-mono text-xs uppercase tracking-widest text-muted">Token</th>
-                <th className="px-5 py-3 font-mono text-xs uppercase tracking-widest text-muted">Name</th>
-                <th className="px-5 py-3 font-mono text-xs uppercase tracking-widest text-muted">Hex</th>
-                <th className="px-5 py-3 font-mono text-xs uppercase tracking-widest text-muted">Usage</th>
+                <th className="px-5 py-3 text-[11px] font-medium uppercase tracking-[0.06em] text-muted">Token</th>
+                <th className="px-5 py-3 text-[11px] font-medium uppercase tracking-[0.06em] text-muted">Name</th>
+                <th className="px-5 py-3 text-[11px] font-medium uppercase tracking-[0.06em] text-muted">Hex</th>
+                <th className="px-5 py-3 text-[11px] font-medium uppercase tracking-[0.06em] text-muted">Usage</th>
               </tr>
             </thead>
             <tbody>
               {tokens.map(([token, color]) => (
-                <tr key={token} className="border-t border-border">
-                  <td className="px-5 py-3 font-mono text-xs text-primary">{token}</td>
-                  <td className="px-5 py-3">{color.name}</td>
-                  <td className="px-5 py-3 font-mono text-xs text-muted">{color.hex}</td>
+                <tr key={token} className="border-t border-line">
+                  <td className="px-5 py-3 font-mono text-[12px] text-ink">{token}</td>
+                  <td className="px-5 py-3 text-ink">{color.name}</td>
+                  <td className="px-5 py-3 font-mono text-[12px] text-muted">{color.hex}</td>
                   <td className="px-5 py-3 text-muted">{color.usage}</td>
                 </tr>
               ))}
