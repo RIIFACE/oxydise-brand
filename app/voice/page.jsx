@@ -12,7 +12,7 @@ export default function VoicePage() {
         description="Three principles that shape every headline, button, and email."
       />
 
-      <section className="space-y-6">
+      <section className="mb-24 space-y-6 md:mb-32">
         {brand.voice.principles.map(({ name, description, do: yes, dont: no }) => (
           <article key={name} className="rounded-[20px] bg-panel p-8 md:p-12">
             <h2 className="font-display text-[clamp(2.5rem,6vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.035em] text-ink">

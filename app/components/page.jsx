@@ -12,7 +12,7 @@ export default function ComponentsPage() {
         description="A minimal set of UI primitives rendered in brand."
       />
 
-      <div className="space-y-16">
+      <div className="space-y-16 pb-24 md:pb-32">
         <Block title="Buttons">
           <div className="flex flex-wrap gap-3">
             <button className="inline-flex h-11 items-center rounded-full bg-ink px-6 text-[16px] font-medium text-bg transition-opacity hover:opacity-90">
