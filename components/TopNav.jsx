@@ -50,7 +50,18 @@ export default function TopNav() {
           </ul>
         </nav>
 
-        <div className="shrink-0">
+        <div className="flex shrink-0 items-center gap-2">
+          <a
+            href="/downloads/oxydise-brand.pdf"
+            download
+            aria-label="Download brand guide as PDF"
+            title="Download as PDF"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-line text-muted transition-colors hover:border-ink/30 hover:text-ink"
+          >
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden>
+              <path d="M8 2v9m0 0l-3-3m3 3l3-3M3 14h10" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </a>
           <ThemeToggle />
         </div>
       </div>

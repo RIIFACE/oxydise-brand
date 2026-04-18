@@ -15,20 +15,20 @@ export default function ComponentsPage() {
       <div className="space-y-10">
         <Block title="Buttons">
           <div className="flex flex-wrap gap-3">
-            <button className="inline-flex h-11 items-center rounded-lg bg-ink px-5 text-[16px] font-medium text-bg transition-opacity hover:opacity-90">
+            <button className="inline-flex h-11 items-center rounded-full bg-ink px-6 text-[16px] font-medium text-bg transition-opacity hover:opacity-90">
               Primary
             </button>
-            <button className="inline-flex h-11 items-center rounded-lg border border-line bg-bg px-5 text-[16px] font-medium text-ink transition-colors hover:bg-surface">
+            <button className="inline-flex h-11 items-center rounded-full bg-panel px-6 text-[16px] font-medium text-ink transition-colors hover:bg-surface">
               Secondary
             </button>
-            <button className="inline-flex h-11 items-center rounded-lg bg-primary px-5 text-[16px] font-medium text-white transition-opacity hover:opacity-90">
+            <button className="inline-flex h-11 items-center rounded-full bg-primary px-6 text-[16px] font-medium text-white transition-opacity hover:opacity-90">
               Accent
             </button>
-            <button className="inline-flex h-11 items-center rounded-lg bg-accent/10 px-5 text-[16px] font-medium text-accent transition-colors hover:bg-accent/15">
-              Destructive
-            </button>
-            <button className="inline-flex h-11 items-center rounded-lg px-5 text-[16px] font-medium text-muted transition-colors hover:text-ink">
-              Ghost
+            <button
+              className="inline-flex h-11 items-center rounded-full bg-transparent px-6 text-[16px] font-medium text-ink transition-colors hover:bg-ink hover:text-bg"
+              style={{ border: '1.5px solid currentColor' }}
+            >
+              Outlined
             </button>
           </div>
         </Block>

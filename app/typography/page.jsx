@@ -69,8 +69,11 @@ export default function TypographyPage() {
               >
                 The quick brown fox
               </div>
-              <div className="hidden shrink-0 text-[16px] text-muted md:block">
-                {step.size} / {step.line}
+              <div className="hidden shrink-0 text-right text-[16px] text-muted md:block">
+                <span className="text-ink">{sizeInPx(step.size)}</span>
+                <span className="block text-muted/80">
+                  {step.size} / {step.line}
+                </span>
               </div>
             </div>
           ))}
@@ -95,4 +98,14 @@ export default function TypographyPage() {
       </section>
     </>
   );
+}
+
+function sizeInPx(size) {
+  const rem = size.match(/^([\d.]+)rem$/);
+  if (rem) return `${Math.round(parseFloat(rem[1]) * 16)}px`;
+  const clamp = size.match(/clamp\(\s*([\d.]+)rem\s*,\s*[^,]+,\s*([\d.]+)rem\s*\)/);
+  if (clamp) {
+    return `${Math.round(parseFloat(clamp[1]) * 16)}–${Math.round(parseFloat(clamp[2]) * 16)}px`;
+  }
+  return size;
 }
