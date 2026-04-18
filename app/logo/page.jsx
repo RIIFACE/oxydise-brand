@@ -46,7 +46,7 @@ export default function LogoPage() {
           Keep at least the height of the wordmark as clear space on every side. Nothing lives
           inside that zone — not type, not edges, not other marks.
         </p>
-        <div className="flex items-center justify-center py-12">
+        <div className="flex items-center justify-center rounded-xl bg-panel p-12">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/logos/oxydise-black.svg"

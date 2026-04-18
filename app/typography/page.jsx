@@ -30,8 +30,8 @@ export default function TypographyPage() {
               </p>
             </div>
             <p
-              className={`mt-6 text-[72px] leading-none tracking-[-0.035em] text-ink ${className}`}
-              style={{ fontWeight: font.defaultWeight }}
+              className={`mt-6 leading-none tracking-[-0.035em] text-ink ${className}`}
+              style={{ fontWeight: font.defaultWeight, fontSize: 'clamp(48px, 12vw, 72px)' }}
             >
               {font.family}
             </p>
@@ -83,16 +83,18 @@ export default function TypographyPage() {
       {/* Sample */}
       <section>
         <h2 className="mb-6 font-display text-[16px] font-medium tracking-[-0.01em] text-ink">In context</h2>
-        <p className="mb-2 text-[16px] font-medium text-primary">Sample</p>
-        <h3 className="font-display text-[34px] font-medium leading-[1.15] tracking-[-0.025em] text-ink md:text-[40px]">
-          We believe the most durable things are made slowly, from good materials,
-          by people who care what happens after the handoff.
-        </h3>
-        <p className="mt-5 max-w-2xl font-sans text-[16px] leading-[1.55] text-muted">
-          That belief shows up everywhere — from how we write a product description to
-          the way a button animates under a cursor. This page is a record of the small
-          decisions that, taken together, form the brand.
-        </p>
+        <div className="rounded-xl bg-panel p-8 md:p-12">
+          <p className="mb-2 text-[16px] font-medium text-primary">Sample</p>
+          <h3 className="font-display text-[34px] font-medium leading-[1.15] tracking-[-0.025em] text-ink md:text-[40px]">
+            We believe the most durable things are made slowly, from good materials,
+            by people who care what happens after the handoff.
+          </h3>
+          <p className="mt-5 max-w-2xl font-sans text-[16px] leading-[1.55] text-muted">
+            That belief shows up everywhere — from how we write a product description to
+            the way a button animates under a cursor. This page is a record of the small
+            decisions that, taken together, form the brand.
+          </p>
+        </div>
       </section>
     </>
   );
