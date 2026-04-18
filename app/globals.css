@@ -4,12 +4,38 @@
 
 :root {
   color-scheme: light;
+  --color-bg:      255 255 255;
+  --color-panel:   251 251 253;
+  --color-surface: 245 245 247;
+  --color-line:    229 229 234;
+  --color-ink:      29  29  31;
+  --color-muted:   110 110 115;
+  --color-primary:   0 113 227;
+  --color-accent:  255 106  61;
+
+  --scrollbar-thumb: rgba(0, 0, 0, 0.14);
+  --scrollbar-thumb-hover: rgba(0, 0, 0, 0.24);
+  --scrollbar-border: #FFFFFF;
+}
+
+html.dark {
+  color-scheme: dark;
+  --color-bg:       11  11  13;
+  --color-panel:    21  21  24;
+  --color-surface:  29  29  31;
+  --color-line:     44  44  46;
+  --color-ink:     245 245 247;
+  --color-muted:   152 152 157;
+  --color-primary:  10 132 255;
+  --color-accent:  255 122  77;
+
+  --scrollbar-thumb: rgba(255, 255, 255, 0.14);
+  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.28);
+  --scrollbar-border: #0B0B0D;
 }
 
 html,
 body {
-  background-color: #FFFFFF;
-  color: #1D1D1F;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -20,29 +46,21 @@ html {
 }
 
 ::selection {
-  background: rgba(0, 113, 227, 0.15);
-  color: #0071E3;
+  background: rgb(var(--color-primary) / 0.18);
+  color: rgb(var(--color-primary));
 }
 
 :focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.25);
+  box-shadow: 0 0 0 3px rgb(var(--color-primary) / 0.25);
   border-radius: 6px;
 }
 
-/* Scrollbar — subtle, macOS-like */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.14);
+  background: var(--scrollbar-thumb);
   border-radius: 10px;
-  border: 2px solid #FFFFFF;
+  border: 2px solid var(--scrollbar-border);
 }
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.24);
-}
+::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
