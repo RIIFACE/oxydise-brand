@@ -8,7 +8,7 @@ import ThemeToggle from './ThemeToggle';
 const sections = [
   { href: '/',           label: 'Overview' },
   { href: '/logo',       label: 'Logo' },
-  { href: '/colors',     label: 'Color' },
+  { href: '/colors',     label: 'Colour' },
   { href: '/typography', label: 'Type' },
   { href: '/voice',      label: 'Voice' },
   { href: '/components', label: 'Components' },
