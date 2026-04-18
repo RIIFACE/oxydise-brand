@@ -7,7 +7,6 @@ const words = [
   'considered.',
   'crafted.',
   'refined.',
-  'distilled.',
   'defined.',
 ];
 
@@ -27,7 +26,7 @@ export default function RotatingWord({ className = '' }) {
     if (reduced) return;
     const id = setInterval(() => {
       setIndex((i) => (i + 1) % words.length);
-    }, 2400);
+    }, 1700);
     return () => clearInterval(id);
   }, [reduced]);
 
