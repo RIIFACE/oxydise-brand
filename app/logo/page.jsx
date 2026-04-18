@@ -46,7 +46,7 @@ export default function LogoPage() {
           Keep at least the height of the wordmark as clear space on every side. Nothing lives
           inside that zone — not type, not edges, not other marks.
         </p>
-        <div className="flex items-center justify-center rounded-xl bg-panel p-12">
+        <div className="flex items-center justify-center rounded-[20px] bg-panel p-12">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/logos/oxydise-black.svg"
@@ -71,10 +71,10 @@ export default function LogoPage() {
         <p className="mb-5 max-w-2xl text-[16px] leading-[1.55] text-muted">
           The logo is a system, not a sticker. Don&apos;t recolor, stretch, outline, or rotate.
         </p>
-        <div className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {misuses.map((m) => (
-            <div key={m.label}>
-              <div className="flex h-32 items-center justify-center overflow-hidden">
+            <div key={m.label} className="rounded-[20px] bg-panel p-6">
+              <div className="flex h-28 items-center justify-center overflow-hidden rounded-[14px] bg-white">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/logos/oxydise-colour.svg"
@@ -97,7 +97,7 @@ function LogoTile({ label, src, bg }) {
   return (
     <div>
       <div
-        className="flex h-60 items-center justify-center px-10"
+        className="flex h-60 items-center justify-center rounded-[20px] px-10"
         style={{ backgroundColor: bg }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
