@@ -35,14 +35,14 @@ export default function ComponentsPage() {
 
         <Block title="Cards">
           <div className="grid gap-3 md:grid-cols-2">
-            <div className="rounded-xl bg-panel p-6">
+            <div className="rounded-[20px] bg-bg p-6">
               <p className="text-[16px] font-medium text-primary">Feature</p>
               <h3 className="mt-3 font-display text-[22px] font-medium tracking-[-0.015em] text-ink">Materials that last.</h3>
               <p className="mt-2 text-[16px] leading-[1.55] text-muted">
                 We source with patience. Shortcuts compound, and we&apos;d rather build once.
               </p>
             </div>
-            <div className="rounded-xl bg-panel p-6">
+            <div className="rounded-[20px] bg-bg p-6">
               <p className="text-[16px] font-medium text-accent">Note</p>
               <h3 className="mt-3 font-display text-[22px] font-medium tracking-[-0.015em] text-ink">Field report</h3>
               <p className="mt-2 text-[16px] leading-[1.55] text-muted">
@@ -104,8 +104,10 @@ export default function ComponentsPage() {
 function Block({ title, children }) {
   return (
     <section>
-      <h2 className="mb-6 font-display text-[18px] font-medium tracking-[-0.01em] text-ink">{title}</h2>
-      {children}
+      <h2 className="mb-4 font-display text-[18px] font-medium tracking-[-0.01em] text-ink">{title}</h2>
+      <div className="rounded-[20px] bg-panel p-6 md:p-8">
+        {children}
+      </div>
     </section>
   );
 }
