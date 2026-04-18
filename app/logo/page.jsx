@@ -20,39 +20,39 @@ const misuses = [
 const mediaTiles = [
   {
     label: 'On dark imagery',
-    caption: 'White version. Anchor bottom-left with generous clear space.',
+    caption: 'White logo, centred. Always white over photography.',
     src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&q=80&auto=format&fit=crop',
     logo: 'white',
     aspect: '4 / 3',
-    anchor: 'items-end justify-start',
+    anchor: 'items-center justify-center',
     padding: 'p-6 md:p-8',
   },
   {
     label: 'On light imagery',
-    caption: 'Black version only when the scene is clean and bright.',
+    caption: 'Still white — even on bright scenes. Never black over a photo.',
     src: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1400&q=80&auto=format&fit=crop',
-    logo: 'black',
+    logo: 'white',
     aspect: '4 / 3',
-    anchor: 'items-end justify-end',
+    anchor: 'items-center justify-center',
     padding: 'p-6 md:p-8',
   },
   {
     label: 'Video / motion',
-    caption: 'Hold for the full duration, bottom-left, with subtle play indicator.',
+    caption: 'White, centred, with a subtle recording indicator.',
     src: 'https://images.unsplash.com/photo-1557683316-973673baf926?w=1600&q=80&auto=format&fit=crop',
     logo: 'white',
     aspect: '16 / 9',
-    anchor: 'items-end justify-start',
+    anchor: 'items-center justify-center',
     padding: 'p-6 md:p-10',
     video: true,
   },
   {
     label: 'Social / square',
-    caption: 'Halo only on square formats (profile avatars, Instagram, LinkedIn).',
-    src: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&q=80&auto=format&fit=crop',
+    caption: 'Halo on navy for profile avatars, Instagram, LinkedIn.',
+    bgStyle: 'radial-gradient(120% 120% at 0% 0%, #1a1f5c 0%, #001540 45%, #00081c 100%)',
     logo: 'halo-black',
     invertLogo: true,
-    logoClass: 'h-20 w-20 md:h-28 md:w-28',
+    logoClass: 'h-40 w-40 md:h-56 md:w-56',
     aspect: '1 / 1',
     anchor: 'items-center justify-center',
     padding: 'p-6',
@@ -79,12 +79,12 @@ const mediaMisuses = [
     padding: 'p-0',
   },
   {
-    label: "Don't use low contrast",
-    caption: 'Black on a dark or busy scene disappears.',
-    src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&q=80&auto=format&fit=crop',
+    label: "Don't use the black version on imagery",
+    caption: 'Over any photo, it should always be the white version.',
+    src: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1400&q=80&auto=format&fit=crop',
     logo: 'black',
     aspect: '4 / 3',
-    anchor: 'items-end justify-start',
+    anchor: 'items-center justify-center',
     padding: 'p-6 md:p-8',
   },
 ];
@@ -130,9 +130,9 @@ export default function LogoPage() {
       <section className="mb-14">
         <h2 className="mb-3 font-display text-[16px] font-medium tracking-[-0.01em] text-ink">Over media</h2>
         <p className="mb-5 max-w-2xl text-[16px] leading-[1.55] text-muted">
-          When the logo sits on a photo or video, contrast is everything. Default to the
-          white version on busy or dark imagery. Use the black version only on bright,
-          uncluttered scenes. Keep clear space — the logo is never pushed against an edge.
+          Over photography and video, the mark is always white and always centred — no
+          exceptions, regardless of whether the scene is dark or bright. Never use the black
+          or colour version on imagery. Keep generous clear space so the mark breathes.
         </p>
         <div className="grid gap-4 md:grid-cols-2">
           {mediaTiles.map((t) => (
@@ -160,23 +160,26 @@ export default function LogoPage() {
           Keep at least the height of the wordmark as clear space on every side. Nothing lives
           inside that zone — not type, not edges, not other marks.
         </p>
-        <div className="flex items-center justify-center rounded-[20px] bg-panel p-12">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/logos/oxydise-black.svg"
-            alt=""
-            aria-hidden
-            className="block h-16 w-auto dark:hidden"
-            style={{ padding: '4rem 6rem', outline: '1px dashed rgb(var(--color-line))' }}
-          />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/logos/oxydise-white.svg"
-            alt=""
-            aria-hidden
-            className="hidden h-16 w-auto dark:block"
-            style={{ padding: '4rem 6rem', outline: '1px dashed rgb(var(--color-line))' }}
-          />
+        <div className="flex items-center justify-center rounded-[20px] bg-panel p-10 md:p-16">
+          <div
+            className="flex items-center justify-center px-12 py-12 md:px-20 md:py-16"
+            style={{ outline: '1px dashed rgb(var(--color-line))' }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logos/oxydise-black.svg"
+              alt=""
+              aria-hidden
+              className="block h-12 w-auto md:h-16 dark:hidden"
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logos/oxydise-white.svg"
+              alt=""
+              aria-hidden
+              className="hidden h-12 w-auto md:h-16 dark:block"
+            />
+          </div>
         </div>
       </section>
 
@@ -213,11 +216,11 @@ function HaloTile({ label, variant, bg }) {
   return (
     <div>
       <div
-        className="flex aspect-square items-center justify-center rounded-[20px] p-10"
+        className="flex aspect-square items-center justify-center rounded-[20px] p-6"
         style={{ backgroundColor: bg }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={src} alt="" aria-hidden className="h-24 w-24 md:h-28 md:w-28" style={style} />
+        <img src={src} alt="" aria-hidden className="h-40 w-40 md:h-56 md:w-56" style={style} />
       </div>
       <div className="mt-3 flex items-center justify-between text-[16px] text-muted">
         <span>{label}</span>
@@ -245,21 +248,23 @@ function LogoTile({ label, src, bg }) {
   );
 }
 
-function MediaTile({ label, caption, src, logo, aspect, anchor, padding, video, misuse, invertLogo, logoClass }) {
+function MediaTile({ label, caption, src, bgStyle, logo, aspect, anchor, padding, video, misuse, invertLogo, logoClass }) {
   return (
     <div>
       <div
         className="relative overflow-hidden rounded-[20px] bg-surface"
-        style={{ aspectRatio: aspect }}
+        style={{ aspectRatio: aspect, background: bgStyle }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={src}
-          alt=""
-          aria-hidden
-          className="absolute inset-0 h-full w-full object-cover"
-          loading="lazy"
-        />
+        {src && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={src}
+            alt=""
+            aria-hidden
+            className="absolute inset-0 h-full w-full object-cover"
+            loading="lazy"
+          />
+        )}
         <div className={`absolute inset-0 flex ${anchor} ${padding}`}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img

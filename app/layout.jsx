@@ -8,14 +8,14 @@ const sans = Manrope({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-sans',
-  weight: ['400', '500', '600'],
+  weight: ['400', '500'],
 });
 
 const display = Urbanist({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-display',
-  weight: ['500', '600', '700'],
+  weight: ['500'],
 });
 
 export const metadata = {
