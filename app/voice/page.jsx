@@ -14,7 +14,7 @@ export default function VoicePage() {
 
       <section className="space-y-4">
         {brand.voice.principles.map((p, i) => (
-          <article key={p.name} className="rounded-xl border border-line bg-bg p-8">
+          <article key={p.name} className="rounded-xl bg-panel p-8">
             <div className="flex items-start gap-6">
               <div className="w-10 shrink-0 font-mono text-[11px] text-muted">
                 0{i + 1}
@@ -44,10 +44,8 @@ function Example({ tone, text }) {
   const isDo = tone === 'do';
   return (
     <div
-      className={`rounded-lg border p-5 ${
-        isDo
-          ? 'border-line bg-panel'
-          : 'border-accent/25 bg-accent/5'
+      className={`rounded-lg p-5 ${
+        isDo ? 'bg-bg' : 'bg-accent/10'
       }`}
     >
       <p

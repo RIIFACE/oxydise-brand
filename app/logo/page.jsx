@@ -28,7 +28,7 @@ export default function LogoPage() {
           Maintain at least the width of the inner dot as clear space on all sides of the mark.
           Nothing lives inside that zone.
         </p>
-        <div className="flex items-center justify-center rounded-xl border border-line bg-panel p-12">
+        <div className="flex items-center justify-center rounded-xl bg-panel p-12">
           <ClearSpaceDiagram />
         </div>
       </section>
@@ -46,7 +46,7 @@ export default function LogoPage() {
             { label: "Don't recolor", recolor: true },
             { label: "Don't add effects", shadow: true },
           ].map((m) => (
-            <div key={m.label} className="rounded-xl border border-line bg-bg p-5">
+            <div key={m.label} className="rounded-xl bg-panel p-5">
               <div className="mb-4 flex h-24 items-center justify-center rounded-lg bg-panel">
                 <svg
                   width="56"
@@ -77,11 +77,11 @@ export default function LogoPage() {
 
 function LogoTile({ label, bg, invert }) {
   return (
-    <div className="overflow-hidden rounded-xl border border-line bg-bg">
+    <div className="overflow-hidden rounded-xl">
       <div className="flex h-60 items-center justify-center" style={{ backgroundColor: bg }}>
         <WordMark invert={invert} />
       </div>
-      <div className="flex items-center justify-between border-t border-line px-5 py-3 text-[12px] text-muted">
+      <div className="flex items-center justify-between px-1 pt-3 text-[12px] text-muted">
         <span>{label}</span>
         <span className="font-mono text-[11px]">Placeholder · /public/logos</span>
       </div>

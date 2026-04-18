@@ -13,14 +13,12 @@ export default function DownloadsPage() {
       />
 
       <section className="mb-10">
-        <div className="overflow-hidden rounded-xl border border-line bg-bg">
-          {brand.downloads.map((d, i) => (
+        <div>
+          {brand.downloads.map((d) => (
             <a
               key={d.href}
               href={d.href}
-              className={`flex items-center justify-between gap-4 px-6 py-4 transition-colors hover:bg-panel ${
-                i === 0 ? '' : 'border-t border-line'
-              }`}
+              className="flex items-center justify-between gap-4 px-0 py-5 transition-colors hover:text-ink"
             >
               <div className="min-w-0">
                 <p className="text-[15px] font-medium text-ink">{d.name}</p>

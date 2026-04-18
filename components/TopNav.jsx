@@ -19,7 +19,7 @@ export default function TopNav() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-20 border-b border-line bg-bg/80 backdrop-blur">
+    <header className="sticky top-0 z-20 bg-bg/80 backdrop-blur">
       <div className="mx-auto grid h-16 max-w-[1440px] grid-cols-[auto_1fr_auto] items-center gap-6 px-6 md:px-10">
         <Link href="/" className="flex shrink-0 items-center gap-2.5">
           <Mark />
