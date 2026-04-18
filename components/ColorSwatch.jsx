@@ -35,7 +35,7 @@ export default function ColorSwatch({ token, color }) {
           <p className="font-display text-[17px] font-medium tracking-tight text-ink">
             {color.name}
           </p>
-          <p className="mt-0.5 font-mono text-[10.5px] text-muted">{token}</p>
+          <p className="mt-0.5 text-[16px] text-muted">{token}</p>
         </div>
         <CopyButton value={color.hex} label={color.hex} />
       </div>
@@ -43,7 +43,7 @@ export default function ColorSwatch({ token, color }) {
       <p className="mt-2 text-[16px] leading-[1.5] text-muted">{color.usage}</p>
 
       {flips ? (
-        <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-1 font-mono text-[10.5px] text-muted/80">
+        <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-1 text-[16px] text-muted/80">
           <div className="flex justify-between">
             <dt className="text-muted/60">Light</dt>
             <dd>{color.hex}</dd>
@@ -54,7 +54,7 @@ export default function ColorSwatch({ token, color }) {
           </div>
         </dl>
       ) : (
-        <p className="mt-3 font-mono text-[10.5px] text-muted/80">
+        <p className="mt-3 text-[16px] text-muted/80">
           {color.hex} · rgb({color.rgb.split(' ').join(', ')})
         </p>
       )}

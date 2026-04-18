@@ -38,13 +38,13 @@ function Example({ tone, text }) {
   return (
     <div className={`rounded-lg p-5 ${isDo ? 'bg-bg' : 'bg-accent/10'}`}>
       <p
-        className={`mb-2 flex items-center gap-1.5 font-mono text-[12px] font-medium ${
+        className={`mb-2 flex items-center gap-1.5 text-[16px] font-medium ${
           isDo ? 'text-primary' : 'text-accent'
         }`}
       >
         <span
           aria-hidden
-          className={`inline-flex h-4 w-4 items-center justify-center rounded-full font-mono text-[11px] ${
+          className={`inline-flex h-4 w-4 items-center justify-center rounded-full text-[16px] ${
             isDo ? 'bg-primary/15' : 'bg-accent/15'
           }`}
         >

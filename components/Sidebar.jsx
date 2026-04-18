@@ -18,13 +18,13 @@ export default function Sidebar() {
       <div className="flex items-center gap-2.5 px-6 py-6">
         <Mark />
         <div className="leading-tight">
-          <p className="font-display text-[15px] font-medium tracking-tight text-ink">{brand.name}</p>
-          <p className="text-[11px] text-muted">Brand guidelines</p>
+          <p className="font-display text-[16px] font-medium tracking-tight text-ink">{brand.name}</p>
+          <p className="text-[16px] text-muted">Brand guidelines</p>
         </div>
       </div>
 
       <nav className="flex-1 px-3 py-2">
-        <p className="mb-2 px-3 text-[11px] font-medium uppercase tracking-[0.08em] text-muted">
+        <p className="mb-2 px-3 text-[16px] font-medium uppercase tracking-[0.08em] text-muted">
           Sections
         </p>
         <ul className="space-y-0.5">
@@ -32,9 +32,9 @@ export default function Sidebar() {
             <li key={s.href}>
               <Link
                 href={s.href}
-                className="group flex items-center gap-3 rounded-lg px-3 py-2 text-[13.5px] font-medium text-ink/80 transition-colors hover:bg-surface hover:text-ink"
+                className="group flex items-center gap-3 rounded-lg px-3 py-2 text-[16px] font-medium text-ink/80 transition-colors hover:bg-surface hover:text-ink"
               >
-                <span className="w-5 font-mono text-[10.5px] text-muted group-hover:text-ink/60">
+                <span className="w-5 text-[16px] text-muted group-hover:text-ink/60">
                   {s.number}
                 </span>
                 <span>{s.label}</span>
@@ -47,8 +47,8 @@ export default function Sidebar() {
       <div className="space-y-3 border-t border-line px-4 py-4">
         <ThemeToggle />
         <div className="px-2">
-          <p className="text-[11px] text-muted">{brand.domain}</p>
-          <p className="text-[11px] text-muted/80">
+          <p className="text-[16px] text-muted">{brand.domain}</p>
+          <p className="text-[16px] text-muted/80">
             v1.0 · {new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
           </p>
         </div>

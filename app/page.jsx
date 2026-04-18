@@ -5,7 +5,7 @@ export default function HomePage() {
 
   return (
     <section className="relative flex h-[calc(100vh-4rem)] flex-col overflow-hidden py-8 md:py-12">
-      <header className="flex items-center justify-between font-mono text-[12px] text-muted">
+      <header className="flex items-center justify-between text-[16px] text-muted">
         <span className="flex items-center gap-2.5">
           <Mark />
           <span>Brand guidelines</span>
@@ -31,7 +31,7 @@ export default function HomePage() {
         <p className="col-span-12 max-w-md text-[16px] leading-[1.55] text-muted md:col-span-6">
           {brand.tagline} A living reference for anyone building, writing, or designing with us.
         </p>
-        <p className="col-span-12 font-mono text-[12px] text-muted md:col-span-5 md:col-start-8 md:text-right">
+        <p className="col-span-12 text-[16px] text-muted md:col-span-5 md:col-start-8 md:text-right">
           {brand.domain}
         </p>
       </footer>
