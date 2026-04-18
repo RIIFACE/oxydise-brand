@@ -12,7 +12,7 @@ export default function HomePage() {
           letterSpacing: '-0.04em',
         }}
       >
-        The {brand.name}<br />
+        {brand.name}<br />
         brand, <RotatingWord className="text-muted" />
       </h1>
 
