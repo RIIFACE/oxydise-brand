@@ -4,10 +4,10 @@ import { brand } from '@/lib/brand.config';
 export const metadata = { title: `Logo — ${brand.name}` };
 
 const tiles = [
-  { label: 'Colour on canvas', src: '/logos/oxydise-colour.svg', bg: '#FFFFFF' },
-  { label: 'Black on canvas',  src: '/logos/oxydise-black.svg',  bg: '#FFFFFF' },
-  { label: 'Colour on navy',   src: '/logos/oxydise-colour.svg', bg: '#001540' },
-  { label: 'White on navy',    src: '/logos/oxydise-white.svg',  bg: '#001540' },
+  { label: 'Colour on canvas',  src: '/logos/oxydise-colour.svg', bg: '#FFFFFF' },
+  { label: 'Black on canvas',   src: '/logos/oxydise-black.svg',  bg: '#FFFFFF' },
+  { label: 'White on black',    src: '/logos/oxydise-white.svg',  bg: '#000000' },
+  { label: 'White on Signal',   src: '/logos/oxydise-white.svg',  bg: '#00AAFF' },
 ];
 
 const misuses = [
@@ -27,7 +27,12 @@ export default function LogoPage() {
       />
 
       <section className="mb-14">
-        <h2 className="mb-4 font-display text-[16px] font-medium tracking-[-0.01em] text-ink">Primary</h2>
+        <h2 className="mb-3 font-display text-[16px] font-medium tracking-[-0.01em] text-ink">Primary</h2>
+        <p className="mb-5 max-w-2xl text-[16px] leading-[1.55] text-muted">
+          Use the colour version on white only. On any dark or blue surface — including
+          black, navy, or Signal — use the white version. Never place the colour logo on
+          a coloured background.
+        </p>
         <div className="grid gap-3 md:grid-cols-2">
           {tiles.map((t) => (
             <LogoTile key={t.label} {...t} />
@@ -69,7 +74,7 @@ export default function LogoPage() {
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {misuses.map((m) => (
             <div key={m.label} className="rounded-xl bg-panel p-5">
-              <div className="mb-4 flex h-28 items-center justify-center overflow-hidden rounded-lg">
+              <div className="mb-4 flex h-28 items-center justify-center overflow-hidden rounded-lg bg-white">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/logos/oxydise-colour.svg"
