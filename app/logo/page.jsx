@@ -30,10 +30,10 @@ const mediaTiles = [
   {
     label: 'On light imagery',
     caption: 'Black version only when the scene is clean and bright.',
-    src: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1400&q=80&auto=format&fit=crop',
+    src: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1400&q=80&auto=format&fit=crop',
     logo: 'black',
     aspect: '4 / 3',
-    anchor: 'items-start justify-end',
+    anchor: 'items-end justify-end',
     padding: 'p-6 md:p-8',
   },
   {
@@ -49,11 +49,41 @@ const mediaTiles = [
   {
     label: 'Social / square',
     caption: 'Centered on square formats (Instagram, LinkedIn).',
-    src: 'https://images.unsplash.com/photo-1557682233-43e671455dfa?w=1200&q=80&auto=format&fit=crop',
+    src: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&q=80&auto=format&fit=crop',
     logo: 'white',
     aspect: '1 / 1',
     anchor: 'items-center justify-center',
     padding: 'p-6',
+  },
+];
+
+const mediaMisuses = [
+  {
+    label: "Don't place colour on imagery",
+    caption: 'The colour version belongs on white only.',
+    src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&q=80&auto=format&fit=crop',
+    logo: 'colour',
+    aspect: '4 / 3',
+    anchor: 'items-end justify-start',
+    padding: 'p-6 md:p-8',
+  },
+  {
+    label: "Don't skip clear space",
+    caption: 'Pushed against an edge, the mark loses presence.',
+    src: 'https://images.unsplash.com/photo-1557683316-973673baf926?w=1400&q=80&auto=format&fit=crop',
+    logo: 'white',
+    aspect: '4 / 3',
+    anchor: 'items-end justify-end',
+    padding: 'p-0',
+  },
+  {
+    label: "Don't use low contrast",
+    caption: 'Black on a dark or busy scene disappears.',
+    src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&q=80&auto=format&fit=crop',
+    logo: 'black',
+    aspect: '4 / 3',
+    anchor: 'items-end justify-start',
+    padding: 'p-6 md:p-8',
   },
 ];
 
@@ -90,6 +120,19 @@ export default function LogoPage() {
         <div className="grid gap-4 md:grid-cols-2">
           {mediaTiles.map((t) => (
             <MediaTile key={t.label} {...t} />
+          ))}
+        </div>
+      </section>
+
+      <section className="mb-14">
+        <h2 className="mb-3 font-display text-[16px] font-medium tracking-[-0.01em] text-ink">Over media — misuse</h2>
+        <p className="mb-5 max-w-2xl text-[16px] leading-[1.55] text-muted">
+          A few common mistakes that break the rule above. Contrast, version and clear space
+          matter as much on a photo as they do on a flat surface.
+        </p>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {mediaMisuses.map((t) => (
+            <MediaTile key={t.label} {...t} misuse />
           ))}
         </div>
       </section>
@@ -165,11 +208,11 @@ function LogoTile({ label, src, bg }) {
   );
 }
 
-function MediaTile({ label, caption, src, logo, aspect, anchor, padding, video }) {
+function MediaTile({ label, caption, src, logo, aspect, anchor, padding, video, misuse }) {
   return (
     <div>
       <div
-        className={`relative overflow-hidden rounded-[20px] bg-surface`}
+        className="relative overflow-hidden rounded-[20px] bg-surface"
         style={{ aspectRatio: aspect }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -186,13 +229,23 @@ function MediaTile({ label, caption, src, logo, aspect, anchor, padding, video }
             src={`/logos/oxydise-${logo}.svg`}
             alt=""
             aria-hidden
-            className="h-6 w-auto md:h-8"
+            className="h-8 w-auto md:h-10"
           />
         </div>
         {video && (
           <div className="absolute right-5 top-5 flex items-center gap-1.5 rounded-full bg-black/50 px-3 py-1 text-[13px] font-medium text-white backdrop-blur">
             <span aria-hidden className="inline-block h-2 w-2 rounded-full bg-[#E5484D]" />
             Video
+          </div>
+        )}
+        {misuse && (
+          <div className="absolute left-5 top-5 flex items-center gap-1.5 rounded-full bg-[#E5484D] px-3 py-1 text-[13px] font-medium text-white">
+            <span aria-hidden className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-white/20">
+              <svg width="10" height="10" viewBox="0 0 16 16" fill="none">
+                <path d="M4.5 4.5l7 7M11.5 4.5l-7 7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              </svg>
+            </span>
+            Don&apos;t
           </div>
         )}
       </div>
