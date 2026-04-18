@@ -1,83 +1,50 @@
-import Link from 'next/link';
-import Poster from '@/components/Poster';
 import { brand } from '@/lib/brand.config';
 
-const sections = [
-  { href: '/logo',       title: 'Logo',        description: 'Wordmark, symbol, clear space, misuse.' },
-  { href: '/colors',     title: 'Color',       description: 'Palette, usage rules, copyable values.' },
-  { href: '/typography', title: 'Type',        description: 'Urbanist and Manrope. Scale and samples.' },
-  { href: '/voice',      title: 'Voice',       description: 'How we sound. Principles and examples.' },
-  { href: '/components', title: 'Components',  description: 'Reusable UI building blocks.' },
-  { href: '/downloads',  title: 'Downloads',   description: 'Logos, fonts, templates.' },
-];
-
 export default function HomePage() {
+  const date = new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+
   return (
-    <>
-      <Poster
-        eyebrow="Overview"
-        headline={
-          <>
-            The {brand.name}<br />
-            brand, <span className="text-muted">documented.</span>
-          </>
-        }
-        subcopy="A living reference for anyone building, writing, or designing with us — inside or outside the company."
-        mark={<PosterMark />}
-      />
+    <section className="relative flex h-[calc(100vh-4rem)] flex-col overflow-hidden py-8 md:py-12">
+      <header className="flex items-center justify-between font-mono text-[12px] text-muted">
+        <span className="flex items-center gap-2.5">
+          <Mark />
+          <span>Brand guidelines</span>
+        </span>
+        <span>v1.0 · {date}</span>
+      </header>
 
-      <section className="grid grid-cols-12 border-t border-line">
-        <header className="col-span-12 flex items-baseline justify-between py-8">
-          <h2 className="font-display text-[16px] font-medium tracking-tight text-ink">
-            Contents
-          </h2>
-          <p className="font-mono text-[12px] text-muted">{sections.length} sections</p>
-        </header>
+      <div className="grid flex-1 grid-cols-12 items-center">
+        <h1
+          className="col-span-12 font-display font-medium text-ink md:col-span-11"
+          style={{
+            fontSize: 'clamp(2.75rem, 10vw, 8.5rem)',
+            lineHeight: '0.95',
+            letterSpacing: '-0.04em',
+          }}
+        >
+          The {brand.name}<br />
+          brand, <span className="text-muted">documented.</span>
+        </h1>
+      </div>
 
-        <ol className="col-span-12 divide-y divide-line border-t border-line">
-          {sections.map((s) => (
-            <li key={s.href}>
-              <Link
-                href={s.href}
-                className="group grid grid-cols-12 items-baseline gap-x-6 py-8 transition-colors hover:bg-panel/60 md:py-10"
-              >
-                <span className="col-span-12 font-display text-[clamp(1.5rem,3vw,2.25rem)] font-medium tracking-[-0.02em] text-ink md:col-span-6">
-                  {s.title}
-                </span>
-                <span className="col-span-12 mt-1 text-[14px] leading-[1.5] text-muted md:col-span-5 md:mt-0">
-                  {s.description}
-                </span>
-                <span className="hidden md:col-span-1 md:flex md:justify-end">
-                  <svg width="18" height="18" viewBox="0 0 16 16" fill="none" className="text-muted transition-transform group-hover:translate-x-1 group-hover:text-ink">
-                    <path d="M5 3l5 5-5 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      <section className="grid grid-cols-12 border-t border-line py-20 md:py-28">
-        <p className="col-span-12 font-display text-[clamp(1.5rem,3.5vw,2.5rem)] font-medium leading-[1.2] tracking-[-0.02em] text-ink md:col-span-10 md:col-start-2">
-          A brand is every small choice you make, repeated. This site keeps those choices
-          consistent — so we spend energy on the work, not the edge cases.
+      <footer className="grid grid-cols-12 items-end gap-6">
+        <p className="col-span-12 max-w-md text-[14px] leading-[1.55] text-muted md:col-span-6">
+          {brand.tagline} A living reference for anyone building, writing, or designing with us.
         </p>
-        <p className="col-span-12 mt-10 font-mono text-[12px] text-muted md:col-span-10 md:col-start-2">
+        <p className="col-span-12 font-mono text-[12px] text-muted md:col-span-5 md:col-start-8 md:text-right">
           {brand.domain}
         </p>
-      </section>
-    </>
+      </footer>
+    </section>
   );
 }
 
-function PosterMark() {
+function Mark() {
   return (
-    <div aria-hidden className="flex h-24 w-24 items-center justify-center rounded-full border border-ink text-ink md:h-32 md:w-32">
-      <svg width="48" height="48" viewBox="0 0 16 16" fill="none">
-        <circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1" />
+    <span aria-hidden className="flex h-5 w-5 items-center justify-center rounded-full border border-muted/70 text-muted">
+      <svg width="10" height="10" viewBox="0 0 16 16" fill="none">
         <circle cx="8" cy="8" r="2" fill="currentColor" />
       </svg>
-    </div>
+    </span>
   );
 }
