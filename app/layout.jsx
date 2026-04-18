@@ -1,7 +1,8 @@
 import { Urbanist, Manrope } from 'next/font/google';
 import './globals.css';
 import { brand } from '@/lib/brand.config';
-import Sidebar from '@/components/Sidebar';
+import TopNav from '@/components/TopNav';
+import GridOverlay from '@/components/GridOverlay';
 
 const sans = Manrope({
   subsets: ['latin'],
@@ -40,10 +41,11 @@ export default function RootLayout({ children }) {
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="bg-bg text-ink font-sans">
-        <div className="flex min-h-screen">
-          <Sidebar />
-          <main className="flex-1 min-w-0">
-            <div className="mx-auto max-w-5xl px-8 py-12 md:px-12 md:py-16">
+        <GridOverlay />
+        <div className="relative z-10 flex min-h-screen flex-col">
+          <TopNav />
+          <main className="flex-1">
+            <div className="mx-auto w-full max-w-[1440px] px-6 md:px-10">
               {children}
             </div>
           </main>

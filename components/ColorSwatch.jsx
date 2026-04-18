@@ -1,31 +1,49 @@
 import CopyButton from './CopyButton';
 
-// Tokens whose swatches are light — needs a visible border so they don't
-// vanish into the page.
-const LIGHT_SWATCHES = new Set(['bg', 'panel', 'surface', 'line']);
+// Tokens whose light swatches are near-white — they get a hairline so they
+// don't vanish into the page.
+const NEAR_WHITE = new Set(['bg', 'panel', 'surface', 'line']);
 
 export default function ColorSwatch({ token, color }) {
-  const isLight = LIGHT_SWATCHES.has(token);
+  const lightNeedsBorder = NEAR_WHITE.has(token);
+
   return (
-    <div className="group overflow-hidden rounded-xl border border-line bg-bg">
-      <div
-        className={`flex h-28 items-end p-4 ${isLight ? 'border-b border-line' : ''}`}
-        style={{ backgroundColor: color.hex }}
-      />
-      <div className="space-y-3 p-4">
-        <div className="flex items-baseline justify-between gap-3">
-          <div>
-            <p className="text-[15px] font-semibold tracking-[-0.01em] text-ink">{color.name}</p>
-            <p className="mt-0.5 font-mono text-[11px] text-muted">{token}</p>
-          </div>
-          <span className="font-mono text-[11px] text-muted">{color.hex}</span>
-        </div>
-        <p className="text-[12.5px] leading-[1.45] text-muted">{color.usage}</p>
-        <div className="flex flex-wrap gap-1.5">
-          <CopyButton value={color.hex} label={color.hex} />
-          <CopyButton value={`rgb(${color.rgb.split(' ').join(', ')})`} label={`rgb`} />
-        </div>
+    <article className="flex flex-col">
+      <div className="flex aspect-[4/3] w-full overflow-hidden">
+        <div
+          className={`flex-1 ${lightNeedsBorder ? 'border border-line' : ''}`}
+          style={{ backgroundColor: color.hex }}
+        />
+        <div
+          className="flex-1 border border-l-0 border-line/60"
+          style={{ backgroundColor: color.dark }}
+        />
       </div>
-    </div>
+
+      <div className="mt-4 flex items-baseline justify-between gap-3">
+        <div>
+          <p className="font-display text-[17px] font-medium tracking-tight text-ink">
+            {color.name}
+          </p>
+          <p className="mt-0.5 font-mono text-[10.5px] uppercase tracking-[0.08em] text-muted">
+            {token}
+          </p>
+        </div>
+        <CopyButton value={color.hex} label={color.hex} />
+      </div>
+
+      <p className="mt-2 text-[13px] leading-[1.5] text-muted">{color.usage}</p>
+
+      <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-1 font-mono text-[10.5px] text-muted/80">
+        <div className="flex justify-between">
+          <dt className="uppercase tracking-[0.08em] text-muted/60">Light</dt>
+          <dd>{color.hex}</dd>
+        </div>
+        <div className="flex justify-between">
+          <dt className="uppercase tracking-[0.08em] text-muted/60">Dark</dt>
+          <dd>{color.dark}</dd>
+        </div>
+      </dl>
+    </article>
   );
 }
