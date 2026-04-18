@@ -13,12 +13,12 @@ export default function DownloadsPage() {
       />
 
       <section className="mb-10">
-        <div>
+        <div className="grid gap-3">
           {brand.downloads.map((d) => (
             <a
               key={d.href}
               href={d.href}
-              className="flex items-center justify-between gap-4 px-0 py-5 transition-colors hover:text-ink"
+              className="flex items-center justify-between gap-4 rounded-xl border border-line bg-panel px-5 py-5 transition-colors hover:bg-surface hover:text-ink"
             >
               <div className="min-w-0">
                 <p className="font-display text-[20px] font-medium text-ink">{d.name}</p>
