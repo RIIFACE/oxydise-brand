@@ -20,9 +20,9 @@ export default function TypographyPage() {
       />
 
       {/* Families */}
-      <section className="mb-20 space-y-16">
+      <section className="mb-14 space-y-6">
         {families.map(({ role, font, className, sample }) => (
-          <div key={role}>
+          <div key={role} className="rounded-xl bg-panel p-8">
             <div className="flex items-center justify-between">
               <p className="text-[16px] font-medium text-muted">{role}</p>
               <p className="text-[16px] text-muted">
@@ -82,17 +82,19 @@ export default function TypographyPage() {
 
       {/* Sample */}
       <section>
-        <h2 className="mb-6 font-display text-[16px] font-medium tracking-[-0.01em] text-ink">In context</h2>
-        <p className="mb-2 text-[16px] font-medium text-primary">Sample</p>
-        <h3 className="font-display text-[34px] font-medium leading-[1.15] tracking-[-0.025em] text-ink md:text-[40px]">
-          We believe the most durable things are made slowly, from good materials,
-          by people who care what happens after the handoff.
-        </h3>
-        <p className="mt-5 max-w-2xl font-sans text-[16px] leading-[1.55] text-muted">
-          That belief shows up everywhere — from how we write a product description to
-          the way a button animates under a cursor. This page is a record of the small
-          decisions that, taken together, form the brand.
-        </p>
+        <h2 className="mb-4 font-display text-[16px] font-medium tracking-[-0.01em] text-ink">In context</h2>
+        <div className="rounded-xl bg-panel p-8 md:p-12">
+          <p className="mb-2 text-[16px] font-medium text-primary">Sample</p>
+          <h3 className="font-display text-[34px] font-medium leading-[1.15] tracking-[-0.025em] text-ink md:text-[40px]">
+            We believe the most durable things are made slowly, from good materials,
+            by people who care what happens after the handoff.
+          </h3>
+          <p className="mt-5 max-w-2xl font-sans text-[16px] leading-[1.55] text-muted">
+            That belief shows up everywhere — from how we write a product description to
+            the way a button animates under a cursor. This page is a record of the small
+            decisions that, taken together, form the brand.
+          </p>
+        </div>
       </section>
     </>
   );
