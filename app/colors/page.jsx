@@ -99,7 +99,7 @@ function ColorGroup({ title, count, tokens }) {
 
 function PosterTile() {
   return (
-    <div aria-hidden className="flex h-24 w-24 md:h-32 md:w-32">
+    <div aria-hidden className="flex h-24 w-24 overflow-hidden rounded-[20px] md:h-32 md:w-32">
       <div className="flex-1 bg-primary" />
       <div className="flex-1 bg-navy" />
     </div>
