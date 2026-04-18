@@ -64,24 +64,36 @@ html {
 }
 ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
 
-/* Blueprint sketchbook background for the homepage cover */
-@keyframes blueprint-fine {
-  from { background-position: 0 0; }
-  to   { background-position: 32px 32px; }
+/* Page entrance animation — runs on every route change via app/template.jsx */
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-@keyframes blueprint-coarse {
-  from { background-position: 0 0; }
-  to   { background-position: -192px 192px; }
+.animate-page-enter {
+  animation: page-enter 0.5s cubic-bezier(0.2, 0, 0, 1) both;
 }
-@keyframes blueprint-breathe {
-  0%, 100% { opacity: 0.55; transform: rotate(0deg); }
-  50%      { opacity: 1;    transform: rotate(2deg); }
+
+/* Staggered in-page reveal — children animate in sequence */
+@keyframes page-reveal {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-@keyframes blueprint-breathe-slow {
-  0%, 100% { opacity: 0.5; transform: rotate(0deg); }
-  50%      { opacity: 0.9; transform: rotate(-3deg); }
+.animate-page-reveal > * {
+  opacity: 0;
+  animation: page-reveal 0.6s cubic-bezier(0.2, 0, 0, 1) both;
 }
-.animate-blueprint-fine        { animation: blueprint-fine 60s linear infinite; }
-.animate-blueprint-coarse      { animation: blueprint-coarse 180s linear infinite; }
-.animate-blueprint-breathe     { animation: blueprint-breathe 14s ease-in-out infinite; transform-origin: 50% 50%; }
-.animate-blueprint-breathe-slow{ animation: blueprint-breathe-slow 22s ease-in-out infinite; transform-origin: 50% 50%; }
+.animate-page-reveal > *:nth-child(1) { animation-delay: 0.05s; }
+.animate-page-reveal > *:nth-child(2) { animation-delay: 0.15s; }
+.animate-page-reveal > *:nth-child(3) { animation-delay: 0.25s; }
+.animate-page-reveal > *:nth-child(4) { animation-delay: 0.35s; }
+.animate-page-reveal > *:nth-child(5) { animation-delay: 0.45s; }
+.animate-page-reveal > *:nth-child(n+6) { animation-delay: 0.55s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-page-enter,
+  .animate-page-reveal > * {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
