@@ -37,10 +37,10 @@ export default function TopNav() {
   }, []);
 
   const inner = [
-    'mx-auto flex h-16 items-center justify-between gap-4 max-w-[1440px] bg-bg/80 px-6 backdrop-blur transition-all duration-300',
+    'mx-auto flex h-16 items-center justify-between gap-4 max-w-[1440px] px-6 transition-all duration-300',
     scrolled
-      ? 'md:mt-3 md:max-w-[1120px] md:rounded-full md:border md:border-line md:px-5 md:shadow-[0_6px_24px_rgba(0,0,0,0.08)] md:dark:shadow-[0_6px_24px_rgba(0,0,0,0.5)]'
-      : 'md:px-10',
+      ? 'bg-bg md:mt-3 md:max-w-[1120px] md:rounded-full md:border md:border-line md:px-5 md:shadow-[0_6px_24px_rgba(0,0,0,0.08)] md:dark:shadow-[0_6px_24px_rgba(0,0,0,0.5)]'
+      : 'bg-bg/85 backdrop-blur md:px-10',
   ].join(' ');
 
   return (
