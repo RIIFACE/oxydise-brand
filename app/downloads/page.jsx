@@ -26,7 +26,7 @@ export default function DownloadsPage() {
                   {d.href} · {d.note}
                 </p>
               </div>
-              <span className="inline-flex h-10 shrink-0 items-center gap-2 rounded-lg border border-line bg-bg px-4 text-[16px] text-ink">
+              <span className="inline-flex h-10 shrink-0 items-center gap-2 rounded-full border border-line bg-bg px-4 text-[16px] text-ink">
                 Download
                 <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden>
                   <path d="M8 2v9m0 0l-3-3m3 3l3-3M3 14h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -43,8 +43,8 @@ export default function DownloadsPage() {
           https://{brand.domain}/downloads
         </code>
         . External partners should request updated files through{' '}
-        <a href="mailto:brand@oxydise.com" className="text-primary hover:underline">
-          brand@oxydise.com
+        <a href="mailto:hello@oxydise.co.uk" className="text-primary hover:underline">
+          hello@oxydise.co.uk
         </a>
         .
       </p>
