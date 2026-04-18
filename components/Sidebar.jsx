@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { brand } from '@/lib/brand.config';
+import ThemeToggle from './ThemeToggle';
 
 const sections = [
   { href: '/',           label: 'Overview',    number: '00' },
@@ -17,7 +18,7 @@ export default function Sidebar() {
       <div className="flex items-center gap-2.5 px-6 py-6">
         <Mark />
         <div className="leading-tight">
-          <p className="text-[15px] font-semibold tracking-tight text-ink">{brand.name}</p>
+          <p className="font-display text-[15px] font-medium tracking-tight text-ink">{brand.name}</p>
           <p className="text-[11px] text-muted">Brand guidelines</p>
         </div>
       </div>
@@ -43,13 +44,14 @@ export default function Sidebar() {
         </ul>
       </nav>
 
-      <div className="border-t border-line px-6 py-4">
-        <p className="text-[11px] text-muted">
-          {brand.domain}
-        </p>
-        <p className="text-[11px] text-muted/80">
-          v1.0 · {new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
-        </p>
+      <div className="space-y-3 border-t border-line px-4 py-4">
+        <ThemeToggle />
+        <div className="px-2">
+          <p className="text-[11px] text-muted">{brand.domain}</p>
+          <p className="text-[11px] text-muted/80">
+            v1.0 · {new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+          </p>
+        </div>
       </div>
     </aside>
   );
