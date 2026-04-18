@@ -22,7 +22,7 @@ export default function DownloadsPage() {
             >
               <div className="min-w-0">
                 <p className="font-display text-[20px] font-medium text-ink">{d.name}</p>
-                <p className="mt-0.5 truncate font-mono text-[11.5px] text-muted">
+                <p className="mt-0.5 truncate text-[16px] text-muted">
                   {d.href} · {d.note}
                 </p>
               </div>
@@ -39,7 +39,7 @@ export default function DownloadsPage() {
 
       <p className="max-w-2xl text-[16px] leading-[1.55] text-muted">
         Internal teams can embed these assets directly in any doc by linking to{' '}
-        <code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[12px] text-ink">
+        <code className="rounded bg-surface px-1.5 py-0.5 text-[16px] text-ink">
           https://{brand.domain}/downloads
         </code>
         . External partners should request updated files through{' '}

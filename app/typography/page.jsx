@@ -24,8 +24,8 @@ export default function TypographyPage() {
         {families.map(({ role, font, className, sample }) => (
           <div key={role} className="rounded-xl bg-panel p-8">
             <div className="flex items-center justify-between">
-              <p className="font-mono text-[11px] font-medium text-muted">{role}</p>
-              <p className="font-mono text-[11px] text-muted">
+              <p className="text-[16px] font-medium text-muted">{role}</p>
+              <p className="text-[16px] text-muted">
                 {font.weights.join(' · ')}
               </p>
             </div>
@@ -39,10 +39,10 @@ export default function TypographyPage() {
               {sample}
             </p>
             <p className="mt-6 text-[16px] text-muted">{font.usage}</p>
-            <p className="mt-1 font-mono text-[11.5px] text-muted/80">
+            <p className="mt-1 text-[16px] text-muted/80">
               default: {font.family} {font.defaultWeight}
             </p>
-            <p className="mt-1 font-mono text-[11.5px] text-muted/80">
+            <p className="mt-1 text-[16px] text-muted/80">
               fallback: {font.fallback}
             </p>
           </div>
@@ -55,7 +55,7 @@ export default function TypographyPage() {
         <div>
           {scale.map((step) => (
             <div key={step.name} className="flex items-baseline gap-6 py-5">
-              <div className="w-24 shrink-0 font-mono text-[11px] text-muted">
+              <div className="w-24 shrink-0 text-[16px] text-muted">
                 {step.name}
               </div>
               <div
@@ -69,7 +69,7 @@ export default function TypographyPage() {
               >
                 The quick brown fox
               </div>
-              <div className="hidden shrink-0 font-mono text-[11px] text-muted md:block">
+              <div className="hidden shrink-0 text-[16px] text-muted md:block">
                 {step.size} / {step.line}
               </div>
             </div>
@@ -81,7 +81,7 @@ export default function TypographyPage() {
       <section>
         <h2 className="mb-4 font-display text-[16px] font-medium tracking-[-0.01em] text-ink">In context</h2>
         <div className="rounded-xl bg-panel p-8 md:p-12">
-          <p className="mb-2 font-mono text-[11px] font-medium text-primary">Sample</p>
+          <p className="mb-2 text-[16px] font-medium text-primary">Sample</p>
           <h3 className="font-display text-[34px] font-medium leading-[1.15] tracking-[-0.025em] text-ink md:text-[40px]">
             We believe the most durable things are made slowly, from good materials,
             by people who care what happens after the handoff.

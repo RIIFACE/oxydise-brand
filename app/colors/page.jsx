@@ -40,29 +40,29 @@ export default function ColorsPage() {
           <h2 className="font-display text-[16px] font-medium tracking-tight text-ink">
             Reference
           </h2>
-          <p className="font-mono text-[12px] text-muted">{tokens.length} tokens</p>
+          <p className="text-[16px] text-muted">{tokens.length} tokens</p>
         </header>
 
         <div className="col-span-12 overflow-x-auto">
           <table className="w-full text-left text-[16px]">
             <thead>
               <tr>
-                <th className="py-3 pr-5 font-mono text-[11px] font-medium text-muted">Token</th>
-                <th className="py-3 pr-5 font-mono text-[11px] font-medium text-muted">Name</th>
-                <th className="py-3 pr-5 font-mono text-[11px] font-medium text-muted">Role</th>
-                <th className="py-3 pr-5 font-mono text-[11px] font-medium text-muted">Light</th>
-                <th className="py-3 pr-5 font-mono text-[11px] font-medium text-muted">Dark</th>
-                <th className="py-3 font-mono text-[11px] font-medium text-muted">Usage</th>
+                <th className="py-3 pr-5 text-[16px] font-medium text-muted">Token</th>
+                <th className="py-3 pr-5 text-[16px] font-medium text-muted">Name</th>
+                <th className="py-3 pr-5 text-[16px] font-medium text-muted">Role</th>
+                <th className="py-3 pr-5 text-[16px] font-medium text-muted">Light</th>
+                <th className="py-3 pr-5 text-[16px] font-medium text-muted">Dark</th>
+                <th className="py-3 text-[16px] font-medium text-muted">Usage</th>
               </tr>
             </thead>
             <tbody>
               {tokens.map(([token, color]) => (
                 <tr key={token}>
-                  <td className="py-4 pr-5 font-mono text-[12px] text-ink">{token}</td>
+                  <td className="py-4 pr-5 text-[16px] text-ink">{token}</td>
                   <td className="py-4 pr-5 font-display font-medium text-ink">{color.name}</td>
-                  <td className="py-4 pr-5 font-mono text-[12px] text-muted">{color.role}</td>
-                  <td className="py-4 pr-5 font-mono text-[12px] text-muted">{color.hex}</td>
-                  <td className="py-4 pr-5 font-mono text-[12px] text-muted">{color.dark}</td>
+                  <td className="py-4 pr-5 text-[16px] text-muted">{color.role}</td>
+                  <td className="py-4 pr-5 text-[16px] text-muted">{color.hex}</td>
+                  <td className="py-4 pr-5 text-[16px] text-muted">{color.dark}</td>
                   <td className="py-4 text-muted">{color.usage}</td>
                 </tr>
               ))}
@@ -81,7 +81,7 @@ function ColorGroup({ title, count, tokens }) {
         <h2 className="font-display text-[18px] font-medium tracking-tight text-ink">
           {title}
         </h2>
-        <p className="font-mono text-[12px] text-muted">
+        <p className="text-[16px] text-muted">
           {count} {count === 1 ? 'token' : 'tokens'}
         </p>
       </header>

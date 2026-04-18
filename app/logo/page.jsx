@@ -85,7 +85,7 @@ export default function LogoPage() {
                 />
               </div>
               <div className="flex items-center gap-2">
-                <span aria-hidden className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-accent/15 font-mono text-[11px] font-semibold text-accent">
+                <span aria-hidden className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-accent/15 text-[16px] font-semibold text-accent">
                   ×
                 </span>
                 <p className="text-[16px] text-ink">{m.label}</p>
@@ -109,7 +109,7 @@ function LogoTile({ label, src, bg }) {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={src} alt="" aria-hidden className="h-12 w-auto md:h-14" />
       </div>
-      <div className="flex items-center justify-between px-1 pt-3 font-mono text-[12px] text-muted">
+      <div className="flex items-center justify-between px-1 pt-3 text-[16px] text-muted">
         <span>{label}</span>
         <span>{bg.toUpperCase()}</span>
       </div>

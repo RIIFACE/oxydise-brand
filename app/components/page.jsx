@@ -36,14 +36,14 @@ export default function ComponentsPage() {
         <Block title="Cards">
           <div className="grid gap-3 md:grid-cols-2">
             <div className="rounded-xl bg-panel p-6">
-              <p className="font-mono text-[12px] font-medium text-primary">Feature</p>
+              <p className="text-[16px] font-medium text-primary">Feature</p>
               <h3 className="mt-3 font-display text-[22px] font-medium tracking-[-0.015em] text-ink">Materials that last.</h3>
               <p className="mt-2 text-[16px] leading-[1.55] text-muted">
                 We source with patience. Shortcuts compound, and we&apos;d rather build once.
               </p>
             </div>
             <div className="rounded-xl bg-panel p-6">
-              <p className="font-mono text-[12px] font-medium text-accent">Note</p>
+              <p className="text-[16px] font-medium text-accent">Note</p>
               <h3 className="mt-3 font-display text-[22px] font-medium tracking-[-0.015em] text-ink">Field report</h3>
               <p className="mt-2 text-[16px] leading-[1.55] text-muted">
                 After two years in salt air, the finish settles into a quieter green.
@@ -55,7 +55,7 @@ export default function ComponentsPage() {
         <Block title="Form inputs">
           <form className="max-w-md space-y-4">
             <label className="block">
-              <span className="mb-2 block font-mono text-[12px] font-medium text-ink">
+              <span className="mb-2 block text-[16px] font-medium text-ink">
                 Email
               </span>
               <input
@@ -65,7 +65,7 @@ export default function ComponentsPage() {
               />
             </label>
             <label className="block">
-              <span className="mb-2 block font-mono text-[12px] font-medium text-ink">
+              <span className="mb-2 block text-[16px] font-medium text-ink">
                 Message
               </span>
               <textarea
@@ -85,13 +85,13 @@ export default function ComponentsPage() {
 
         <Block title="Badges">
           <div className="flex flex-wrap gap-2">
-            <span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 font-mono text-[12px] font-medium text-primary">
+            <span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-[16px] font-medium text-primary">
               New
             </span>
-            <span className="inline-flex items-center rounded-full bg-accent/10 px-3 py-1 font-mono text-[12px] font-medium text-accent">
+            <span className="inline-flex items-center rounded-full bg-accent/10 px-3 py-1 text-[16px] font-medium text-accent">
               Live
             </span>
-            <span className="inline-flex items-center rounded-full border border-line bg-panel px-3 py-1 font-mono text-[12px] font-medium text-muted">
+            <span className="inline-flex items-center rounded-full border border-line bg-panel px-3 py-1 text-[16px] font-medium text-muted">
               Draft
             </span>
           </div>
