@@ -46,14 +46,14 @@ export default function LogoPage() {
           Keep at least the height of the wordmark as clear space on every side. Nothing lives
           inside that zone — not type, not edges, not other marks.
         </p>
-        <div className="flex items-center justify-center rounded-xl bg-panel p-12">
+        <div className="flex items-center justify-center py-12">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/logos/oxydise-black.svg"
             alt=""
             aria-hidden
             className="block h-16 w-auto dark:hidden"
-            style={{ padding: '4rem 6rem', outline: '1px dashed #C7C7CC', outlineOffset: '0px' }}
+            style={{ padding: '4rem 6rem', outline: '1px dashed rgb(var(--color-line))' }}
           />
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -61,7 +61,7 @@ export default function LogoPage() {
             alt=""
             aria-hidden
             className="hidden h-16 w-auto dark:block"
-            style={{ padding: '4rem 6rem', outline: '1px dashed #48484A', outlineOffset: '0px' }}
+            style={{ padding: '4rem 6rem', outline: '1px dashed rgb(var(--color-line))' }}
           />
         </div>
       </section>
@@ -71,10 +71,10 @@ export default function LogoPage() {
         <p className="mb-5 max-w-2xl text-[16px] leading-[1.55] text-muted">
           The logo is a system, not a sticker. Don&apos;t recolor, stretch, outline, or rotate.
         </p>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
           {misuses.map((m) => (
-            <div key={m.label} className="rounded-xl bg-panel p-5">
-              <div className="mb-4 flex h-28 items-center justify-center overflow-hidden rounded-lg bg-white">
+            <div key={m.label}>
+              <div className="flex h-32 items-center justify-center overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/logos/oxydise-colour.svg"
@@ -84,12 +84,7 @@ export default function LogoPage() {
                   style={{ transform: m.transform, filter: m.filter }}
                 />
               </div>
-              <div className="flex items-center gap-2">
-                <span aria-hidden className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-accent/15 text-[16px] font-semibold text-accent">
-                  ×
-                </span>
-                <p className="text-[16px] text-ink">{m.label}</p>
-              </div>
+              <p className="mt-4 text-[16px] text-ink">{m.label}</p>
             </div>
           ))}
         </div>
@@ -99,9 +94,8 @@ export default function LogoPage() {
 }
 
 function LogoTile({ label, src, bg }) {
-  const isDark = isDarkHex(bg);
   return (
-    <div className="overflow-hidden rounded-xl">
+    <div>
       <div
         className="flex h-60 items-center justify-center px-10"
         style={{ backgroundColor: bg }}
@@ -109,18 +103,10 @@ function LogoTile({ label, src, bg }) {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={src} alt="" aria-hidden className="h-12 w-auto md:h-14" />
       </div>
-      <div className="flex items-center justify-between px-1 pt-3 text-[16px] text-muted">
+      <div className="mt-3 flex items-center justify-between text-[16px] text-muted">
         <span>{label}</span>
         <span>{bg.toUpperCase()}</span>
       </div>
     </div>
   );
-}
-
-function isDarkHex(hex) {
-  const h = hex.replace('#', '');
-  const r = parseInt(h.slice(0, 2), 16);
-  const g = parseInt(h.slice(2, 4), 16);
-  const b = parseInt(h.slice(4, 6), 16);
-  return (r * 299 + g * 587 + b * 114) / 1000 < 128;
 }

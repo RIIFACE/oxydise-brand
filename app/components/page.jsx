@@ -12,7 +12,7 @@ export default function ComponentsPage() {
         description="A minimal set of UI primitives rendered in brand."
       />
 
-      <div className="space-y-10">
+      <div className="space-y-16">
         <Block title="Buttons">
           <div className="flex flex-wrap gap-3">
             <button className="inline-flex h-11 items-center rounded-full bg-ink px-6 text-[16px] font-medium text-bg transition-opacity hover:opacity-90">
@@ -104,10 +104,8 @@ export default function ComponentsPage() {
 function Block({ title, children }) {
   return (
     <section>
-      <h2 className="mb-4 font-display text-[18px] font-medium tracking-[-0.01em] text-ink">{title}</h2>
-      <div className="rounded-xl bg-panel p-6 md:p-8">
-        {children}
-      </div>
+      <h2 className="mb-6 font-display text-[18px] font-medium tracking-[-0.01em] text-ink">{title}</h2>
+      {children}
     </section>
   );
 }
