@@ -1,6 +1,6 @@
 export default function SectionHeader({ eyebrow, title, description }) {
   return (
-    <header className="mb-12 border-b border-line pb-10 pt-10">
+    <header className="mb-12 pt-10">
       {eyebrow && (
         <p className="mb-3 font-mono text-[12px] text-muted">{eyebrow}</p>
       )}

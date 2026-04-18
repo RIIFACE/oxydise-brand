@@ -35,7 +35,7 @@ export default function ColorsPage() {
         tokens={surfaceTokens}
       />
 
-      <section className="grid grid-cols-12 border-t border-line py-14 md:py-20">
+      <section className="grid grid-cols-12 py-14 md:py-20">
         <header className="col-span-12 mb-8 flex items-baseline justify-between">
           <h2 className="font-display text-[16px] font-medium tracking-tight text-ink">
             Reference
@@ -46,7 +46,7 @@ export default function ColorsPage() {
         <div className="col-span-12 overflow-x-auto">
           <table className="w-full text-left text-[13.5px]">
             <thead>
-              <tr className="border-b border-line">
+              <tr>
                 <th className="py-3 pr-5 font-mono text-[11px] font-medium text-muted">Token</th>
                 <th className="py-3 pr-5 font-mono text-[11px] font-medium text-muted">Name</th>
                 <th className="py-3 pr-5 font-mono text-[11px] font-medium text-muted">Role</th>
@@ -57,7 +57,7 @@ export default function ColorsPage() {
             </thead>
             <tbody>
               {tokens.map(([token, color]) => (
-                <tr key={token} className="border-b border-line/70">
+                <tr key={token}>
                   <td className="py-4 pr-5 font-mono text-[12px] text-ink">{token}</td>
                   <td className="py-4 pr-5 font-display font-medium text-ink">{color.name}</td>
                   <td className="py-4 pr-5 font-mono text-[12px] text-muted">{color.role}</td>
@@ -76,7 +76,7 @@ export default function ColorsPage() {
 
 function ColorGroup({ title, count, tokens }) {
   return (
-    <section className="grid grid-cols-12 border-t border-line pt-10 md:pt-14">
+    <section className="grid grid-cols-12 pt-10 md:pt-14">
       <header className="col-span-12 mb-8 flex items-baseline justify-between md:mb-10">
         <h2 className="font-display text-[18px] font-medium tracking-tight text-ink">
           {title}
