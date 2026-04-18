@@ -1,12 +1,9 @@
 import { brand } from '@/lib/brand.config';
-import HomeBackground from '@/components/HomeBackground';
 
 export default function HomePage() {
   return (
-    <section className="relative flex min-h-[calc(100dvh-4rem)] flex-col py-8 md:py-12">
-      <HomeBackground />
-
-      <div className="relative z-10 flex flex-1 items-center">
+    <section className="flex min-h-[calc(100dvh-4rem)] flex-col py-8 md:py-12">
+      <div className="flex flex-1 items-center">
         <h1
           className="font-display font-medium text-ink"
           style={{
@@ -20,7 +17,7 @@ export default function HomePage() {
         </h1>
       </div>
 
-      <p className="relative z-10 mt-10 max-w-md text-[16px] leading-[1.55] text-muted md:max-w-xl">
+      <p className="mt-10 max-w-md text-[16px] leading-[1.55] text-muted md:max-w-xl">
         {brand.tagline} A living reference for anyone building, writing, or designing with us.
       </p>
     </section>
