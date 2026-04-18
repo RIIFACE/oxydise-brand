@@ -1,4 +1,5 @@
 import { brand } from '@/lib/brand.config';
+import RotatingWord from '@/components/RotatingWord';
 
 export default function HomePage() {
   return (
@@ -13,7 +14,7 @@ export default function HomePage() {
           }}
         >
           The {brand.name}<br />
-          brand, <span className="text-muted">documented.</span>
+          brand, <RotatingWord className="text-muted" />
         </h1>
       </div>
 
