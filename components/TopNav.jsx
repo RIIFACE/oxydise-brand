@@ -18,7 +18,6 @@ const sections = [
 export default function TopNav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => { setOpen(false); }, [pathname]);
 
@@ -29,33 +28,20 @@ export default function TopNav() {
     return () => { document.body.style.overflow = prev; };
   }, [open]);
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 16);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  const inner = [
-    'mx-auto flex h-16 items-center justify-between gap-4 max-w-[1440px] px-6 transition-all duration-300',
-    scrolled
-      ? 'bg-bg md:mt-3 md:max-w-[1120px] md:rounded-full md:border md:border-line md:px-5 md:shadow-[0_6px_24px_rgba(0,0,0,0.08)] md:dark:shadow-[0_6px_24px_rgba(0,0,0,0.5)]'
-      : 'bg-bg/85 backdrop-blur md:px-10',
-  ].join(' ');
-
   return (
     <>
-      <header className="sticky top-0 z-30">
-        <div className={inner}>
-          <Link href="/" className="flex shrink-0 items-center" aria-label="Oxydise — home">
+      {/* Mobile: sticky top bar. Desktop: floating pill fixed to bottom-center. */}
+      <header className="sticky top-0 z-30 w-full md:fixed md:left-1/2 md:bottom-6 md:top-auto md:w-auto md:max-w-[calc(100vw-2rem)] md:-translate-x-1/2">
+        <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between gap-4 bg-bg/85 px-6 backdrop-blur md:h-14 md:max-w-none md:gap-2 md:rounded-full md:border md:border-line md:bg-bg md:px-3 md:shadow-[0_10px_40px_rgba(0,0,0,0.12)] md:dark:shadow-[0_10px_40px_rgba(0,0,0,0.6)]">
+          <Link href="/" className="flex shrink-0 items-center md:px-3" aria-label="Oxydise — home">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logos/oxydise-black.svg" alt="Oxydise" className="block h-7 w-auto md:h-8 dark:hidden" />
+            <img src="/logos/oxydise-black.svg" alt="Oxydise" className="block h-7 w-auto md:h-6 dark:hidden" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logos/oxydise-white.svg" alt="Oxydise" className="hidden h-7 w-auto md:h-8 dark:block" />
+            <img src="/logos/oxydise-white.svg" alt="Oxydise" className="hidden h-7 w-auto md:h-6 dark:block" />
           </Link>
 
           <nav className="hidden md:block">
-            <ul className="flex items-center gap-1.5">
+            <ul className="flex items-center gap-1">
               {sections.map((s) => {
                 const isActive = s.href === '/' ? pathname === '/' : pathname?.startsWith(s.href);
                 return (
@@ -63,10 +49,10 @@ export default function TopNav() {
                     <Link
                       href={s.href}
                       aria-current={isActive ? 'page' : undefined}
-                      className={`inline-flex h-10 items-center rounded-full border px-4 text-[16px] transition-colors ${
+                      className={`inline-flex h-9 items-center rounded-full px-4 text-[15px] transition-colors ${
                         isActive
-                          ? 'border-ink bg-ink text-bg'
-                          : 'border-line text-muted hover:border-ink/30 hover:bg-panel hover:text-ink'
+                          ? 'bg-ink text-bg'
+                          : 'text-muted hover:bg-panel hover:text-ink'
                       }`}
                     >
                       {s.label}
@@ -77,17 +63,17 @@ export default function TopNav() {
             </ul>
           </nav>
 
-          <div className="flex shrink-0 items-center gap-2">
+          <div className="flex shrink-0 items-center gap-1.5">
             <a
               href="/downloads/oxydise-brand.pdf"
               download
               aria-label="Download brand guide as PDF"
               title="Download as PDF"
-              className="hidden h-11 w-11 items-center justify-center rounded-full border border-line text-muted transition-colors hover:border-ink/30 hover:text-ink md:inline-flex"
+              className="hidden h-10 w-10 items-center justify-center rounded-full text-muted transition-colors hover:bg-panel hover:text-ink md:inline-flex"
             >
               <DownloadIcon />
             </a>
-            <ThemeToggle />
+            <ThemeToggle className="h-11 w-11 border border-line hover:border-ink/30 md:h-10 md:w-10 md:border-0 md:hover:border-0 md:hover:bg-panel" />
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}

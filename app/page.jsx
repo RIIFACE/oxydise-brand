@@ -3,7 +3,7 @@ import RotatingWord from '@/components/RotatingWord';
 
 export default function HomePage() {
   return (
-    <section className="flex min-h-[calc(100dvh-4rem)] flex-col justify-center py-8 md:py-12">
+    <section className="flex min-h-[calc(100dvh-4rem)] flex-col justify-center py-8 md:min-h-[calc(100dvh-7rem)] md:py-12">
       <h1
         className="font-display font-medium text-ink"
         style={{

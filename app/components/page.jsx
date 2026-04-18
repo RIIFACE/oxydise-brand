@@ -18,9 +18,6 @@ export default function ComponentsPage() {
             <button className="inline-flex h-11 items-center rounded-full bg-ink px-6 text-[16px] font-medium text-bg transition-opacity hover:opacity-90">
               Primary
             </button>
-            <button className="inline-flex h-11 items-center rounded-full bg-panel px-6 text-[16px] font-medium text-ink transition-colors hover:bg-surface">
-              Secondary
-            </button>
             <button className="inline-flex h-11 items-center rounded-full bg-primary px-6 text-[16px] font-medium text-white transition-opacity hover:opacity-90">
               Accent
             </button>
