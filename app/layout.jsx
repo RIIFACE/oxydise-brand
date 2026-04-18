@@ -45,7 +45,7 @@ export default function RootLayout({ children }) {
         <div className="relative z-10 flex min-h-screen flex-col">
           <TopNav />
           <main className="flex-1">
-            <div className="mx-auto w-full max-w-[1440px] px-6 md:pl-64 md:pr-10">
+            <div className="mx-auto w-full max-w-[1440px] px-6 md:pl-[288px] md:pr-10">
               {children}
             </div>
           </main>

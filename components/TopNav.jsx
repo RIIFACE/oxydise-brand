@@ -30,18 +30,18 @@ export default function TopNav() {
 
   return (
     <>
-      {/* Mobile: sticky top bar. Desktop: vertical dock fixed to the left, vertically centered. */}
-      <header className="sticky top-0 z-30 w-full md:fixed md:left-6 md:top-1/2 md:w-auto md:-translate-y-1/2">
-        <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between gap-4 bg-bg/85 px-6 backdrop-blur md:h-auto md:max-w-none md:flex-col md:items-stretch md:gap-3 md:rounded-[28px] md:border md:border-line md:bg-bg md:px-3 md:py-4 md:shadow-[0_10px_40px_rgba(0,0,0,0.12)] md:dark:shadow-[0_10px_40px_rgba(0,0,0,0.6)]">
-          <Link href="/" className="flex shrink-0 items-center md:justify-center md:px-2 md:py-1" aria-label="Oxydise — home">
+      {/* Mobile: sticky top bar. Desktop: full-height sidebar pinned left. */}
+      <header className="sticky top-0 z-30 w-full md:fixed md:inset-y-0 md:left-0 md:w-64">
+        <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between gap-4 bg-bg/85 px-6 backdrop-blur md:h-full md:max-w-none md:flex-col md:items-stretch md:gap-8 md:border-r md:border-line md:bg-bg md:px-7 md:py-8 md:backdrop-blur-0">
+          <Link href="/" className="flex shrink-0 items-center md:px-1" aria-label="Oxydise — home">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logos/oxydise-black.svg" alt="Oxydise" className="block h-7 w-auto md:h-6 dark:hidden" />
+            <img src="/logos/oxydise-black.svg" alt="Oxydise" className="block h-7 w-auto md:h-7 dark:hidden" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logos/oxydise-white.svg" alt="Oxydise" className="hidden h-7 w-auto md:h-6 dark:block" />
+            <img src="/logos/oxydise-white.svg" alt="Oxydise" className="hidden h-7 w-auto md:h-7 dark:block" />
           </Link>
 
-          <nav className="hidden md:block">
-            <ul className="flex flex-col gap-0.5">
+          <nav className="hidden md:block md:flex-1">
+            <ul className="flex flex-col">
               {sections.map((s) => {
                 const isActive = s.href === '/' ? pathname === '/' : pathname?.startsWith(s.href);
                 return (
@@ -49,12 +49,16 @@ export default function TopNav() {
                     <Link
                       href={s.href}
                       aria-current={isActive ? 'page' : undefined}
-                      className={`flex h-9 items-center rounded-full px-4 text-[15px] transition-colors ${
-                        isActive
-                          ? 'bg-ink text-bg'
-                          : 'text-muted hover:bg-panel hover:text-ink'
+                      className={`relative flex h-10 items-center rounded-md pl-4 pr-3 text-[15px] transition-colors ${
+                        isActive ? 'text-ink' : 'text-muted hover:text-ink'
                       }`}
                     >
+                      {isActive && (
+                        <span
+                          aria-hidden
+                          className="absolute left-0 top-2.5 h-5 w-[2px] rounded-full bg-primary"
+                        />
+                      )}
                       {s.label}
                     </Link>
                   </li>
@@ -63,7 +67,7 @@ export default function TopNav() {
             </ul>
           </nav>
 
-          <div className="flex shrink-0 items-center gap-1.5 md:flex-col md:gap-1 md:border-t md:border-line md:pt-3">
+          <div className="flex shrink-0 items-center gap-1.5 md:flex-row md:gap-1 md:border-t md:border-line md:pt-5">
             <a
               href="/downloads/oxydise-brand.pdf"
               download
