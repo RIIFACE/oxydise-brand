@@ -10,8 +10,8 @@
   --color-line:    229 229 234;
   --color-ink:      29  29  31;
   --color-muted:   110 110 115;
-  --color-primary:   0 113 227;
-  --color-accent:  255 106  61;
+  /* brand blue — kept as var for ::selection / focus rings */
+  --color-primary:   0 170 255;
 
   --scrollbar-thumb: rgba(0, 0, 0, 0.14);
   --scrollbar-thumb-hover: rgba(0, 0, 0, 0.24);
@@ -26,8 +26,7 @@ html.dark {
   --color-line:     44  44  46;
   --color-ink:     245 245 247;
   --color-muted:   152 152 157;
-  --color-primary:  10 132 255;
-  --color-accent:  255 122  77;
+  --color-primary:   0 170 255;
 
   --scrollbar-thumb: rgba(255, 255, 255, 0.14);
   --scrollbar-thumb-hover: rgba(255, 255, 255, 0.28);

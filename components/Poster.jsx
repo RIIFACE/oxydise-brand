@@ -6,7 +6,7 @@ export default function Poster({ eyebrow, headline, subcopy, mark }) {
   return (
     <section className="relative grid min-h-[calc(100vh-4rem)] grid-cols-12 grid-rows-[auto_1fr_auto] gap-y-8 py-10 md:py-16">
       {eyebrow && (
-        <p className="col-span-12 row-start-1 font-mono text-[11px] uppercase tracking-[0.12em] text-muted">
+        <p className="col-span-12 row-start-1 font-mono text-[12px] text-muted">
           {eyebrow}
         </p>
       )}

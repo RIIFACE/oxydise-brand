@@ -7,7 +7,7 @@ export default function DownloadsPage() {
   return (
     <>
       <SectionHeader
-        eyebrow="06 · Downloads"
+        eyebrow="Downloads"
         title="Assets."
         description="Drop the real files into /public with matching paths, and these links light up."
       />

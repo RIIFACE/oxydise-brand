@@ -7,7 +7,7 @@ export default function VoicePage() {
   return (
     <>
       <SectionHeader
-        eyebrow="04 · Voice"
+        eyebrow="Voice"
         title="How we sound."
         description="Three principles that shape every headline, button, and email."
       />
@@ -51,7 +51,7 @@ function Example({ tone, text }) {
       }`}
     >
       <p
-        className={`mb-2 flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.08em] ${
+        className={`mb-2 flex items-center gap-1.5 text-[12px] font-medium ${
           isDo ? 'text-primary' : 'text-accent'
         }`}
       >
