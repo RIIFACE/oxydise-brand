@@ -38,7 +38,7 @@ export default function TypographyPage() {
             <p className={`mt-4 max-w-2xl text-[18px] leading-[1.5] text-ink/80 ${className}`}>
               {sample}
             </p>
-            <p className="mt-6 text-[13.5px] text-muted">{font.usage}</p>
+            <p className="mt-6 text-[16px] text-muted">{font.usage}</p>
             <p className="mt-1 font-mono text-[11.5px] text-muted/80">
               default: {font.family} {font.defaultWeight}
             </p>
@@ -51,7 +51,7 @@ export default function TypographyPage() {
 
       {/* Scale */}
       <section className="mb-14">
-        <h2 className="mb-4 font-display text-[15px] font-medium tracking-[-0.01em] text-ink">Scale</h2>
+        <h2 className="mb-4 font-display text-[16px] font-medium tracking-[-0.01em] text-ink">Scale</h2>
         <div>
           {scale.map((step) => (
             <div key={step.name} className="flex items-baseline gap-6 py-5">
@@ -79,7 +79,7 @@ export default function TypographyPage() {
 
       {/* Sample */}
       <section>
-        <h2 className="mb-4 font-display text-[15px] font-medium tracking-[-0.01em] text-ink">In context</h2>
+        <h2 className="mb-4 font-display text-[16px] font-medium tracking-[-0.01em] text-ink">In context</h2>
         <div className="rounded-xl bg-panel p-8 md:p-12">
           <p className="mb-2 font-mono text-[11px] font-medium text-primary">Sample</p>
           <h3 className="font-display text-[34px] font-medium leading-[1.15] tracking-[-0.025em] text-ink md:text-[40px]">

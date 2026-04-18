@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { brand } from '@/lib/brand.config';
 import ThemeToggle from './ThemeToggle';
 
 const sections = [
@@ -21,11 +20,11 @@ export default function TopNav() {
   return (
     <header className="sticky top-0 z-20 bg-bg/80 backdrop-blur">
       <div className="mx-auto grid h-16 max-w-[1440px] grid-cols-[auto_1fr_auto] items-center gap-6 px-6 md:px-10">
-        <Link href="/" className="flex shrink-0 items-center gap-2.5">
-          <Mark />
-          <span className="font-display text-[15px] font-medium tracking-tight text-ink">
-            {brand.name}
-          </span>
+        <Link href="/" className="flex shrink-0 items-center" aria-label="Oxydise — home">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logos/oxydise-black.svg" alt="Oxydise" className="block h-5 w-auto dark:hidden" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logos/oxydise-white.svg" alt="Oxydise" className="hidden h-5 w-auto dark:block" />
         </Link>
 
         <nav className="overflow-x-auto md:justify-self-center">
@@ -37,7 +36,7 @@ export default function TopNav() {
                   <Link
                     href={s.href}
                     aria-current={isActive ? 'page' : undefined}
-                    className={`inline-flex h-9 items-center rounded-full border px-3.5 text-[13px] transition-colors ${
+                    className={`inline-flex h-10 items-center rounded-full border px-4 text-[16px] transition-colors ${
                       isActive
                         ? 'border-ink bg-ink text-bg'
                         : 'border-line text-muted hover:border-ink/30 hover:bg-panel hover:text-ink'
@@ -56,16 +55,5 @@ export default function TopNav() {
         </div>
       </div>
     </header>
-  );
-}
-
-function Mark() {
-  return (
-    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-ink text-bg">
-      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden>
-        <circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.3" />
-        <circle cx="8" cy="8" r="2" fill="currentColor" />
-      </svg>
-    </div>
   );
 }

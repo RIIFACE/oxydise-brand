@@ -40,7 +40,7 @@ export default function ColorSwatch({ token, color }) {
         <CopyButton value={color.hex} label={color.hex} />
       </div>
 
-      <p className="mt-2 text-[13px] leading-[1.5] text-muted">{color.usage}</p>
+      <p className="mt-2 text-[16px] leading-[1.5] text-muted">{color.usage}</p>
 
       {flips ? (
         <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-1 font-mono text-[10.5px] text-muted/80">

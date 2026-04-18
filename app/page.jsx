@@ -28,7 +28,7 @@ export default function HomePage() {
       </div>
 
       <footer className="grid grid-cols-12 items-end gap-6">
-        <p className="col-span-12 max-w-md text-[14px] leading-[1.55] text-muted md:col-span-6">
+        <p className="col-span-12 max-w-md text-[16px] leading-[1.55] text-muted md:col-span-6">
           {brand.tagline} A living reference for anyone building, writing, or designing with us.
         </p>
         <p className="col-span-12 font-mono text-[12px] text-muted md:col-span-5 md:col-start-8 md:text-right">

@@ -44,7 +44,7 @@ export default function ColorsPage() {
         </header>
 
         <div className="col-span-12 overflow-x-auto">
-          <table className="w-full text-left text-[13.5px]">
+          <table className="w-full text-left text-[16px]">
             <thead>
               <tr>
                 <th className="py-3 pr-5 font-mono text-[11px] font-medium text-muted">Token</th>
