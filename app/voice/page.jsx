@@ -40,12 +40,36 @@ function Example({ tone, text }) {
   const isDo = tone === 'do';
   return (
     <div>
-      <p className={`text-[16px] font-medium ${isDo ? 'text-primary' : 'text-accent'}`}>
+      <p className="flex items-center gap-2 text-[16px] font-medium text-ink">
+        <span
+          aria-hidden
+          className={`inline-flex h-6 w-6 items-center justify-center rounded-full ${
+            isDo ? 'bg-primary text-white' : 'bg-[#E5484D] text-white'
+          }`}
+        >
+          {isDo ? <CheckIcon /> : <XIcon />}
+        </span>
         {isDo ? 'Do' : "Don't"}
       </p>
       <p className="mt-3 font-display text-[22px] font-medium leading-[1.3] tracking-[-0.01em] text-ink">
         {text}
       </p>
     </div>
+  );
+}
+
+function CheckIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden>
+      <path d="M3.5 8.5l3 3L12.5 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function XIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden>
+      <path d="M4.5 4.5l7 7M11.5 4.5l-7 7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
   );
 }
