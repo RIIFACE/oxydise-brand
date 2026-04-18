@@ -18,6 +18,7 @@ const sections = [
 export default function TopNav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => { setOpen(false); }, [pathname]);
 
@@ -28,10 +29,24 @@ export default function TopNav() {
     return () => { document.body.style.overflow = prev; };
   }, [open]);
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 16);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const inner = [
+    'mx-auto flex h-16 items-center justify-between gap-4 max-w-[1440px] bg-bg/80 px-6 backdrop-blur transition-all duration-300',
+    scrolled
+      ? 'md:mt-3 md:max-w-[1120px] md:rounded-full md:border md:border-line md:px-5 md:shadow-[0_6px_24px_rgba(0,0,0,0.08)] md:dark:shadow-[0_6px_24px_rgba(0,0,0,0.5)]'
+      : 'md:px-10',
+  ].join(' ');
+
   return (
     <>
-      <header className="sticky top-0 z-30 bg-bg/80 backdrop-blur">
-        <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between gap-4 px-6 md:px-10">
+      <header className="sticky top-0 z-30">
+        <div className={inner}>
           <Link href="/" className="flex shrink-0 items-center" aria-label="Oxydise — home">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logos/oxydise-black.svg" alt="Oxydise" className="block h-7 w-auto md:h-8 dark:hidden" />
