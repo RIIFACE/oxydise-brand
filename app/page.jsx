@@ -12,8 +12,8 @@ export default function HomePage() {
           letterSpacing: '-0.04em',
         }}
       >
-        {brand.name}<br />
-        brand, <RotatingWord className="text-muted" />
+        {brand.name} brand,<br />
+        <RotatingWord className="text-muted" />
       </h1>
 
       <p className="mt-6 max-w-md text-[16px] leading-[1.55] text-muted md:mt-8 md:max-w-xl md:text-[18px]">
