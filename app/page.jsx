@@ -5,11 +5,7 @@ export default function HomePage() {
 
   return (
     <section className="relative flex h-[calc(100vh-4rem)] flex-col overflow-hidden py-8 md:py-12">
-      <header className="flex items-center justify-between text-[16px] text-muted">
-        <span className="flex items-center gap-2.5">
-          <Mark />
-          <span>Brand guidelines</span>
-        </span>
+      <header className="flex items-center justify-end text-[16px] text-muted">
         <span>v1.0 · {date}</span>
       </header>
 
@@ -27,24 +23,11 @@ export default function HomePage() {
         </h1>
       </div>
 
-      <footer className="grid grid-cols-12 items-end gap-6">
-        <p className="col-span-12 max-w-md text-[16px] leading-[1.55] text-muted md:col-span-6">
+      <footer className="grid grid-cols-12 items-end">
+        <p className="col-span-12 max-w-md text-[16px] leading-[1.55] text-muted md:col-span-7">
           {brand.tagline} A living reference for anyone building, writing, or designing with us.
-        </p>
-        <p className="col-span-12 text-[16px] text-muted md:col-span-5 md:col-start-8 md:text-right">
-          {brand.domain}
         </p>
       </footer>
     </section>
-  );
-}
-
-function Mark() {
-  return (
-    <span aria-hidden className="flex h-5 w-5 items-center justify-center rounded-full border border-muted/70 text-muted">
-      <svg width="10" height="10" viewBox="0 0 16 16" fill="none">
-        <circle cx="8" cy="8" r="2" fill="currentColor" />
-      </svg>
-    </span>
   );
 }
