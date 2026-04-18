@@ -52,7 +52,7 @@ const mediaTiles = [
     bgStyle: 'radial-gradient(120% 120% at 0% 0%, #1a1f5c 0%, #001540 45%, #00081c 100%)',
     logo: 'halo-black',
     invertLogo: true,
-    logoClass: 'h-40 w-40 md:h-56 md:w-56',
+    logoClass: 'h-[240px] w-[240px] md:h-[336px] md:w-[336px]',
     aspect: '1 / 1',
     anchor: 'items-center justify-center',
     padding: 'p-6',
@@ -274,7 +274,7 @@ function MediaTile({ label, caption, src, bgStyle, logo, aspect, anchor, padding
             src={`/logos/oxydise-${logo}.svg`}
             alt=""
             aria-hidden
-            className={logoClass || 'h-8 w-auto md:h-10'}
+            className={logoClass || 'h-[48px] w-auto md:h-[60px]'}
             style={invertLogo ? { filter: 'brightness(0) invert(1)' } : undefined}
           />
         </div>
