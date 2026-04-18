@@ -22,9 +22,9 @@ export default function TopNav() {
       <div className="mx-auto grid h-16 max-w-[1440px] grid-cols-[auto_1fr_auto] items-center gap-6 px-6 md:px-10">
         <Link href="/" className="flex shrink-0 items-center" aria-label="Oxydise — home">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logos/oxydise-black.svg" alt="Oxydise" className="block h-5 w-auto dark:hidden" />
+          <img src="/logos/oxydise-black.svg" alt="Oxydise" className="block h-8 w-auto dark:hidden" />
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logos/oxydise-white.svg" alt="Oxydise" className="hidden h-5 w-auto dark:block" />
+          <img src="/logos/oxydise-white.svg" alt="Oxydise" className="hidden h-8 w-auto dark:block" />
         </Link>
 
         <nav className="overflow-x-auto md:justify-self-center">
