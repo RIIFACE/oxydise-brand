@@ -30,9 +30,9 @@ export default function TopNav() {
 
   return (
     <>
-      {/* Mobile: sticky top bar. Desktop: full-height sidebar pinned left. */}
-      <header className="sticky top-0 z-30 w-full md:fixed md:inset-y-0 md:left-0 md:w-64">
-        <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between gap-4 bg-bg/85 px-6 backdrop-blur md:h-full md:max-w-none md:flex-col md:items-stretch md:gap-8 md:border-r md:border-line md:bg-bg md:px-7 md:py-8 md:backdrop-blur-0">
+      {/* Mobile: sticky top bar. Desktop: floating sidebar island on the left. */}
+      <header className="sticky top-0 z-30 w-full md:fixed md:left-6 md:top-6 md:bottom-6 md:w-60">
+        <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between gap-4 bg-bg/85 px-6 backdrop-blur md:h-full md:max-w-none md:flex-col md:items-stretch md:gap-8 md:rounded-[28px] md:border md:border-line md:bg-bg md:px-5 md:py-7 md:shadow-[0_10px_40px_rgba(0,0,0,0.1)] md:backdrop-blur-0 md:dark:shadow-[0_10px_40px_rgba(0,0,0,0.5)]">
           <Link href="/" className="flex shrink-0 items-center md:px-1" aria-label="Oxydise — home">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logos/oxydise-black.svg" alt="Oxydise" className="block h-7 w-auto md:h-7 dark:hidden" />
