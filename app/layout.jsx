@@ -44,7 +44,7 @@ export default function RootLayout({ children }) {
         <GridOverlay />
         <div className="relative z-10 flex min-h-screen flex-col">
           <TopNav />
-          <main className="flex-1">
+          <main className="flex-1 md:pb-28">
             <div className="mx-auto w-full max-w-[1440px] px-6 md:px-10">
               {children}
             </div>
