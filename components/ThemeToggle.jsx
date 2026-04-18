@@ -19,19 +19,15 @@ export default function ThemeToggle() {
   }
 
   const isDark = mounted && theme === 'dark';
-  const label = mounted ? (isDark ? 'Light mode' : 'Dark mode') : 'Theme';
 
   return (
     <button
       type="button"
       onClick={toggle}
       aria-label={mounted ? `Switch to ${isDark ? 'light' : 'dark'} mode` : 'Switch theme'}
-      className="group flex w-full items-center gap-2.5 rounded-lg border border-line bg-bg px-3 py-2 text-[12.5px] font-medium text-ink/80 transition-colors hover:bg-surface hover:text-ink"
+      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-line text-muted transition-colors hover:border-ink/30 hover:text-ink"
     >
-      <span className="flex h-4 w-4 items-center justify-center text-muted group-hover:text-ink">
-        {isDark ? <SunIcon /> : <MoonIcon />}
-      </span>
-      <span>{label}</span>
+      {isDark ? <SunIcon /> : <MoonIcon />}
     </button>
   );
 }
