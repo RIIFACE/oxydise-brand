@@ -2,7 +2,7 @@ import Poster from '@/components/Poster';
 import ColorSwatch from '@/components/ColorSwatch';
 import { brand } from '@/lib/brand.config';
 
-export const metadata = { title: `Color — ${brand.name}` };
+export const metadata = { title: `Colour — ${brand.name}` };
 
 export default function ColorsPage() {
   const tokens = Object.entries(brand.colors);
@@ -12,14 +12,14 @@ export default function ColorsPage() {
   return (
     <>
       <Poster
-        eyebrow="Color"
+        eyebrow="Colour"
         headline={
           <>
-            Five brand colors.<br />
+            Five brand colours.<br />
             <span className="text-muted">Six surface tokens.</span>
           </>
         }
-        subcopy="Brand colors are constants. Surfaces flip between light and dark. Every swatch is copyable."
+        subcopy="Brand colours are constants. Surfaces flip between light and dark. Every swatch is copyable."
         mark={<PosterTile />}
       />
 

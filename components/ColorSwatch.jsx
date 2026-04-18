@@ -10,7 +10,7 @@ export default function ColorSwatch({ token, color }) {
 
   return (
     <article className="flex flex-col">
-      <div className="flex aspect-[4/3] w-full overflow-hidden">
+      <div className="flex aspect-[4/3] w-full overflow-hidden rounded-[20px]">
         {flips ? (
           <>
             <div

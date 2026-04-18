@@ -13,7 +13,7 @@ const tiles = [
 const misuses = [
   { label: "Don't stretch",     transform: 'scaleX(1.6) scaleY(0.7)' },
   { label: "Don't rotate",      transform: 'rotate(14deg)' },
-  { label: "Don't recolor",     filter: 'hue-rotate(120deg) saturate(1.4)' },
+  { label: "Don't recolour",     filter: 'hue-rotate(120deg) saturate(1.4)' },
   { label: "Don't add effects", filter: 'drop-shadow(0 0 10px rgba(0,170,255,0.9))' },
 ];
 
@@ -123,7 +123,7 @@ export default function LogoPage() {
       <section className="mb-4">
         <h2 className="mb-3 font-display text-[16px] font-medium tracking-[-0.01em] text-ink">Misuse</h2>
         <p className="mb-5 max-w-2xl text-[16px] leading-[1.55] text-muted">
-          The logo is a system, not a sticker. Don&apos;t recolor, stretch, outline, or rotate.
+          The logo is a system, not a sticker. Don&apos;t recolour, stretch, outline, or rotate.
         </p>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {misuses.map((m) => (
