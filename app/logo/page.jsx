@@ -17,6 +17,46 @@ const misuses = [
   { label: "Don't add effects", filter: 'drop-shadow(0 0 10px rgba(0,170,255,0.9))' },
 ];
 
+const mediaTiles = [
+  {
+    label: 'On dark imagery',
+    caption: 'White version. Anchor bottom-left with generous clear space.',
+    src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&q=80&auto=format&fit=crop',
+    logo: 'white',
+    aspect: '4 / 3',
+    anchor: 'items-end justify-start',
+    padding: 'p-6 md:p-8',
+  },
+  {
+    label: 'On light imagery',
+    caption: 'Black version only when the scene is clean and bright.',
+    src: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1400&q=80&auto=format&fit=crop',
+    logo: 'black',
+    aspect: '4 / 3',
+    anchor: 'items-start justify-end',
+    padding: 'p-6 md:p-8',
+  },
+  {
+    label: 'Video / motion',
+    caption: 'Hold for the full duration, bottom-left, with subtle play indicator.',
+    src: 'https://images.unsplash.com/photo-1557683316-973673baf926?w=1600&q=80&auto=format&fit=crop',
+    logo: 'white',
+    aspect: '16 / 9',
+    anchor: 'items-end justify-start',
+    padding: 'p-6 md:p-10',
+    video: true,
+  },
+  {
+    label: 'Social / square',
+    caption: 'Centered on square formats (Instagram, LinkedIn).',
+    src: 'https://images.unsplash.com/photo-1557682233-43e671455dfa?w=1200&q=80&auto=format&fit=crop',
+    logo: 'white',
+    aspect: '1 / 1',
+    anchor: 'items-center justify-center',
+    padding: 'p-6',
+  },
+];
+
 export default function LogoPage() {
   return (
     <>
@@ -36,6 +76,20 @@ export default function LogoPage() {
         <div className="grid gap-3 md:grid-cols-2">
           {tiles.map((t) => (
             <LogoTile key={t.label} {...t} />
+          ))}
+        </div>
+      </section>
+
+      <section className="mb-14">
+        <h2 className="mb-3 font-display text-[16px] font-medium tracking-[-0.01em] text-ink">Over media</h2>
+        <p className="mb-5 max-w-2xl text-[16px] leading-[1.55] text-muted">
+          When the logo sits on a photo or video, contrast is everything. Default to the
+          white version on busy or dark imagery. Use the black version only on bright,
+          uncluttered scenes. Keep clear space — the logo is never pushed against an edge.
+        </p>
+        <div className="grid gap-4 md:grid-cols-2">
+          {mediaTiles.map((t) => (
+            <MediaTile key={t.label} {...t} />
           ))}
         </div>
       </section>
@@ -106,6 +160,45 @@ function LogoTile({ label, src, bg }) {
       <div className="mt-3 flex items-center justify-between text-[16px] text-muted">
         <span>{label}</span>
         <span>{bg.toUpperCase()}</span>
+      </div>
+    </div>
+  );
+}
+
+function MediaTile({ label, caption, src, logo, aspect, anchor, padding, video }) {
+  return (
+    <div>
+      <div
+        className={`relative overflow-hidden rounded-[20px] bg-surface`}
+        style={{ aspectRatio: aspect }}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={src}
+          alt=""
+          aria-hidden
+          className="absolute inset-0 h-full w-full object-cover"
+          loading="lazy"
+        />
+        <div className={`absolute inset-0 flex ${anchor} ${padding}`}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={`/logos/oxydise-${logo}.svg`}
+            alt=""
+            aria-hidden
+            className="h-6 w-auto md:h-8"
+          />
+        </div>
+        {video && (
+          <div className="absolute right-5 top-5 flex items-center gap-1.5 rounded-full bg-black/50 px-3 py-1 text-[13px] font-medium text-white backdrop-blur">
+            <span aria-hidden className="inline-block h-2 w-2 rounded-full bg-[#E5484D]" />
+            Video
+          </div>
+        )}
+      </div>
+      <div className="mt-3">
+        <p className="text-[16px] text-ink">{label}</p>
+        <p className="mt-0.5 max-w-md text-[16px] text-muted">{caption}</p>
       </div>
     </div>
   );
