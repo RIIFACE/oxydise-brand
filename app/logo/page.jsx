@@ -7,7 +7,7 @@ export default function LogoPage() {
   return (
     <>
       <SectionHeader
-        eyebrow="01 · Logo"
+        eyebrow="Logo"
         title="The mark."
         description="Our logo is the shortest possible expression of the brand. Use it confidently, and sparingly."
       />

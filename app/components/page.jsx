@@ -7,7 +7,7 @@ export default function ComponentsPage() {
   return (
     <>
       <SectionHeader
-        eyebrow="05 · Components"
+        eyebrow="Components"
         title="Building blocks."
         description="A minimal set of UI primitives rendered in brand."
       />
@@ -38,14 +38,14 @@ export default function ComponentsPage() {
         <Block title="Cards">
           <div className="grid gap-3 md:grid-cols-2">
             <div className="rounded-xl border border-line bg-bg p-6">
-              <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-primary">Feature</p>
+              <p className="font-mono text-[11px] font-medium text-primary">Feature</p>
               <h3 className="mt-3 text-[20px] font-semibold tracking-[-0.015em] text-ink">Materials that last.</h3>
               <p className="mt-2 text-[14px] leading-[1.55] text-muted">
                 We source with patience. Shortcuts compound, and we&apos;d rather build once.
               </p>
             </div>
             <div className="rounded-xl border border-line bg-bg p-6">
-              <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-accent">Note</p>
+              <p className="font-mono text-[11px] font-medium text-accent">Note</p>
               <h3 className="mt-3 text-[20px] font-semibold tracking-[-0.015em] text-ink">Field report</h3>
               <p className="mt-2 text-[14px] leading-[1.55] text-muted">
                 After two years in salt air, the finish settles into a quieter green.

@@ -14,8 +14,12 @@ module.exports = {
         line:    'rgb(var(--color-line) / <alpha-value>)',
         ink:     'rgb(var(--color-ink) / <alpha-value>)',
         muted:   'rgb(var(--color-muted) / <alpha-value>)',
-        primary: 'rgb(var(--color-primary) / <alpha-value>)',
-        accent:  'rgb(var(--color-accent) / <alpha-value>)',
+        // Brand palette — constants in both themes
+        primary: '#00AAFF',
+        sky:     '#ADE4FF',
+        royal:   '#003093',
+        accent:  '#4040BF',
+        navy:    '#001540',
       },
       fontFamily: {
         display: ['var(--font-display)', '-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'system-ui', 'sans-serif'],
@@ -25,7 +29,7 @@ module.exports = {
       letterSpacing: { tightest: '-0.04em' },
       boxShadow: {
         card:  '0 1px 2px rgba(0,0,0,0.04)',
-        focus: '0 0 0 3px rgb(var(--color-primary) / 0.25)',
+        focus: '0 0 0 3px rgb(0 170 255 / 0.25)',
       },
     },
   },
