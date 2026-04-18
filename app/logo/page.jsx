@@ -48,9 +48,11 @@ const mediaTiles = [
   },
   {
     label: 'Social / square',
-    caption: 'Centered on square formats (Instagram, LinkedIn).',
+    caption: 'Halo only on square formats (profile avatars, Instagram, LinkedIn).',
     src: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&q=80&auto=format&fit=crop',
-    logo: 'white',
+    logo: 'halo-black',
+    invertLogo: true,
+    logoClass: 'h-20 w-20 md:h-28 md:w-28',
     aspect: '1 / 1',
     anchor: 'items-center justify-center',
     padding: 'p-6',
@@ -107,6 +109,21 @@ export default function LogoPage() {
           {tiles.map((t) => (
             <LogoTile key={t.label} {...t} />
           ))}
+        </div>
+      </section>
+
+      <section className="mb-14">
+        <h2 className="mb-3 font-display text-[16px] font-medium tracking-[-0.01em] text-ink">Halo</h2>
+        <p className="mb-5 max-w-2xl text-[16px] leading-[1.55] text-muted">
+          The halo is the standalone symbol — the mark without the wordmark. Use it where the
+          full lockup won&apos;t read or fit: profile avatars, favicons, app icons, square
+          social formats, loading states, and tight UI. Same contrast rules apply — colour
+          halo on white only; white halo on dark or coloured surfaces.
+        </p>
+        <div className="grid gap-3 sm:grid-cols-3">
+          <HaloTile label="Colour on canvas"  variant="colour" bg="#FFFFFF" />
+          <HaloTile label="Black on canvas"   variant="black"  bg="#FFFFFF" />
+          <HaloTile label="White on navy"     variant="white"  bg="#001540" />
         </div>
       </section>
 
@@ -190,6 +207,26 @@ export default function LogoPage() {
   );
 }
 
+function HaloTile({ label, variant, bg }) {
+  const src = variant === 'colour' ? '/logos/oxydise-halo-colour.svg' : '/logos/oxydise-halo-black.svg';
+  const style = variant === 'white' ? { filter: 'brightness(0) invert(1)' } : undefined;
+  return (
+    <div>
+      <div
+        className="flex aspect-square items-center justify-center rounded-[20px] p-10"
+        style={{ backgroundColor: bg }}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={src} alt="" aria-hidden className="h-24 w-24 md:h-28 md:w-28" style={style} />
+      </div>
+      <div className="mt-3 flex items-center justify-between text-[16px] text-muted">
+        <span>{label}</span>
+        <span>{bg.toUpperCase()}</span>
+      </div>
+    </div>
+  );
+}
+
 function LogoTile({ label, src, bg }) {
   return (
     <div>
@@ -208,7 +245,7 @@ function LogoTile({ label, src, bg }) {
   );
 }
 
-function MediaTile({ label, caption, src, logo, aspect, anchor, padding, video, misuse }) {
+function MediaTile({ label, caption, src, logo, aspect, anchor, padding, video, misuse, invertLogo, logoClass }) {
   return (
     <div>
       <div
@@ -229,7 +266,8 @@ function MediaTile({ label, caption, src, logo, aspect, anchor, padding, video, 
             src={`/logos/oxydise-${logo}.svg`}
             alt=""
             aria-hidden
-            className="h-8 w-auto md:h-10"
+            className={logoClass || 'h-8 w-auto md:h-10'}
+            style={invertLogo ? { filter: 'brightness(0) invert(1)' } : undefined}
           />
         </div>
         {video && (
