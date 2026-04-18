@@ -81,7 +81,7 @@ export default function TypographyPage() {
       </section>
 
       {/* Sample */}
-      <section>
+      <section className="mb-24 md:mb-32">
         <h2 className="mb-6 font-display text-[16px] font-medium tracking-[-0.01em] text-ink">In context</h2>
         <div className="rounded-[20px] bg-panel p-8 md:p-12">
           <p className="mb-2 text-[16px] font-medium text-primary">Sample</p>

@@ -35,7 +35,7 @@ export default function ColorsPage() {
         tokens={surfaceTokens}
       />
 
-      <section className="grid grid-cols-12 py-14 md:py-20">
+      <section className="grid grid-cols-12 py-14 pb-24 md:py-20 md:pb-32">
         <header className="col-span-12 mb-8 flex items-baseline justify-between">
           <h2 className="font-display text-[16px] font-medium tracking-tight text-ink">
             Reference

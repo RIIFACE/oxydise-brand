@@ -183,7 +183,7 @@ export default function LogoPage() {
         </div>
       </section>
 
-      <section className="mb-4">
+      <section className="mb-24 md:mb-32">
         <h2 className="mb-3 font-display text-[16px] font-medium tracking-[-0.01em] text-ink">Misuse</h2>
         <p className="mb-5 max-w-2xl text-[16px] leading-[1.55] text-muted">
           The logo is a system, not a sticker. Don&apos;t recolour, stretch, outline, or rotate.

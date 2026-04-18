@@ -43,7 +43,7 @@ export default function DownloadsPage() {
         </ul>
       </section>
 
-      <p className="max-w-2xl text-[16px] leading-[1.55] text-muted">
+      <p className="mb-24 max-w-2xl text-[16px] leading-[1.55] text-muted md:mb-32">
         Internal teams can embed these assets directly in any doc by linking to{' '}
         <code className="rounded bg-surface px-1.5 py-0.5 text-[16px] text-ink">
           https://{brand.domain}/downloads
