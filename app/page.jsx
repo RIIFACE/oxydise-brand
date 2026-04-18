@@ -16,7 +16,7 @@ export default function HomePage() {
         brand, <RotatingWord className="text-muted" />
       </h1>
 
-      <p className="mt-6 max-w-md text-[16px] leading-[1.55] text-muted md:mt-8 md:max-w-xl">
+      <p className="mt-6 max-w-md text-[16px] leading-[1.55] text-muted md:mt-8 md:max-w-xl md:text-[18px]">
         {brand.tagline} A living reference for anyone building, writing, or designing with us.
       </p>
     </section>

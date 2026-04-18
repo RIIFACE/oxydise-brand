@@ -49,8 +49,8 @@ export default function DownloadsPage() {
           https://{brand.domain}/downloads
         </code>
         . External partners should request updated files through{' '}
-        <a href="mailto:brand@oxydise.com" className="text-primary hover:underline">
-          brand@oxydise.com
+        <a href="mailto:hello@oxydise.co.uk" className="text-primary hover:underline">
+          hello@oxydise.co.uk
         </a>
         .
       </p>
