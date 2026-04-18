@@ -61,7 +61,7 @@ export default function ComponentsPage() {
               <input
                 type="email"
                 placeholder="you@oxydise.com"
-                className="h-11 w-full rounded-lg border border-line bg-bg px-3 text-[16px] text-ink placeholder:text-muted/70 focus:border-primary focus:outline-none"
+                className="h-11 w-full rounded-full border border-line bg-bg px-5 text-[16px] text-ink placeholder:text-muted/70 focus:border-primary focus:outline-none"
               />
             </label>
             <label className="block">
@@ -71,12 +71,12 @@ export default function ComponentsPage() {
               <textarea
                 rows={3}
                 placeholder="Tell us what you're building…"
-                className="w-full rounded-lg border border-line bg-bg px-3 py-2 text-[16px] text-ink placeholder:text-muted/70 focus:border-primary focus:outline-none"
+                className="w-full rounded-[20px] border border-line bg-bg px-5 py-3 text-[16px] text-ink placeholder:text-muted/70 focus:border-primary focus:outline-none"
               />
             </label>
             <button
               type="button"
-              className="inline-flex h-11 items-center rounded-lg bg-ink px-5 text-[16px] font-medium text-bg transition-opacity hover:opacity-90"
+              className="inline-flex h-11 items-center rounded-full bg-ink px-6 text-[16px] font-medium text-bg transition-opacity hover:opacity-90"
             >
               Send
             </button>
