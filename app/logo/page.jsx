@@ -212,7 +212,10 @@ export default function LogoPage() {
 
 function HaloTile({ label, variant, bg }) {
   const src = variant === 'colour' ? '/logos/oxydise-halo-colour.svg' : '/logos/oxydise-halo-black.svg';
-  const style = variant === 'white' ? { filter: 'brightness(0) invert(1)' } : undefined;
+  const style =
+    variant === 'white' ? { filter: 'brightness(0) invert(1)' } :
+    variant === 'black' ? { filter: 'brightness(0)' } :
+    undefined;
   return (
     <div>
       <div
