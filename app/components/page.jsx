@@ -1,4 +1,4 @@
-import SectionHeader from '@/components/SectionHeader';
+import Poster from '@/components/Poster';
 import { brand } from '@/lib/brand.config';
 
 export const metadata = { title: `Components — ${brand.name}` };
@@ -6,29 +6,57 @@ export const metadata = { title: `Components — ${brand.name}` };
 export default function ComponentsPage() {
   return (
     <>
-      <SectionHeader
+      <Poster
         eyebrow="Components"
-        title="Building blocks."
-        description="A minimal set of UI primitives rendered in brand."
+        headline={
+          <>
+            Building<br />
+            <span className="text-muted">blocks.</span>
+          </>
+        }
+        subcopy="A minimal set of UI primitives rendered in brand."
       />
 
       <div className="space-y-16 pb-24 md:pb-32">
-        <Block title="Buttons">
-          <div className="flex flex-wrap gap-3">
-            <button className="inline-flex h-11 items-center rounded-full bg-ink px-6 text-[16px] font-medium text-bg transition-opacity hover:opacity-90">
-              Primary
-            </button>
-            <button className="inline-flex h-11 items-center rounded-full bg-primary px-6 text-[16px] font-medium text-white transition-opacity hover:opacity-90">
-              Accent
-            </button>
-            <button
-              className="inline-flex h-11 items-center rounded-full bg-transparent px-6 text-[16px] font-medium text-ink transition-colors hover:bg-ink hover:text-bg"
-              style={{ border: '1.5px solid currentColor' }}
-            >
-              Outlined
-            </button>
+        <section>
+          <h2 className="mb-4 font-display text-[18px] font-medium tracking-[-0.01em] text-ink">Buttons</h2>
+          <div className="grid gap-3 md:grid-cols-2">
+            <div className="rounded-[20px] bg-panel p-6 md:p-8">
+              <p className="mb-5 text-[13px] text-muted">On light</p>
+              <div className="flex flex-wrap gap-3">
+                <button className="inline-flex h-11 items-center rounded-full bg-ink px-6 text-[16px] font-medium text-bg transition-opacity hover:opacity-90">
+                  Primary
+                </button>
+                <button className="inline-flex h-11 items-center rounded-full bg-primary px-6 text-[16px] font-medium text-white transition-opacity hover:opacity-90">
+                  Accent
+                </button>
+                <button
+                  className="inline-flex h-11 items-center rounded-full bg-transparent px-6 text-[16px] font-medium text-ink transition-colors hover:bg-ink hover:text-bg"
+                  style={{ border: '1.5px solid currentColor' }}
+                >
+                  Outlined
+                </button>
+              </div>
+            </div>
+            <div className="rounded-[20px] bg-[#0B0B0D] p-6 md:p-8">
+              <p className="mb-5 text-[13px] text-white/50">On dark</p>
+              <div className="flex flex-wrap gap-3">
+                <button className="inline-flex h-11 items-center rounded-full bg-white px-6 text-[16px] font-medium text-[#0B0B0D] transition-opacity hover:opacity-90">
+                  Primary
+                </button>
+                <button className="inline-flex h-11 items-center rounded-full bg-primary px-6 text-[16px] font-medium text-white transition-opacity hover:opacity-90">
+                  Accent
+                </button>
+                <button
+                  className="inline-flex h-11 items-center rounded-full bg-transparent px-6 text-[16px] font-medium text-white transition-colors hover:bg-white hover:text-[#0B0B0D]"
+                  style={{ border: '1.5px solid currentColor' }}
+                >
+                  Outlined
+                </button>
+              </div>
+            </div>
           </div>
-        </Block>
+        </section>
 
         <Block title="Cards">
           <div className="grid gap-3 md:grid-cols-2">

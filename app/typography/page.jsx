@@ -1,4 +1,4 @@
-import SectionHeader from '@/components/SectionHeader';
+import Poster from '@/components/Poster';
 import { brand } from '@/lib/brand.config';
 
 export const metadata = { title: `Typography — ${brand.name}` };
@@ -13,10 +13,15 @@ export default function TypographyPage() {
 
   return (
     <>
-      <SectionHeader
+      <Poster
         eyebrow="Typography"
-        title="Type system."
-        description={`Two families working together. ${display.family} sets the tone in display. ${sans.family} carries the reading load.`}
+        headline={
+          <>
+            Two families.<br />
+            <span className="text-muted">One voice.</span>
+          </>
+        }
+        subcopy={`${display.family} sets the tone in display. ${sans.family} carries the reading load. Nothing else is loaded.`}
       />
 
       {/* Families */}
