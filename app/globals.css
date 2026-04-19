@@ -64,12 +64,12 @@ html {
 }
 ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
 
-/* Slideshow feel on desktop — each top-level section in main pulls to
-   viewport edge as you scroll. `proximity` keeps normal reading smooth;
-   it only snaps when you land near a section boundary. */
+/* Slideshow feel on desktop — each top-level section in main fills the
+   viewport and snaps cleanly as you scroll. Mandatory snap gives a proper
+   deck / presentation rhythm. Respects reduced-motion. */
 @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
   html {
-    scroll-snap-type: y proximity;
+    scroll-snap-type: y mandatory;
   }
   main > div > section,
   main > div > article,
@@ -77,6 +77,7 @@ html {
   main > article {
     scroll-snap-align: start;
     scroll-snap-stop: normal;
+    min-height: 100dvh;
   }
 }
 
