@@ -1,4 +1,4 @@
-import SectionHeader from '@/components/SectionHeader';
+import Poster from '@/components/Poster';
 import { brand } from '@/lib/brand.config';
 
 export const metadata = { title: `Logo — ${brand.name}` };
@@ -92,10 +92,15 @@ const mediaMisuses = [
 export default function LogoPage() {
   return (
     <>
-      <SectionHeader
+      <Poster
         eyebrow="Logo"
-        title="The mark."
-        description="Our logo is the shortest possible expression of the brand. Use it confidently, and sparingly."
+        headline={
+          <>
+            One mark,<br />
+            <span className="text-muted">many forms.</span>
+          </>
+        }
+        subcopy="The shortest expression of the brand. Use it confidently, sparingly, and always with enough air around it."
       />
 
       <section className="mb-14">

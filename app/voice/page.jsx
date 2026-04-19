@@ -1,4 +1,4 @@
-import SectionHeader from '@/components/SectionHeader';
+import Poster from '@/components/Poster';
 import { brand } from '@/lib/brand.config';
 
 export const metadata = { title: `Voice — ${brand.name}` };
@@ -6,10 +6,15 @@ export const metadata = { title: `Voice — ${brand.name}` };
 export default function VoicePage() {
   return (
     <>
-      <SectionHeader
+      <Poster
         eyebrow="Voice"
-        title="How we sound."
-        description="Three principles that shape every headline, button, and email."
+        headline={
+          <>
+            How we<br />
+            <span className="text-muted">sound.</span>
+          </>
+        }
+        subcopy="Three principles that shape every headline, button, and email."
       />
 
       <section className="mb-24 space-y-6 md:mb-32">

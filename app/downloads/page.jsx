@@ -1,4 +1,4 @@
-import SectionHeader from '@/components/SectionHeader';
+import Poster from '@/components/Poster';
 import { brand } from '@/lib/brand.config';
 
 export const metadata = { title: `Downloads — ${brand.name}` };
@@ -6,10 +6,15 @@ export const metadata = { title: `Downloads — ${brand.name}` };
 export default function DownloadsPage() {
   return (
     <>
-      <SectionHeader
+      <Poster
         eyebrow="Downloads"
-        title="Assets."
-        description="Drop the real files into /public with matching paths, and these links light up."
+        headline={
+          <>
+            Get the<br />
+            <span className="text-muted">kit.</span>
+          </>
+        }
+        subcopy="Everything you need to put Oxydise out in the world. Logos, fonts, templates — one click away."
       />
 
       <section className="mb-10">
