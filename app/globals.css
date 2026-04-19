@@ -64,6 +64,22 @@ html {
 }
 ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
 
+/* Slideshow feel on desktop — each top-level section in main pulls to
+   viewport edge as you scroll. `proximity` keeps normal reading smooth;
+   it only snaps when you land near a section boundary. */
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-snap-type: y proximity;
+  }
+  main > div > section,
+  main > div > article,
+  main > section,
+  main > article {
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+  }
+}
+
 /* Page entrance animation — runs on every route change via app/template.jsx */
 @keyframes page-enter {
   from { opacity: 0; transform: translateY(10px); }
