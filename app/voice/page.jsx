@@ -21,35 +21,23 @@ export default function VoicePage() {
 
       <section className="mb-24 space-y-8 md:mb-32 md:space-y-10">
         {brand.voice.principles.map(({ name, description, do: yes, dont: no }, i) => (
-          <article key={name} className="relative overflow-hidden rounded-[20px] bg-panel p-8 md:p-16">
-            <span
-              aria-hidden
-              className="pointer-events-none absolute -right-6 -top-14 select-none font-display text-[280px] leading-none text-ink/[0.03] md:-right-10 md:-top-24 md:text-[460px]"
+          <article key={name} className="rounded-[20px] bg-panel p-8 md:p-14">
+            <p className="text-[14px] text-primary">{TAGS[i] ?? 'Principle'}</p>
+
+            <h2
+              className="mt-6 font-display font-medium leading-[0.92] tracking-[-0.035em] text-ink"
+              style={{ fontSize: 'clamp(2.5rem, 6.5vw, 5rem)' }}
             >
-              &ldquo;
-            </span>
+              {name}
+            </h2>
 
-            <div className="relative grid grid-cols-12 gap-y-8 md:gap-x-12">
-              <aside className="col-span-12 md:col-span-4 md:pt-4">
-                <p className="text-[14px] italic text-primary">{TAGS[i] ?? 'Principle'}</p>
-                <p className="mt-6 max-w-sm text-[18px] leading-[1.55] text-ink/70">
-                  {description}
-                </p>
-              </aside>
+            <p className="mt-6 max-w-2xl text-[18px] leading-[1.55] text-ink/70">
+              {description}
+            </p>
 
-              <div className="col-span-12 md:col-span-8">
-                <h2
-                  className="font-display font-medium leading-[0.92] tracking-[-0.035em] text-ink"
-                  style={{ fontSize: 'clamp(2.5rem, 6.5vw, 5rem)' }}
-                >
-                  {name}
-                </h2>
-
-                <div className="mt-12 grid gap-10 md:grid-cols-2 md:gap-8">
-                  <Example tone="do" text={yes} />
-                  <Example tone="dont" text={no} />
-                </div>
-              </div>
+            <div className="mt-12 grid gap-10 md:grid-cols-2 md:gap-8">
+              <Example tone="do" text={yes} />
+              <Example tone="dont" text={no} />
             </div>
           </article>
         ))}
