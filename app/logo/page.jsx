@@ -108,11 +108,13 @@ export default function LogoPage() {
 
       <section className="mb-14">
         <h2 className="mb-3 font-display text-[16px] font-medium tracking-[-0.01em] text-ink">Halo</h2>
+        <p className="mb-3 max-w-2xl text-[18px] font-medium text-ink">
+          Only use the halo when space doesn&apos;t allow the full lockup.
+        </p>
         <p className="mb-5 max-w-2xl text-[16px] leading-[1.55] text-muted">
-          The halo is the standalone symbol — the mark without the wordmark. Use it where the
-          full lockup won&apos;t read or fit: profile avatars, favicons, app icons, square
-          social formats, loading states, and tight UI. Same rule — black on light, white on
-          dark or coloured.
+          Avatars, favicons, app icons, loading states, tight UI — nowhere else. The
+          wordmark is always preferred when it fits. Same rule as the lockup: black on light,
+          white on dark or coloured.
         </p>
         <div className="grid gap-3 sm:grid-cols-2">
           <HaloTile label="Black on canvas"   variant="black"  bg="#FFFFFF" />
