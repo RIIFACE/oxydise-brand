@@ -4,7 +4,6 @@ import { brand } from '@/lib/brand.config';
 export const metadata = { title: `Logo — ${brand.name}` };
 
 const tiles = [
-  { label: 'Colour on canvas',  src: '/logos/oxydise-colour.svg', bg: '#FFFFFF' },
   { label: 'Black on canvas',   src: '/logos/oxydise-black.svg',  bg: '#FFFFFF' },
   { label: 'White on black',    src: '/logos/oxydise-white.svg',  bg: '#000000' },
   { label: 'White on Signal',   src: '/logos/oxydise-white.svg',  bg: '#00AAFF' },
@@ -13,7 +12,7 @@ const tiles = [
 const misuses = [
   { label: "Don't stretch",     transform: 'scaleX(1.6) scaleY(0.7)' },
   { label: "Don't rotate",      transform: 'rotate(14deg)' },
-  { label: "Don't recolour",     filter: 'hue-rotate(120deg) saturate(1.4)' },
+  { label: "Don't recolour",    filter: 'brightness(0.4) sepia(1) saturate(8) hue-rotate(280deg)' },
   { label: "Don't add effects", filter: 'drop-shadow(0 0 10px rgba(0,170,255,0.9))' },
 ];
 
@@ -61,15 +60,6 @@ const mediaTiles = [
 
 const mediaMisuses = [
   {
-    label: "Don't place colour on imagery",
-    caption: 'The colour version belongs on white only.',
-    src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&q=80&auto=format&fit=crop',
-    logo: 'colour',
-    aspect: '4 / 3',
-    anchor: 'items-end justify-start',
-    padding: 'p-6 md:p-8',
-  },
-  {
     label: "Don't skip clear space",
     caption: 'Pushed against an edge, the mark loses presence.',
     src: 'https://images.unsplash.com/photo-1557683316-973673baf926?w=1400&q=80&auto=format&fit=crop',
@@ -106,11 +96,10 @@ export default function LogoPage() {
       <section className="mb-14">
         <h2 className="mb-3 font-display text-[16px] font-medium tracking-[-0.01em] text-ink">Primary</h2>
         <p className="mb-5 max-w-2xl text-[16px] leading-[1.55] text-muted">
-          Use the colour version on white only. On any dark or blue surface — including
-          black, navy, or Signal — use the white version. Never place the colour logo on
-          a coloured background.
+          Mono only. Black on light. White on dark or any coloured surface. That&apos;s the
+          whole system — no colour version.
         </p>
-        <div className="grid gap-3 md:grid-cols-2">
+        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {tiles.map((t) => (
             <LogoTile key={t.label} {...t} />
           ))}
@@ -122,11 +111,10 @@ export default function LogoPage() {
         <p className="mb-5 max-w-2xl text-[16px] leading-[1.55] text-muted">
           The halo is the standalone symbol — the mark without the wordmark. Use it where the
           full lockup won&apos;t read or fit: profile avatars, favicons, app icons, square
-          social formats, loading states, and tight UI. Same contrast rules apply — colour
-          halo on white only; white halo on dark or coloured surfaces.
+          social formats, loading states, and tight UI. Same rule — black on light, white on
+          dark or coloured.
         </p>
-        <div className="grid gap-3 sm:grid-cols-3">
-          <HaloTile label="Colour on canvas"  variant="colour" bg="#FFFFFF" />
+        <div className="grid gap-3 sm:grid-cols-2">
           <HaloTile label="Black on canvas"   variant="black"  bg="#FFFFFF" />
           <HaloTile label="White on navy"     variant="white"  bg="#001540" />
         </div>
@@ -137,7 +125,7 @@ export default function LogoPage() {
         <p className="mb-5 max-w-2xl text-[16px] leading-[1.55] text-muted">
           Over photography and video, the mark is always white and always centred — no
           exceptions, regardless of whether the scene is dark or bright. Never use the black
-          or colour version on imagery. Keep generous clear space so the mark breathes.
+          version on imagery. Keep generous clear space so the mark breathes.
         </p>
         <div className="grid gap-4 md:grid-cols-2">
           {mediaTiles.map((t) => (
@@ -199,7 +187,7 @@ export default function LogoPage() {
               <div className="flex h-28 items-center justify-center overflow-hidden rounded-[14px] bg-white">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="/logos/oxydise-colour.svg"
+                  src="/logos/oxydise-black.svg"
                   alt=""
                   aria-hidden
                   className="h-8 w-auto"
@@ -216,11 +204,10 @@ export default function LogoPage() {
 }
 
 function HaloTile({ label, variant, bg }) {
-  const src = variant === 'colour' ? '/logos/oxydise-halo-colour.svg' : '/logos/oxydise-halo-black.svg';
+  const src = '/logos/oxydise-halo-black.svg';
   const style =
     variant === 'white' ? { filter: 'brightness(0) invert(1)' } :
-    variant === 'black' ? { filter: 'brightness(0)' } :
-    undefined;
+    { filter: 'brightness(0)' };
   return (
     <div>
       <div
