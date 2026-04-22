@@ -3,26 +3,36 @@ import { brand } from '@/lib/brand.config';
 
 export const metadata = { title: `Voice — ${brand.name}` };
 
-const TAGS = ['On substance', 'On warmth', 'On clarity'];
-
 export default function VoicePage() {
+  const { tone, feel, principles } = brand.voice;
+
   return (
     <>
       <Poster
         eyebrow="Voice"
         headline={
           <>
-            How we<br />
-            <span className="text-muted">sound.</span>
+            Calm, credible,<br />
+            <span className="text-muted">and considered.</span>
           </>
         }
-        subcopy="Three principles that shape every headline, button, and email."
+        subcopy={`If someone reads Oxydise content, they should feel ${feel.should.join(', ')}—not ${feel.shouldNot.join(', ')}.`}
       />
 
+      <section className="mb-16 md:mb-24">
+        <p className="text-[14px] text-primary">Aligned to values</p>
+        <h2
+          className="mt-6 max-w-4xl font-display font-medium leading-[1.05] tracking-[-0.035em] text-ink"
+          style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)' }}
+        >
+          {tone}
+        </h2>
+      </section>
+
       <section className="mb-24 space-y-8 md:mb-32 md:space-y-10">
-        {brand.voice.principles.map(({ name, description, do: yes, dont: no }, i) => (
+        {principles.map(({ name, values, guidelines, do: yes, dont: no }) => (
           <article key={name} className="rounded-[20px] bg-panel p-8 md:p-14">
-            <p className="text-[14px] text-primary">{TAGS[i] ?? 'Principle'}</p>
+            <p className="text-[14px] text-primary">{values}</p>
 
             <h2
               className="mt-6 font-display font-medium leading-[0.92] tracking-[-0.035em] text-ink"
@@ -31,13 +41,20 @@ export default function VoicePage() {
               {name}
             </h2>
 
-            <p className="mt-6 max-w-2xl text-[18px] leading-[1.55] text-ink/70">
-              {description}
-            </p>
+            {guidelines?.length > 0 && (
+              <ul className="mt-6 max-w-2xl space-y-2 text-[18px] leading-[1.55] text-ink/70">
+                {guidelines.map((g) => (
+                  <li key={g} className="flex gap-3">
+                    <span aria-hidden className="mt-[0.65em] inline-block h-[3px] w-3 flex-none rounded-full bg-ink/40" />
+                    <span>{g}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
 
             <div className="mt-12 grid gap-10 md:grid-cols-2 md:gap-8">
-              <Example tone="do" text={yes} />
-              <Example tone="dont" text={no} />
+              <Example tone="do" items={yes} />
+              <Example tone="dont" items={no} />
             </div>
           </article>
         ))}
@@ -46,8 +63,9 @@ export default function VoicePage() {
   );
 }
 
-function Example({ tone, text }) {
+function Example({ tone, items }) {
   const isDo = tone === 'do';
+  const list = Array.isArray(items) ? items : [items];
   return (
     <div className="flex flex-col">
       <div className="flex items-center gap-2.5">
@@ -61,14 +79,19 @@ function Example({ tone, text }) {
         </span>
         <span className="text-[14px] font-medium text-ink">{isDo ? 'Do' : "Don't"}</span>
       </div>
-      <blockquote
-        className={`mt-5 font-display font-medium leading-[1.2] tracking-[-0.015em] ${
-          isDo ? 'text-ink' : 'text-muted line-through decoration-[1px]'
-        }`}
-        style={{ fontSize: 'clamp(1.375rem, 2.5vw, 1.875rem)' }}
-      >
-        {text}
-      </blockquote>
+      <div className="mt-5 space-y-5">
+        {list.map((text, i) => (
+          <blockquote
+            key={i}
+            className={`font-display font-medium leading-[1.2] tracking-[-0.015em] ${
+              isDo ? 'text-ink' : 'text-muted line-through decoration-[1px]'
+            }`}
+            style={{ fontSize: 'clamp(1.375rem, 2.5vw, 1.875rem)' }}
+          >
+            {text}
+          </blockquote>
+        ))}
+      </div>
     </div>
   );
 }
