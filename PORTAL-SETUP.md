@@ -31,7 +31,7 @@ Copy `.env.example` to `.env.local` and fill in:
 NEXT_PUBLIC_SUPABASE_URL=https://<your-project>.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<Project Settings → API → anon public>
 SUPABASE_SERVICE_ROLE_KEY=<Project Settings → API → service_role>  # server-only
-NEXT_PUBLIC_SITE_URL=https://brand.oxydise.co.uk
+NEXT_PUBLIC_SITE_URL=https://oxydise-brand.com
 ```
 
 Add the same variables to Vercel (Project → Settings → Environment Variables). Mark `SUPABASE_SERVICE_ROLE_KEY` as encrypted.
@@ -45,7 +45,7 @@ Supabase doesn't know which user is the admin on day one. Create it manually:
    - `user_id` = your user's `id` from `auth.users`
    - `client_id` = the Oxydise Internal row's `id`
    - `role` = `admin`
-4. Go to `https://brand.oxydise.co.uk/portal`. You're now an admin; open `/portal/admin` to create client orgs and invite their users. Any further Oxydise team members go into the Oxydise Internal client (role can be `admin` or `client` — both see internal files).
+4. Go to `https://oxydise-brand.com/portal`. You're now an admin; open `/portal/admin` to create client orgs and invite their users. Any further Oxydise team members go into the Oxydise Internal client (role can be `admin` or `client` — both see internal files).
 
 ## How it works
 
