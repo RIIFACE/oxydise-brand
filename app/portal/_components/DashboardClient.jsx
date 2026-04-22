@@ -32,7 +32,7 @@ export default function DashboardClient({ files, isAdmin }) {
   const availableCategories = CATEGORIES.filter((c) => counts[c.value] > 0);
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[240px_1fr] lg:gap-12">
+    <div className="grid gap-8 lg:grid-cols-[240px_1fr] lg:gap-16">
       <aside className="lg:sticky lg:top-8 lg:self-start">
         {hasInternal && (
           <div className="mb-8">
@@ -100,7 +100,7 @@ export default function DashboardClient({ files, isAdmin }) {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
             {visibleFiles.map((f) => (
               <FileCard key={f.id} file={f} />
             ))}

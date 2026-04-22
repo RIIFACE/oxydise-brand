@@ -12,7 +12,7 @@ export default async function PortalLayout({ children }) {
   return (
     <div className="min-h-dvh bg-bg">
       <header className="border-b border-line">
-        <div className="mx-auto flex h-16 max-w-[1200px] items-center justify-between gap-4 px-6 md:px-10">
+        <div className="flex h-16 items-center justify-between gap-4 px-6 md:px-10">
           <Link href="/portal" className="flex items-center gap-3" aria-label="Oxydise portal — home">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logos/oxydise-black.svg" alt="Oxydise" className="block h-6 w-auto dark:hidden" />
@@ -23,7 +23,7 @@ export default async function PortalLayout({ children }) {
           {user && <SignOutButton email={user.email} />}
         </div>
       </header>
-      <main className="mx-auto max-w-[1200px] px-6 py-10 md:px-10 md:py-16">{children}</main>
+      <main className="px-6 py-10 md:px-10 md:py-12">{children}</main>
     </div>
   );
 }

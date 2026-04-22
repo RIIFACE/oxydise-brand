@@ -3,6 +3,7 @@ import './globals.css';
 import { brand } from '@/lib/brand.config';
 import TopNav from '@/components/TopNav';
 import GridOverlay from '@/components/GridOverlay';
+import PortalAuthButton from '@/components/PortalAuthButton';
 
 const sans = Manrope({
   subsets: ['latin'],
@@ -44,6 +45,7 @@ export default function RootLayout({ children }) {
         <GridOverlay />
         <div className="relative z-10 flex min-h-screen flex-col">
           <TopNav />
+          <PortalAuthButton />
           <main className="flex-1">
             <div className="mx-auto w-full max-w-[1440px] px-6 md:pl-[272px] md:pr-10">
               {children}
