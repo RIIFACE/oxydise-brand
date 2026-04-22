@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { getSupabaseServerClient } from '@/lib/supabase/server';
+import { groupByCategory } from '@/lib/portal/groupFiles';
 
 export const dynamic = 'force-dynamic';
 
@@ -7,7 +8,6 @@ export default async function PortalDashboard() {
   const supabase = getSupabaseServerClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  // Role check: is this user an admin on any client?
   const { data: adminRows } = await supabase
     .from('client_member')
     .select('role')
@@ -18,8 +18,13 @@ export default async function PortalDashboard() {
 
   const { data: files } = await supabase
     .from('file')
-    .select('id, display_name, size_bytes, mime_type, uploaded_at, client_id, client:client_id(name, slug)')
+    .select('id, display_name, size_bytes, mime_type, category, uploaded_at, client_id, client:client_id(name, slug, is_internal)')
     .order('uploaded_at', { ascending: false });
+
+  const internalFiles = (files ?? []).filter((f) => f.client?.is_internal);
+  const clientFiles = (files ?? []).filter((f) => !f.client?.is_internal);
+
+  const hasAny = (files?.length ?? 0) > 0;
 
   return (
     <>
@@ -42,38 +47,73 @@ export default async function PortalDashboard() {
         </div>
       )}
 
-      {files?.length ? (
-        <ul className="space-y-4">
-          {files.map((f) => (
-            <li key={f.id}>
-              <a
-                href={`/api/portal/download/${f.id}`}
-                className="group flex flex-col gap-4 rounded-[20px] bg-panel p-6 transition-colors hover:bg-surface md:flex-row md:items-center md:justify-between md:p-8"
-              >
-                <div className="min-w-0">
-                  <p className="font-display text-[20px] font-medium text-ink md:text-[22px]">{f.display_name}</p>
-                  <p className="mt-1 text-[14px] text-muted">
-                    {f.client?.name ?? 'Shared'} · {formatBytes(f.size_bytes)} · {new Date(f.uploaded_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
-                  </p>
-                </div>
-                <span
-                  className="inline-flex h-11 w-fit shrink-0 items-center gap-2 rounded-full bg-transparent px-6 text-[16px] font-medium text-ink transition-colors group-hover:bg-ink group-hover:text-bg"
-                  style={{ border: '1.5px solid currentColor' }}
-                >
-                  Download
-                  <DownloadIcon />
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      ) : (
+      {!hasAny && (
         <div className="rounded-[20px] bg-panel p-10 text-center">
           <p className="font-display text-[22px] font-medium text-ink">No files yet.</p>
           <p className="mt-2 text-[16px] text-muted">Oxydise will add assets here as soon as they&apos;re ready.</p>
         </div>
       )}
+
+      {internalFiles.length > 0 && (
+        <FilesSection
+          eyebrow="Team only"
+          title="Internal"
+          files={internalFiles}
+        />
+      )}
+
+      {clientFiles.length > 0 && (
+        <FilesSection
+          eyebrow="For your brand"
+          title={internalFiles.length > 0 ? 'Brand assets' : 'Your files'}
+          files={clientFiles}
+          className={internalFiles.length > 0 ? 'mt-14' : ''}
+        />
+      )}
     </>
+  );
+}
+
+function FilesSection({ eyebrow, title, files, className = '' }) {
+  const groups = groupByCategory(files);
+  return (
+    <section className={className}>
+      <div className="mb-6">
+        <p className="text-[13px] uppercase tracking-[0.08em] text-muted">{eyebrow}</p>
+        <h2 className="mt-1 font-display text-[28px] font-medium tracking-[-0.02em] text-ink">{title}</h2>
+      </div>
+      <div className="space-y-10">
+        {groups.map((group) => (
+          <div key={group.value}>
+            <h3 className="mb-4 font-display text-[16px] font-medium text-ink">{group.label}</h3>
+            <ul className="space-y-4">
+              {group.files.map((f) => (
+                <li key={f.id}>
+                  <a
+                    href={`/api/portal/download/${f.id}`}
+                    className="group flex flex-col gap-4 rounded-[20px] bg-panel p-6 transition-colors hover:bg-surface md:flex-row md:items-center md:justify-between md:p-8"
+                  >
+                    <div className="min-w-0">
+                      <p className="font-display text-[20px] font-medium text-ink md:text-[22px]">{f.display_name}</p>
+                      <p className="mt-1 text-[14px] text-muted">
+                        {f.client?.name ?? 'Shared'} · {formatBytes(f.size_bytes)} · {new Date(f.uploaded_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                      </p>
+                    </div>
+                    <span
+                      className="inline-flex h-11 w-fit shrink-0 items-center gap-2 rounded-full bg-transparent px-6 text-[16px] font-medium text-ink transition-colors group-hover:bg-ink group-hover:text-bg"
+                      style={{ border: '1.5px solid currentColor' }}
+                    >
+                      Download
+                      <DownloadIcon />
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
 

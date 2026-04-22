@@ -61,18 +61,24 @@ export async function inviteMember(formData) {
   revalidatePath('/portal/admin');
 }
 
+const VALID_CATEGORIES = new Set([
+  'logo', 'pdf', 'font', 'brochure', 'photo', 'video', 'social_template', 'other',
+]);
+
 export async function uploadFile(formData) {
   const { user } = await assertAdmin();
   const admin = getSupabaseAdminClient();
   const clientId = String(formData.get('clientId') ?? '');
   const file = formData.get('file');
+  const categoryRaw = String(formData.get('category') ?? 'other');
+  const category = VALID_CATEGORIES.has(categoryRaw) ? categoryRaw : 'other';
   if (!clientId || !file || typeof file === 'string') throw new Error('Client and file required');
 
   const { data: client } = await admin.from('client').select('slug').eq('id', clientId).maybeSingle();
   if (!client) throw new Error('Client not found');
 
   const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-  const path = `${client.slug}/${Date.now()}-${safeName}`;
+  const path = `${client.slug}/${category}/${Date.now()}-${safeName}`;
 
   const bytes = Buffer.from(await file.arrayBuffer());
   const { error: upErr } = await admin.storage.from(BUCKET).upload(path, bytes, {
@@ -87,6 +93,7 @@ export async function uploadFile(formData) {
     display_name: file.name,
     mime_type: file.type || null,
     size_bytes: file.size,
+    category,
     uploaded_by: user.id,
   });
   if (rowErr) throw new Error(rowErr.message);

@@ -2,8 +2,15 @@
 
 import { useState } from 'react';
 import { createClient, inviteMember, uploadFile, deleteFile } from './_actions';
+import { CATEGORIES, categoryLabel, groupByCategory } from '@/lib/portal/groupFiles';
 
 export default function AdminPanel({ clients, files }) {
+  const filesByClient = new Map();
+  for (const f of files) {
+    const key = f.client_id;
+    if (!filesByClient.has(key)) filesByClient.set(key, { client: f.client, items: [] });
+    filesByClient.get(key).items.push(f);
+  }
   return (
     <>
       <header className="mb-12">
@@ -34,7 +41,22 @@ export default function AdminPanel({ clients, files }) {
 
         <Card title="Upload file">
           <ServerForm action={uploadFile} encType="multipart/form-data">
-            <Select label="Client" name="clientId" options={clients.map((c) => ({ value: c.id, label: c.name }))} required />
+            <Select
+              label="Client"
+              name="clientId"
+              options={clients.map((c) => ({
+                value: c.id,
+                label: c.is_internal ? `${c.name} (internal)` : c.name,
+              }))}
+              required
+            />
+            <Select
+              label="Category"
+              name="category"
+              options={CATEGORIES.map((c) => ({ value: c.value, label: c.label }))}
+              defaultValue="other"
+              required
+            />
             <File label="File" name="file" required />
             <Submit>Upload</Submit>
           </ServerForm>
@@ -47,7 +69,10 @@ export default function AdminPanel({ clients, files }) {
             <ul className="divide-y divide-line/60">
               {clients.map((c) => (
                 <li key={c.id} className="flex items-baseline justify-between py-3">
-                  <span className="text-[16px] text-ink">{c.name}</span>
+                  <span className="flex items-baseline gap-2 text-[16px] text-ink">
+                    {c.name}
+                    {c.is_internal && <InternalBadge />}
+                  </span>
                   <span className="text-[13px] text-muted">{c.slug}</span>
                 </li>
               ))}
@@ -61,31 +86,54 @@ export default function AdminPanel({ clients, files }) {
         {files.length === 0 ? (
           <p className="text-[14px] text-muted">No files yet.</p>
         ) : (
-          <ul className="divide-y divide-line/60 rounded-[20px] bg-panel px-6 py-2 md:px-8">
-            {files.map((f) => (
-              <li key={f.id} className="flex items-center justify-between gap-4 py-4">
-                <div className="min-w-0">
-                  <p className="truncate text-[16px] text-ink">{f.display_name}</p>
-                  <p className="mt-0.5 text-[13px] text-muted">
-                    {f.client?.name} · {new Date(f.uploaded_at).toLocaleString('en-GB')}
-                  </p>
+          <div className="space-y-6">
+            {[...filesByClient.values()].map(({ client, items }) => (
+              <div key={client?.name ?? 'unknown'} className="rounded-[20px] bg-panel px-6 py-6 md:px-8">
+                <div className="mb-4 flex items-baseline gap-2">
+                  <h3 className="font-display text-[18px] font-medium text-ink">{client?.name ?? 'Unknown'}</h3>
+                  {client?.is_internal && <InternalBadge />}
                 </div>
-                <form action={deleteFile}>
-                  <input type="hidden" name="fileId" value={f.id} />
-                  <button
-                    type="submit"
-                    className="inline-flex h-9 items-center rounded-full px-4 text-[13px] font-medium text-[#E5484D] transition-colors hover:bg-[#E5484D]/10"
-                    style={{ border: '1.5px solid currentColor' }}
-                  >
-                    Delete
-                  </button>
-                </form>
-              </li>
+                {groupByCategory(items).map((group) => (
+                  <div key={group.value} className="mt-4 first:mt-0">
+                    <p className="mb-2 text-[13px] uppercase tracking-[0.08em] text-muted">{group.label}</p>
+                    <ul className="divide-y divide-line/60">
+                      {group.files.map((f) => (
+                        <li key={f.id} className="flex items-center justify-between gap-4 py-3">
+                          <div className="min-w-0">
+                            <p className="truncate text-[16px] text-ink">{f.display_name}</p>
+                            <p className="mt-0.5 text-[13px] text-muted">
+                              {categoryLabel(f.category)} · {new Date(f.uploaded_at).toLocaleString('en-GB')}
+                            </p>
+                          </div>
+                          <form action={deleteFile}>
+                            <input type="hidden" name="fileId" value={f.id} />
+                            <button
+                              type="submit"
+                              className="inline-flex h-9 items-center rounded-full px-4 text-[13px] font-medium text-[#E5484D] transition-colors hover:bg-[#E5484D]/10"
+                              style={{ border: '1.5px solid currentColor' }}
+                            >
+                              Delete
+                            </button>
+                          </form>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
             ))}
-          </ul>
+          </div>
         )}
       </section>
     </>
+  );
+}
+
+function InternalBadge() {
+  return (
+    <span className="inline-flex h-5 items-center rounded-full bg-ink/10 px-2 text-[11px] font-medium uppercase tracking-[0.08em] text-ink">
+      Internal
+    </span>
   );
 }
 
