@@ -9,18 +9,24 @@ export default function PortalAuthButton() {
   const pathname = usePathname();
   const [state, setState] = useState({ status: 'loading', email: null });
 
-  // Portal routes have their own sign-out button in the portal header.
-  if (pathname?.startsWith('/portal')) return null;
-
   useEffect(() => {
-    const supabase = getSupabaseBrowserClient();
     let mounted = true;
+    let supabase;
+    try {
+      supabase = getSupabaseBrowserClient();
+    } catch {
+      // Missing env vars in browser — silently behave as signed out.
+      setState({ status: 'out', email: null });
+      return () => {};
+    }
 
     supabase.auth.getUser().then(({ data }) => {
       if (!mounted) return;
       setState(data?.user
         ? { status: 'in', email: data.user.email }
         : { status: 'out', email: null });
+    }).catch(() => {
+      if (mounted) setState({ status: 'out', email: null });
     });
 
     const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -36,8 +42,11 @@ export default function PortalAuthButton() {
     };
   }, []);
 
-  // Desktop only — on mobile the sticky TopNav bar already occupies the top.
-  // Mobile users can reach the portal via the in-page links / typing the URL.
+  // Conditional render must come AFTER all hooks (Rules of Hooks).
+  // Portal routes have their own sign-out button in the portal header.
+  if (pathname?.startsWith('/portal')) return null;
+
+  // Desktop only — on mobile the sticky TopNav already occupies the top.
   const wrapper = 'fixed right-6 top-6 z-40 hidden md:block';
 
   if (state.status === 'loading') {
