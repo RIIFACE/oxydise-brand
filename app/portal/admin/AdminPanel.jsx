@@ -89,8 +89,14 @@ function UploadTab() {
           fd.append('audience', audience);
           fd.append('category', category);
           fd.append('file', item.file);
-          await uploadFile(fd);
-          setQueue((q) => q.map((x) => (x.id === item.id ? { ...x, status: 'done' } : x)));
+          const result = await uploadFile(fd);
+          if (result?.ok) {
+            setQueue((q) => q.map((x) => (x.id === item.id ? { ...x, status: 'done' } : x)));
+          } else {
+            setQueue((q) =>
+              q.map((x) => (x.id === item.id ? { ...x, status: 'error', error: result?.error || 'Upload failed' } : x)),
+            );
+          }
         } catch (e) {
           setQueue((q) =>
             q.map((x) => (x.id === item.id ? { ...x, status: 'error', error: e.message || 'Upload failed' } : x)),
@@ -238,8 +244,12 @@ function InviteTab() {
     const email = fd.get('email');
     startTransition(async () => {
       try {
-        await inviteMember(fd);
-        setSuccess(`Invite sent to ${email}.`);
+        const result = await inviteMember(fd);
+        if (result?.ok) {
+          setSuccess(`Invite sent to ${email}.`);
+        } else {
+          setError(result?.error || 'Could not send invite');
+        }
       } catch (e) {
         setError(e.message || 'Could not send invite');
       }
