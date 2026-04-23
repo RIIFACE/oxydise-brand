@@ -4,7 +4,7 @@ import { brand } from '@/lib/brand.config';
 export const metadata = { title: `Proposition — ${brand.name}` };
 
 export default function PropositionPage() {
-  const { headline, headlineTail, oneLiner, audience, pillars, against } = brand.proposition;
+  const { headline, headlineTail, primary, support, pillars } = brand.proposition;
 
   return (
     <>
@@ -16,37 +16,55 @@ export default function PropositionPage() {
             <span className="text-muted">{headlineTail}</span>
           </>
         }
-        subcopy={audience}
+        subcopy="The single sentence that leads, and the support line that grounds it. Used in the header, the hero, and anywhere we introduce the brand."
       />
 
-      {/* One-liner — the elevator pitch */}
-      <section className="mb-24 grid grid-cols-12 gap-6 md:mb-32 md:gap-10">
+      {/* Primary — the lead */}
+      <section className="mb-16 grid grid-cols-12 gap-6 md:mb-24 md:gap-10">
         <header className="col-span-12 md:col-span-4">
-          <p className="text-[14px] text-primary">One line</p>
+          <p className="text-[14px] text-primary">Primary</p>
           <h2 className="mt-3 font-display text-[26px] font-medium leading-[1.15] tracking-[-0.02em] text-ink md:text-[32px]">
-            If you have five seconds, say this.
+            The lead line.
           </h2>
         </header>
         <blockquote className="col-span-12 md:col-span-8">
           <p
-            className="font-display font-medium leading-[1.1] tracking-[-0.03em] text-ink"
-            style={{ fontSize: 'clamp(1.75rem, 4vw, 3rem)' }}
+            className="font-display font-medium leading-[1.02] tracking-[-0.035em] text-ink"
+            style={{ fontSize: 'clamp(2rem, 5vw, 4rem)' }}
           >
-            {oneLiner}
+            {primary}
           </p>
         </blockquote>
       </section>
 
-      {/* Pillars — why it matters */}
+      {/* Support — the follow */}
+      <section className="mb-24 grid grid-cols-12 gap-6 md:mb-32 md:gap-10">
+        <header className="col-span-12 md:col-span-4">
+          <p className="text-[14px] text-primary">Support</p>
+          <h2 className="mt-3 font-display text-[26px] font-medium leading-[1.15] tracking-[-0.02em] text-ink md:text-[32px]">
+            Follows the primary.
+          </h2>
+        </header>
+        <blockquote className="col-span-12 md:col-span-8">
+          <p
+            className="font-display font-medium leading-[1.2] tracking-[-0.02em] text-ink/90"
+            style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)' }}
+          >
+            {support}
+          </p>
+        </blockquote>
+      </section>
+
+      {/* Pillars */}
       <section className="mb-24 md:mb-32">
         <header className="mb-10 flex items-baseline justify-between md:mb-14">
           <div>
-            <p className="text-[14px] text-primary">What holds it up</p>
+            <p className="text-[14px] text-primary">Pillars</p>
             <h2
               className="mt-3 font-display font-medium leading-[1.05] tracking-[-0.025em] text-ink"
               style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)' }}
             >
-              Four things that make it true.
+              Two technologies anchor the brand.
             </h2>
           </div>
           <p className="hidden shrink-0 text-[16px] text-muted md:block">
@@ -54,42 +72,62 @@ export default function PropositionPage() {
           </p>
         </header>
 
-        <div className="grid grid-cols-12 gap-6 md:gap-10">
+        <div className="grid grid-cols-12 gap-6 md:gap-8">
           {pillars.map((p, i) => (
-            <article key={p.title} className="col-span-12 md:col-span-6">
-              <p className="font-display text-[14px] text-muted tabular-nums">
+            <article
+              key={p.title}
+              className="col-span-12 flex min-h-[220px] flex-col justify-between rounded-[20px] bg-panel p-8 md:col-span-6 md:p-12"
+            >
+              <span className="font-display text-[14px] font-medium text-muted tabular-nums">
                 {String(i + 1).padStart(2, '0')}
-              </p>
-              <h3 className="mt-3 font-display text-[22px] font-medium leading-[1.15] tracking-[-0.02em] text-ink md:text-[26px]">
+              </span>
+              <p
+                className="font-display font-medium leading-[1.05] tracking-[-0.025em] text-ink"
+                style={{ fontSize: 'clamp(1.75rem, 4vw, 2.75rem)' }}
+              >
                 {p.title}
-              </h3>
-              <p className="mt-2 text-[16px] leading-[1.55] text-muted">
-                {p.body}
               </p>
             </article>
           ))}
         </div>
       </section>
 
-      {/* Anti-proposition — what we're not */}
+      {/* Usage */}
       <section className="mb-24 md:mb-32">
-        <header className="mb-6">
-          <p className="text-[14px] text-primary">{against.label}</p>
-          <h2
-            className="mt-3 font-display font-medium leading-[1.05] tracking-[-0.025em] text-ink"
-            style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)' }}
-          >
-            The places we deliberately don&apos;t play.
+        <header className="mb-8">
+          <p className="text-[14px] text-primary">Usage</p>
+          <h2 className="mt-3 font-display text-[22px] font-medium tracking-[-0.015em] text-ink md:text-[26px]">
+            When to use which.
           </h2>
         </header>
-        <ul className="divide-y divide-line">
-          {against.items.map((item) => (
-            <li key={item} className="py-4 text-[18px] leading-[1.5] text-muted md:text-[20px]">
-              {item}
-            </li>
-          ))}
+        <ul className="divide-y divide-line border-y border-line">
+          <UsageRow
+            label="Primary, alone"
+            where="Hero, campaign headers, press boilerplate"
+          />
+          <UsageRow
+            label="Primary + support"
+            where="About page, investor decks, first-time introductions"
+          />
+          <UsageRow
+            label="Support, alone"
+            where="Sub-pages, email footers, social bios"
+          />
         </ul>
       </section>
     </>
+  );
+}
+
+function UsageRow({ label, where }) {
+  return (
+    <li className="grid grid-cols-12 items-baseline gap-4 py-5">
+      <span className="col-span-12 font-display text-[18px] font-medium tracking-[-0.01em] text-ink md:col-span-4">
+        {label}
+      </span>
+      <span className="col-span-12 text-[16px] leading-[1.5] text-muted md:col-span-8">
+        {where}
+      </span>
+    </li>
   );
 }
