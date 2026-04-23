@@ -163,7 +163,10 @@ function UploadTab() {
       <aside className="space-y-6 rounded-[20px] bg-panel p-6 md:p-7">
         <div>
           <p className="mb-3 text-[13px] font-medium text-ink">Audience</p>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
+            <AudiencePill active={audience === 'public'} onClick={() => setAudience('public')}>
+              Public
+            </AudiencePill>
             <AudiencePill active={audience === 'client'} onClick={() => setAudience('client')}>
               Client files
             </AudiencePill>
@@ -172,9 +175,11 @@ function UploadTab() {
             </AudiencePill>
           </div>
           <p className="mt-2 text-[12px] text-muted">
-            {audience === 'client'
-              ? 'Visible to all invited external clients.'
-              : 'Visible only to the Oxydise team.'}
+            {audience === 'public'
+              ? 'On the public /downloads page — anyone can grab them, no sign-in.'
+              : audience === 'client'
+                ? 'Visible to all invited external clients in the portal.'
+                : 'Visible only to the Oxydise team.'}
           </p>
         </div>
 
@@ -290,13 +295,16 @@ function InviteTab() {
 // ---------- Files tab ----------
 
 function FilesTab({ files }) {
+  const isPublic = (f) => f.client?.slug === 'brand-downloads';
+  const publicFiles = files.filter(isPublic);
   const internal = files.filter((f) => f.client?.is_internal);
-  const shared = files.filter((f) => !f.client?.is_internal);
+  const shared = files.filter((f) => !f.client?.is_internal && !isPublic(f));
 
   return (
     <div className="space-y-10">
-      <FilesBucket title="Internal" subtitle="Team only" files={internal} />
+      <FilesBucket title="Public downloads" subtitle="Visible on /downloads — anyone" files={publicFiles} />
       <FilesBucket title="Client files" subtitle="Visible to all invited clients" files={shared} />
+      <FilesBucket title="Internal" subtitle="Team only" files={internal} />
     </div>
   );
 }

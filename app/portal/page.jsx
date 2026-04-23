@@ -28,7 +28,9 @@ export default async function PortalDashboard() {
     .select('id, display_name, size_bytes, mime_type, category, storage_path, uploaded_at, client_id, client:client_id(name, slug, is_internal)')
     .order('uploaded_at', { ascending: false });
 
-  const rows = files ?? [];
+  // Brand downloads have their own home at /downloads — keep them out of
+  // the portal dashboard.
+  const rows = (files ?? []).filter((f) => f.client?.slug !== 'brand-downloads');
   const previewPaths = rows.filter((f) => isPreviewable(f.mime_type)).map((f) => f.storage_path);
 
   let previewByPath = new Map();
