@@ -14,7 +14,10 @@ export default async function PortalLayout({ children }) {
       {/* The marketing site uses scroll-snap for a "slideshow" feel.
           The portal is an app — scroll should behave normally. */}
       <style>{`
-        html { scroll-snap-type: none !important; }
+        html {
+          scroll-snap-type: none !important;
+          scroll-behavior: auto !important;
+        }
         main > section, main > article,
         main > div > section, main > div > article {
           scroll-snap-align: none !important;
