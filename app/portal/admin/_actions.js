@@ -97,19 +97,27 @@ export async function uploadFile(formData) {
     contentType: file.type || 'application/octet-stream',
     upsert: false,
   });
-  if (upErr) throw new Error(upErr.message);
+  if (upErr) throw new Error(`Storage: ${upErr.message}`);
 
-  const { error: rowErr } = await admin.from('file').insert({
+  const row = {
     client_id: target.id,
     storage_path: path,
     display_name: file.name,
     mime_type: file.type || null,
     size_bytes: file.size,
     category,
-    bucket,
     uploaded_by: user.id,
-  });
-  if (rowErr) throw new Error(rowErr.message);
+  };
+  // Only include bucket when it's not the default — keeps the action
+  // working on schemas that pre-date migration 0004.
+  if (bucket !== PRIVATE_BUCKET) row.bucket = bucket;
+
+  const { error: rowErr } = await admin.from('file').insert(row);
+  if (rowErr && /column .*bucket.* does not exist/i.test(rowErr.message)) {
+    throw new Error('Schema out of date — run migration 0004_brand_downloads.sql in the Supabase SQL editor.');
+  }
+  if (rowErr) throw new Error(`DB: ${rowErr.message}`);
+
   revalidatePath('/portal/admin');
   revalidatePath('/portal');
   if (audience === 'public') revalidatePath('/downloads');
@@ -120,11 +128,20 @@ export async function deleteFile(formData) {
   const admin = getSupabaseAdminClient();
   const fileId = String(formData.get('fileId') ?? '');
   if (!fileId) throw new Error('File id required');
-  const { data: file } = await admin
+  // Try the new shape first; fall back when the bucket column doesn't exist.
+  let { data: file } = await admin
     .from('file')
     .select('storage_path, bucket, client:client_id(slug)')
     .eq('id', fileId)
     .maybeSingle();
+  if (!file) {
+    const fallback = await admin
+      .from('file')
+      .select('storage_path, client:client_id(slug)')
+      .eq('id', fileId)
+      .maybeSingle();
+    file = fallback.data;
+  }
   if (file) {
     await admin.storage.from(file.bucket || PRIVATE_BUCKET).remove([file.storage_path]);
   }
