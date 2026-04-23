@@ -4,7 +4,7 @@ import { brand } from '@/lib/brand.config';
 export const metadata = { title: `Values + Mission — ${brand.name}` };
 
 export default function ValuesMissionPage() {
-  const { headline, headlineTail, intro, mission, values } = brand.valuesMission;
+  const { headline, headlineTail, intro, mission, values, approvedOn } = brand.valuesMission;
 
   return (
     <>
@@ -46,41 +46,47 @@ export default function ValuesMissionPage() {
               className="mt-3 font-display font-medium leading-[1.05] tracking-[-0.025em] text-ink"
               style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)' }}
             >
-              The six things we measure every decision against.
+              The six we measure every decision against.
             </h2>
           </div>
-          <p className="hidden shrink-0 text-[16px] text-muted md:block">
-            {values.length} values
-          </p>
+          {approvedOn && (
+            <p className="hidden shrink-0 text-[14px] text-muted md:block">
+              Approved{' '}
+              {new Date(approvedOn).toLocaleDateString('en-GB', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+              })}
+            </p>
+          )}
         </header>
 
-        <div className="space-y-6 md:space-y-8">
+        <ul className="divide-y divide-line border-t border-line">
           {values.map((v, i) => (
-            <Value key={v.name} index={i + 1} {...v} />
+            <li key={v.name} className="grid grid-cols-12 gap-x-4 gap-y-4 py-10 md:gap-x-8 md:py-12">
+              <div className="col-span-2 md:col-span-1">
+                <span className="font-display text-[14px] text-muted tabular-nums">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+              </div>
+              <div className="col-span-10 md:col-span-4">
+                <h3
+                  className="font-display font-medium leading-[1.05] tracking-[-0.02em] text-ink"
+                  style={{ fontSize: 'clamp(1.75rem, 2.8vw, 2.25rem)' }}
+                >
+                  {v.name}
+                </h3>
+                {v.summary && (
+                  <p className="mt-2 text-[14px] text-primary">{v.summary}</p>
+                )}
+              </div>
+              <p className="col-span-12 self-center text-[17px] leading-[1.55] text-ink/80 md:col-span-7 md:text-[18px]">
+                {v.body}
+              </p>
+            </li>
           ))}
-        </div>
+        </ul>
       </section>
     </>
-  );
-}
-
-function Value({ index, name, description }) {
-  return (
-    <article className="grid grid-cols-12 items-baseline gap-4 border-t border-line pt-6 md:gap-8 md:pt-8">
-      <div className="col-span-2 md:col-span-1">
-        <span className="font-display text-[14px] text-muted tabular-nums">
-          {String(index).padStart(2, '0')}
-        </span>
-      </div>
-      <h3
-        className="col-span-10 font-display font-medium leading-[1.1] tracking-[-0.02em] text-ink md:col-span-4"
-        style={{ fontSize: 'clamp(1.5rem, 2.5vw, 2rem)' }}
-      >
-        {name}
-      </h3>
-      <p className="col-span-12 text-[16px] leading-[1.55] text-muted md:col-span-7">
-        {description}
-      </p>
-    </article>
   );
 }
