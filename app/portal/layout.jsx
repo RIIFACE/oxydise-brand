@@ -10,6 +10,18 @@ export default async function PortalLayout({ children }) {
   const { data: { user } } = await supabase.auth.getUser();
 
   return (
+    <>
+      {/* The marketing site uses scroll-snap for a "slideshow" feel.
+          The portal is an app — scroll should behave normally. */}
+      <style>{`
+        html { scroll-snap-type: none !important; }
+        main > section, main > article,
+        main > div > section, main > div > article {
+          scroll-snap-align: none !important;
+          scroll-snap-stop: normal !important;
+          min-height: 0 !important;
+        }
+      `}</style>
     <div className="min-h-dvh bg-bg">
       <header className="border-b border-line">
         <div className="flex h-16 items-center justify-between gap-4 px-6 md:px-10">
@@ -25,5 +37,6 @@ export default async function PortalLayout({ children }) {
       </header>
       <main className="px-6 py-10 md:px-10 md:py-12">{children}</main>
     </div>
+    </>
   );
 }
