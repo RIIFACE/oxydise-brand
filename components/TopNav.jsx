@@ -6,13 +6,15 @@ import { usePathname } from 'next/navigation';
 import ThemeToggle from './ThemeToggle';
 
 const sections = [
-  { href: '/',           label: 'Overview' },
-  { href: '/logo',       label: 'Logo' },
-  { href: '/colors',     label: 'Colour' },
-  { href: '/typography', label: 'Type' },
-  { href: '/voice',      label: 'Voice' },
-  { href: '/components', label: 'Components' },
-  { href: '/downloads',  label: 'Downloads' },
+  { href: '/',                label: 'Overview' },
+  { href: '/logo',            label: 'Logo' },
+  { href: '/colors',          label: 'Colour' },
+  { href: '/typography',      label: 'Type' },
+  { href: '/voice',           label: 'Voice' },
+  { href: '/values-mission',  label: 'Values + Mission' },
+  { href: '/proposition',     label: 'Proposition' },
+  { href: '/components',      label: 'Components' },
+  { href: '/downloads',       label: 'Downloads' },
 ];
 
 export default function TopNav() {
