@@ -3,11 +3,19 @@
 import { revalidatePath } from 'next/cache';
 import { getSupabaseServerClient, getSupabaseAdminClient } from '@/lib/supabase/server';
 
-const BUCKET = 'client-files';
+const PRIVATE_BUCKET = 'client-files';
+const PUBLIC_BUCKET = 'brand-downloads';
 
 const AUDIENCE_SLUG = {
   internal: 'oxydise-internal',
   client: 'clients',
+  public: 'brand-downloads',
+};
+
+const BUCKET_FOR_AUDIENCE = {
+  internal: PRIVATE_BUCKET,
+  client: PRIVATE_BUCKET,
+  public: PUBLIC_BUCKET,
 };
 
 const VALID_CATEGORIES = new Set([
@@ -79,12 +87,13 @@ export async function uploadFile(formData) {
   if (!file || typeof file === 'string') throw new Error('File required');
 
   const target = await resolveAudienceClient(audience);
+  const bucket = BUCKET_FOR_AUDIENCE[audience] ?? PRIVATE_BUCKET;
 
   const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
   const path = `${target.slug}/${category}/${Date.now()}-${safeName}`;
 
   const bytes = Buffer.from(await file.arrayBuffer());
-  const { error: upErr } = await admin.storage.from(BUCKET).upload(path, bytes, {
+  const { error: upErr } = await admin.storage.from(bucket).upload(path, bytes, {
     contentType: file.type || 'application/octet-stream',
     upsert: false,
   });
@@ -97,11 +106,13 @@ export async function uploadFile(formData) {
     mime_type: file.type || null,
     size_bytes: file.size,
     category,
+    bucket,
     uploaded_by: user.id,
   });
   if (rowErr) throw new Error(rowErr.message);
   revalidatePath('/portal/admin');
   revalidatePath('/portal');
+  if (audience === 'public') revalidatePath('/downloads');
 }
 
 export async function deleteFile(formData) {
@@ -109,11 +120,16 @@ export async function deleteFile(formData) {
   const admin = getSupabaseAdminClient();
   const fileId = String(formData.get('fileId') ?? '');
   if (!fileId) throw new Error('File id required');
-  const { data: file } = await admin.from('file').select('storage_path').eq('id', fileId).maybeSingle();
+  const { data: file } = await admin
+    .from('file')
+    .select('storage_path, bucket, client:client_id(slug)')
+    .eq('id', fileId)
+    .maybeSingle();
   if (file) {
-    await admin.storage.from(BUCKET).remove([file.storage_path]);
+    await admin.storage.from(file.bucket || PRIVATE_BUCKET).remove([file.storage_path]);
   }
   await admin.from('file').delete().eq('id', fileId);
   revalidatePath('/portal/admin');
   revalidatePath('/portal');
+  if (file?.client?.slug === 'brand-downloads') revalidatePath('/downloads');
 }

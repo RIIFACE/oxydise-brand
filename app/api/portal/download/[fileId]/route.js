@@ -3,8 +3,6 @@ import { getSupabaseServerClient } from '@/lib/supabase/server';
 
 export const dynamic = 'force-dynamic';
 
-const BUCKET = 'client-files';
-
 export async function GET(request, { params }) {
   const { fileId } = params;
   const supabase = getSupabaseServerClient();
@@ -17,7 +15,7 @@ export async function GET(request, { params }) {
   // RLS handles permission: only files the user can see come back.
   const { data: file, error } = await supabase
     .from('file')
-    .select('id, storage_path, display_name')
+    .select('id, storage_path, display_name, bucket')
     .eq('id', fileId)
     .maybeSingle();
 
@@ -26,7 +24,7 @@ export async function GET(request, { params }) {
   }
 
   const { data: signed, error: signErr } = await supabase.storage
-    .from(BUCKET)
+    .from(file.bucket || 'client-files')
     .createSignedUrl(file.storage_path, 60, { download: file.display_name });
 
   if (signErr || !signed?.signedUrl) {
