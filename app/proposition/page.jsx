@@ -22,7 +22,7 @@ export default function PropositionPage() {
       {/* Definition — what a proposition is */}
       <section className="mb-20 grid grid-cols-12 gap-6 md:mb-28 md:gap-10">
         <header className="col-span-12 md:col-span-4">
-          <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-muted">What it is</p>
+          <p className="text-[14px] font-medium text-muted">What it is</p>
           <h2 className="mt-3 font-display text-[26px] font-medium leading-[1.15] tracking-[-0.02em] text-ink md:text-[32px]">
             The central idea.
           </h2>
@@ -35,7 +35,7 @@ export default function PropositionPage() {
       {/* Primary — the lead */}
       <section className="mb-16 grid grid-cols-12 gap-6 md:mb-24 md:gap-10">
         <header className="col-span-12 md:col-span-4">
-          <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-muted">Primary</p>
+          <p className="text-[14px] font-medium text-muted">Primary</p>
           <h2 className="mt-3 font-display text-[26px] font-medium leading-[1.15] tracking-[-0.02em] text-ink md:text-[32px]">
             The lead line.
           </h2>
@@ -53,7 +53,7 @@ export default function PropositionPage() {
       {/* Support — the follow */}
       <section className="mb-24 grid grid-cols-12 gap-6 md:mb-32 md:gap-10">
         <header className="col-span-12 md:col-span-4">
-          <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-muted">Support</p>
+          <p className="text-[14px] font-medium text-muted">Support</p>
           <h2 className="mt-3 font-display text-[26px] font-medium leading-[1.15] tracking-[-0.02em] text-ink md:text-[32px]">
             Follows the primary.
           </h2>
@@ -72,7 +72,7 @@ export default function PropositionPage() {
       <section className="mb-24 md:mb-32">
         <header className="mb-10 flex items-baseline justify-between md:mb-14">
           <div>
-            <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-muted">Pillars</p>
+            <p className="text-[14px] font-medium text-muted">Pillars</p>
             <h2
               className="mt-3 font-display font-medium leading-[1.05] tracking-[-0.025em] text-ink"
               style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)' }}
@@ -108,7 +108,7 @@ export default function PropositionPage() {
       {/* Usage */}
       <section className="mb-24 md:mb-32">
         <header className="mb-8">
-          <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-muted">Usage</p>
+          <p className="text-[14px] font-medium text-muted">Usage</p>
           <h2 className="mt-3 font-display text-[22px] font-medium tracking-[-0.015em] text-ink md:text-[26px]">
             Where each form appears.
           </h2>

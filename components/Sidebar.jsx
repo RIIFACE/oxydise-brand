@@ -24,7 +24,7 @@ export default function Sidebar() {
       </div>
 
       <nav className="flex-1 px-3 py-2">
-        <p className="mb-2 px-3 text-[16px] font-medium uppercase tracking-[0.08em] text-muted">
+        <p className="mb-2 px-3 text-[16px] font-medium text-muted">
           Sections
         </p>
         <ul className="space-y-0.5">
