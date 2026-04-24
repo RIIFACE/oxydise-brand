@@ -1,15 +1,15 @@
 import Poster from '@/components/Poster';
 import { brand } from '@/lib/brand.config';
 
-export const metadata = { title: `Values + Mission — ${brand.name}` };
+export const metadata = { title: `Mission & Values — ${brand.name}` };
 
 export default function ValuesMissionPage() {
-  const { headline, headlineTail, intro, mission, values, approvedOn } = brand.valuesMission;
+  const { label, headline, headlineTail, intro, mission, values, approvedOn } = brand.valuesMission;
 
   return (
     <>
       <Poster
-        eyebrow="Values + Mission"
+        eyebrow={label}
         headline={
           <>
             {headline}<br />
@@ -22,9 +22,9 @@ export default function ValuesMissionPage() {
       {/* Mission — one line that keeps us honest */}
       <section className="mb-24 grid grid-cols-12 gap-6 md:mb-32 md:gap-10">
         <header className="col-span-12 md:col-span-4">
-          <p className="text-[14px] text-primary">{mission.label}</p>
+          <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-muted">{mission.label}</p>
           <h2 className="mt-3 font-display text-[26px] font-medium leading-[1.15] tracking-[-0.02em] text-ink md:text-[32px]">
-            One sentence. Kept simple.
+            The north star.
           </h2>
         </header>
         <blockquote className="col-span-12 md:col-span-8">
@@ -41,7 +41,7 @@ export default function ValuesMissionPage() {
       <section className="mb-24 md:mb-32">
         <header className="mb-10 flex items-baseline justify-between md:mb-14">
           <div>
-            <p className="text-[14px] text-primary">Values</p>
+            <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-muted">Values</p>
             <h2
               className="mt-3 font-display font-medium leading-[1.05] tracking-[-0.025em] text-ink"
               style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)' }}
@@ -77,7 +77,7 @@ export default function ValuesMissionPage() {
                   {v.name}
                 </h3>
                 {v.summary && (
-                  <p className="mt-2 text-[14px] text-primary">{v.summary}</p>
+                  <p className="mt-2 text-[14px] text-muted">{v.summary}</p>
                 )}
               </div>
               <p className="col-span-12 self-center text-[17px] leading-[1.55] text-ink/80 md:col-span-7 md:text-[18px]">

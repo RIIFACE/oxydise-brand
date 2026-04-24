@@ -22,7 +22,7 @@ export default function VoicePage() {
       {/* Feeling — what readers take away */}
       <section className="mb-20 grid grid-cols-12 gap-6 md:mb-28 md:gap-10">
         <header className="col-span-12 md:col-span-4">
-          <p className="text-[14px] text-primary">Feeling</p>
+          <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-muted">Feeling</p>
           <h2 className="mt-3 font-display text-[26px] font-medium leading-[1.15] tracking-[-0.02em] text-ink md:text-[32px]">
             Read any Oxydise content and the reader should come away:
           </h2>
@@ -37,7 +37,7 @@ export default function VoicePage() {
       <section className="mb-24 md:mb-32">
         <header className="mb-10 flex items-baseline justify-between md:mb-14">
           <div>
-            <p className="text-[14px] text-primary">Aligned to values</p>
+            <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-muted">Aligned to values</p>
             <h2
               className="mt-3 font-display font-medium leading-[1.05] tracking-[-0.025em] text-ink"
               style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)' }}
@@ -93,7 +93,7 @@ function Principle({ index, name, values, guidelines, do: yes, dont: no }) {
           <span className="font-display text-[14px] font-medium text-muted">
             {String(index).padStart(2, '0')}
           </span>
-          <p className="text-[14px] text-primary">{values}</p>
+          <p className="text-[14px] text-muted">{values}</p>
         </div>
         <h3
           className="mt-5 font-display font-medium leading-[0.92] tracking-[-0.035em] text-ink"

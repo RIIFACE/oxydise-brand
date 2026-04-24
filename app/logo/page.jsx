@@ -4,9 +4,12 @@ import { brand } from '@/lib/brand.config';
 export const metadata = { title: `Logo — ${brand.name}` };
 
 const tiles = [
-  { label: 'Black on canvas',   src: '/logos/oxydise-black.svg',  bg: '#FFFFFF' },
-  { label: 'White on black',    src: '/logos/oxydise-white.svg',  bg: '#000000' },
-  { label: 'White on Signal',   src: '/logos/oxydise-white.svg',  bg: '#00AAFF' },
+  { label: 'Black on canvas',     src: '/logos/oxydise-black.svg',  bg: '#FFFFFF' },
+  { label: 'White on black',      src: '/logos/oxydise-white.svg',  bg: '#000000' },
+  { label: 'White on Signal',     src: '/logos/oxydise-white.svg',  bg: '#00AAFF' },
+  { label: 'White on mid-tone',   src: '/logos/oxydise-white.svg',  bg: '#E5484D' },
+  { label: 'White on Deep Navy',  src: '/logos/oxydise-white.svg',  bg: '#001540' },
+  { label: 'White on warm tone',  src: '/logos/oxydise-white.svg',  bg: '#C98B3A' },
 ];
 
 const misuses = [
@@ -14,6 +17,13 @@ const misuses = [
   { label: "Don't rotate",      transform: 'rotate(14deg)' },
   { label: "Don't recolour",    filter: 'brightness(0.4) sepia(1) saturate(8) hue-rotate(280deg)' },
   { label: "Don't add effects", filter: 'drop-shadow(0 0 10px rgba(0,170,255,0.9))' },
+];
+
+const cropMisuses = [
+  { label: "Don't crop the left edge", clipPath: 'inset(0 0 0 22%)' },
+  { label: "Don't crop the right edge", clipPath: 'inset(0 22% 0 0)' },
+  { label: "Don't crop vertically", clipPath: 'inset(30% 0 30% 0)' },
+  { label: "Don't crop a corner", clipPath: 'polygon(0 0, 75% 0, 75% 60%, 100% 60%, 100% 100%, 0 100%)' },
 ];
 
 const mediaTiles = [
@@ -96,8 +106,9 @@ export default function LogoPage() {
       <section className="mb-14">
         <h2 className="mb-3 font-display text-[16px] font-medium tracking-[-0.01em] text-ink">Primary</h2>
         <p className="mb-5 max-w-2xl text-[16px] leading-[1.55] text-muted">
-          Mono only. Black on light. White on dark or any coloured surface. That&apos;s the
-          whole system — no colour version.
+          Mono only — no colour version. Black on light, neutral backgrounds. White on
+          everything else: black, navy, Signal, or any mid-tone colour such as red, amber,
+          or saturated greens. If the surface has any real colour to it, use white.
         </p>
         <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {tiles.map((t) => (
@@ -178,7 +189,7 @@ export default function LogoPage() {
         </div>
       </section>
 
-      <section className="mb-24 md:mb-32">
+      <section className="mb-14">
         <h2 className="mb-3 font-display text-[16px] font-medium tracking-[-0.01em] text-ink">Misuse</h2>
         <p className="mb-5 max-w-2xl text-[16px] leading-[1.55] text-muted">
           The logo is a system, not a sticker. Don&apos;t recolour, stretch, outline, or rotate.
@@ -195,6 +206,39 @@ export default function LogoPage() {
                   className="h-8 w-auto"
                   style={{ transform: m.transform, filter: m.filter }}
                 />
+              </div>
+              <p className="mt-4 text-[16px] text-ink">{m.label}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mb-24 md:mb-32">
+        <h2 className="mb-3 font-display text-[16px] font-medium tracking-[-0.01em] text-ink">Don&apos;t crop</h2>
+        <p className="mb-5 max-w-2xl text-[16px] leading-[1.55] text-muted">
+          The lockup is whole or not at all. Never trim edges to fit a layout, and never
+          let another element overlap it. If space is tight, use the halo instead.
+        </p>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {cropMisuses.map((m) => (
+            <div key={m.label} className="rounded-[20px] bg-panel p-6">
+              <div className="relative flex h-28 items-center justify-center overflow-hidden rounded-[14px] bg-white">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/logos/oxydise-black.svg"
+                  alt=""
+                  aria-hidden
+                  className="h-8 w-auto"
+                  style={{ clipPath: m.clipPath, WebkitClipPath: m.clipPath }}
+                />
+                <span
+                  aria-hidden
+                  className="absolute left-3 top-3 inline-flex h-5 w-5 items-center justify-center rounded-full bg-[#E5484D] text-white"
+                >
+                  <svg width="10" height="10" viewBox="0 0 16 16" fill="none">
+                    <path d="M4.5 4.5l7 7M11.5 4.5l-7 7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                  </svg>
+                </span>
               </div>
               <p className="mt-4 text-[16px] text-ink">{m.label}</p>
             </div>

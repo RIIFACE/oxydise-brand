@@ -11,7 +11,7 @@ const sections = [
   { href: '/colors',          label: 'Colour' },
   { href: '/typography',      label: 'Type' },
   { href: '/voice',           label: 'Voice' },
-  { href: '/values-mission',  label: 'Values + Mission' },
+  { href: '/values-mission',  label: 'Mission & Values' },
   { href: '/proposition',     label: 'Proposition' },
   { href: '/components',      label: 'Components' },
   { href: '/downloads',       label: 'Downloads' },

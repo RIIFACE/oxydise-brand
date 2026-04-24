@@ -4,7 +4,7 @@ import { brand } from '@/lib/brand.config';
 export const metadata = { title: `Proposition — ${brand.name}` };
 
 export default function PropositionPage() {
-  const { headline, headlineTail, primary, support, pillars } = brand.proposition;
+  const { headline, headlineTail, definition, primary, support, pillars, usage } = brand.proposition;
 
   return (
     <>
@@ -16,13 +16,26 @@ export default function PropositionPage() {
             <span className="text-muted">{headlineTail}</span>
           </>
         }
-        subcopy="The single sentence that leads, and the support line that grounds it. Used in the header, the hero, and anywhere we introduce the brand."
+        subcopy="The single sentence that leads, and the support line that grounds it. Used wherever we introduce the brand."
       />
+
+      {/* Definition — what a proposition is */}
+      <section className="mb-20 grid grid-cols-12 gap-6 md:mb-28 md:gap-10">
+        <header className="col-span-12 md:col-span-4">
+          <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-muted">What it is</p>
+          <h2 className="mt-3 font-display text-[26px] font-medium leading-[1.15] tracking-[-0.02em] text-ink md:text-[32px]">
+            The central idea.
+          </h2>
+        </header>
+        <p className="col-span-12 self-center text-[18px] leading-[1.55] text-ink/80 md:col-span-8 md:text-[20px]">
+          {definition}
+        </p>
+      </section>
 
       {/* Primary — the lead */}
       <section className="mb-16 grid grid-cols-12 gap-6 md:mb-24 md:gap-10">
         <header className="col-span-12 md:col-span-4">
-          <p className="text-[14px] text-primary">Primary</p>
+          <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-muted">Primary</p>
           <h2 className="mt-3 font-display text-[26px] font-medium leading-[1.15] tracking-[-0.02em] text-ink md:text-[32px]">
             The lead line.
           </h2>
@@ -40,7 +53,7 @@ export default function PropositionPage() {
       {/* Support — the follow */}
       <section className="mb-24 grid grid-cols-12 gap-6 md:mb-32 md:gap-10">
         <header className="col-span-12 md:col-span-4">
-          <p className="text-[14px] text-primary">Support</p>
+          <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-muted">Support</p>
           <h2 className="mt-3 font-display text-[26px] font-medium leading-[1.15] tracking-[-0.02em] text-ink md:text-[32px]">
             Follows the primary.
           </h2>
@@ -59,7 +72,7 @@ export default function PropositionPage() {
       <section className="mb-24 md:mb-32">
         <header className="mb-10 flex items-baseline justify-between md:mb-14">
           <div>
-            <p className="text-[14px] text-primary">Pillars</p>
+            <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-muted">Pillars</p>
             <h2
               className="mt-3 font-display font-medium leading-[1.05] tracking-[-0.025em] text-ink"
               style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)' }}
@@ -95,24 +108,15 @@ export default function PropositionPage() {
       {/* Usage */}
       <section className="mb-24 md:mb-32">
         <header className="mb-8">
-          <p className="text-[14px] text-primary">Usage</p>
+          <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-muted">Usage</p>
           <h2 className="mt-3 font-display text-[22px] font-medium tracking-[-0.015em] text-ink md:text-[26px]">
-            When to use which.
+            Where each form appears.
           </h2>
         </header>
         <ul className="divide-y divide-line border-y border-line">
-          <UsageRow
-            label="Primary, alone"
-            where="Hero, campaign headers, press boilerplate"
-          />
-          <UsageRow
-            label="Primary + support"
-            where="About page, investor decks, first-time introductions"
-          />
-          <UsageRow
-            label="Support, alone"
-            where="Sub-pages, email footers, social bios"
-          />
+          {usage.map((row) => (
+            <UsageRow key={row.label} label={row.label} where={row.where} />
+          ))}
         </ul>
       </section>
     </>
