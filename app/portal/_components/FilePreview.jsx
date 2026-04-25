@@ -47,13 +47,13 @@ function FileGlyph({ category, filename }) {
 
 function tintFor(category) {
   switch (category) {
-    case 'logo':            return { bg: 'rgba(173, 228, 255, 0.35)', fg: '#001540' };
-    case 'pdf':             return { bg: 'rgba(229, 72, 77, 0.12)',   fg: '#C43B3F' };
-    case 'brochure':        return { bg: 'rgba(0, 48, 147, 0.1)',     fg: '#003093' };
-    case 'font':            return { bg: 'rgba(64, 64, 191, 0.12)',   fg: '#4040BF' };
-    case 'photo':           return { bg: 'rgba(173, 228, 255, 0.25)', fg: '#00AAFF' };
-    case 'video':           return { bg: 'rgba(0, 21, 64, 0.08)',     fg: '#001540' };
-    case 'social_template': return { bg: 'rgba(0, 170, 255, 0.1)',    fg: '#00AAFF' };
-    default:                return { bg: 'rgb(245 245 247)',           fg: 'rgb(110 110 115)' };
+    case 'logo':            return { bg: 'rgba(0, 21, 64, 0.06)',  fg: '#001540' };
+    case 'pdf':             return { bg: 'rgba(229, 72, 77, 0.12)', fg: '#C43B3F' };
+    case 'brochure':        return { bg: 'rgba(0, 21, 64, 0.08)',  fg: '#001540' };
+    case 'font':            return { bg: 'rgba(0, 21, 64, 0.08)',  fg: '#001540' };
+    case 'photo':           return { bg: 'rgba(0, 170, 255, 0.1)', fg: '#00AAFF' };
+    case 'video':           return { bg: 'rgba(0, 21, 64, 0.08)',  fg: '#001540' };
+    case 'social_template': return { bg: 'rgba(0, 170, 255, 0.1)', fg: '#00AAFF' };
+    default:                return { bg: 'rgb(245 245 247)',       fg: 'rgb(110 110 115)' };
   }
 }

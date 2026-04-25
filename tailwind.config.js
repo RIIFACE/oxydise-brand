@@ -16,9 +16,6 @@ module.exports = {
         muted:   'rgb(var(--color-muted) / <alpha-value>)',
         // Brand palette — constants in both themes
         primary: '#00AAFF',
-        sky:     '#ADE4FF',
-        royal:   '#003093',
-        accent:  '#4040BF',
         navy:    '#001540',
       },
       fontFamily: {
