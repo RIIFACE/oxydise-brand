@@ -10,7 +10,6 @@ export default function ColorsPage() {
   const surfaceTokens = tokens.filter(([, c]) => c.role === 'surface');
   const primary    = tokens.find(([, c]) => c.tier === 'primary');
   const secondary  = tokens.find(([, c]) => c.tier === 'secondary');
-  const supporting = tokens.filter(([, c]) => c.tier === 'supporting');
 
   return (
     <>
@@ -22,7 +21,7 @@ export default function ColorsPage() {
             <span className="text-muted">Deep Navy anchors.</span>
           </>
         }
-        subcopy="One primary, one secondary, three supporting. Signal carries emphasis; Deep Navy carries depth. The rest quietly fill in."
+        subcopy="One primary, one secondary. Signal carries emphasis; Deep Navy carries depth."
         mark={<PosterTile />}
       />
 
@@ -32,28 +31,11 @@ export default function ColorsPage() {
           <h2 className="font-display text-[18px] font-medium tracking-tight text-ink">
             Brand
           </h2>
-          <p className="mt-1 text-[16px] text-muted">Primary and secondary carry the identity. Supporting fills in.</p>
+          <p className="mt-1 text-[16px] text-muted">Primary and secondary carry the identity.</p>
         </header>
 
         <HeroSwatch label="Primary"   token={primary[0]}   color={primary[1]} />
         <HeroSwatch label="Secondary" token={secondary[0]} color={secondary[1]} />
-      </section>
-
-      {/* Supporting */}
-      <section className="grid grid-cols-12 pt-10 md:pt-14">
-        <header className="col-span-12 mb-8 flex items-baseline justify-between md:mb-10">
-          <h3 className="font-display text-[16px] font-medium tracking-tight text-muted">
-            Supporting
-          </h3>
-          <p className="text-[16px] text-muted">{supporting.length} tokens</p>
-        </header>
-        <div className="col-span-12 grid grid-cols-12 gap-x-6 gap-y-14 pb-14 md:gap-y-16 md:pb-20">
-          {supporting.map(([token, color]) => (
-            <div key={token} className="col-span-12 sm:col-span-6 lg:col-span-4">
-              <ColorSwatch token={token} color={color} />
-            </div>
-          ))}
-        </div>
       </section>
 
       {/* Surfaces */}

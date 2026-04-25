@@ -68,7 +68,7 @@ export default function ComponentsPage() {
               </p>
             </div>
             <div className="rounded-[20px] bg-bg p-6">
-              <p className="text-[16px] font-medium text-accent">Note</p>
+              <p className="text-[16px] font-medium text-navy">Note</p>
               <h3 className="mt-3 font-display text-[22px] font-medium tracking-[-0.015em] text-ink">Field report</h3>
               <p className="mt-2 text-[16px] leading-[1.55] text-muted">
                 After two years in salt air, the finish settles into a quieter green.
@@ -113,7 +113,7 @@ export default function ComponentsPage() {
             <span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-[16px] font-medium text-primary">
               New
             </span>
-            <span className="inline-flex items-center rounded-full bg-accent/10 px-3 py-1 text-[16px] font-medium text-accent">
+            <span className="inline-flex items-center rounded-full bg-navy/10 px-3 py-1 text-[16px] font-medium text-navy">
               Live
             </span>
             <span className="inline-flex items-center rounded-full border border-line bg-panel px-3 py-1 text-[16px] font-medium text-muted">
