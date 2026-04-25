@@ -57,12 +57,14 @@ const mediaTiles = [
   },
   {
     label: 'Social / square',
-    caption: 'Wordmark on navy. Centred, generous clear space.',
+    caption: 'Halo on navy for profile avatars, Instagram, LinkedIn.',
     bgStyle: 'radial-gradient(120% 120% at 0% 0%, #1a1f5c 0%, #001540 45%, #00081c 100%)',
-    logo: 'white',
+    logo: 'halo-black',
+    invertLogo: true,
+    logoClass: 'h-[240px] w-[240px] md:h-[336px] md:w-[336px]',
     aspect: '1 / 1',
     anchor: 'items-center justify-center',
-    padding: 'p-12 md:p-20',
+    padding: 'p-6',
   },
 ];
 
@@ -112,6 +114,22 @@ export default function LogoPage() {
           {tiles.map((t) => (
             <LogoTile key={t.label} {...t} />
           ))}
+        </div>
+      </section>
+
+      <section className="mb-14">
+        <h2 className="mb-3 font-display text-[16px] font-medium tracking-[-0.01em] text-ink">Halo</h2>
+        <p className="mb-3 max-w-2xl text-[18px] font-medium text-ink">
+          Only use the halo when space doesn&apos;t allow the full lockup.
+        </p>
+        <p className="mb-5 max-w-2xl text-[16px] leading-[1.55] text-muted">
+          Avatars, favicons, app icons, loading states, tight UI — nowhere else. The
+          wordmark is always preferred when it fits. Same rule as the lockup: black on light,
+          white on dark or coloured.
+        </p>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <HaloTile label="Black on canvas"   variant="black"  bg="#FFFFFF" />
+          <HaloTile label="White on navy"     variant="white"  bg="#001540" />
         </div>
       </section>
 
@@ -199,7 +217,7 @@ export default function LogoPage() {
         <h2 className="mb-3 font-display text-[16px] font-medium tracking-[-0.01em] text-ink">Don&apos;t crop</h2>
         <p className="mb-5 max-w-2xl text-[16px] leading-[1.55] text-muted">
           The lockup is whole or not at all. Never trim edges to fit a layout, and never
-          let another element overlap it. If space is tight, scale down rather than crop.
+          let another element overlap it. If space is tight, use the halo instead.
         </p>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {cropMisuses.map((m) => (
@@ -228,6 +246,28 @@ export default function LogoPage() {
         </div>
       </section>
     </>
+  );
+}
+
+function HaloTile({ label, variant, bg }) {
+  const src = '/logos/oxydise-halo-black.svg';
+  const style =
+    variant === 'white' ? { filter: 'brightness(0) invert(1)' } :
+    { filter: 'brightness(0)' };
+  return (
+    <div>
+      <div
+        className="flex aspect-square items-center justify-center rounded-[20px] p-6"
+        style={{ backgroundColor: bg }}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={src} alt="" aria-hidden className="h-40 w-40 md:h-56 md:w-56" style={style} />
+      </div>
+      <div className="mt-3 flex items-center justify-between text-[16px] text-muted">
+        <span>{label}</span>
+        <span>{bg.toUpperCase()}</span>
+      </div>
+    </div>
   );
 }
 
