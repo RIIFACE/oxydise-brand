@@ -1,37 +1,18 @@
 import Poster from '@/components/Poster';
 import { brand } from '@/lib/brand.config';
-import { getSupabaseAdminClient } from '@/lib/supabase/server';
-import { CATEGORIES, categoryLabel } from '@/lib/portal/groupFiles';
+import { listFolder, folderUrl } from '@/lib/drive/server';
+import FolderBrowser from '@/components/FolderBrowser';
 
 export const metadata = { title: `Downloads — ${brand.name}` };
-export const dynamic = 'force-dynamic';
+export const revalidate = 30;
 
-const PUBLIC_BUCKET = 'brand-downloads';
+export default async function DownloadsPage({ searchParams }) {
+  const rootId = process.env.GOOGLE_DRIVE_FOLDER_PUBLIC;
+  const folderId = (searchParams?.folder && String(searchParams.folder)) || rootId;
 
-export default async function DownloadsPage() {
-  const admin = getSupabaseAdminClient();
-
-  const { data: brandClient } = await admin
-    .from('client')
-    .select('id')
-    .eq('slug', PUBLIC_BUCKET)
-    .maybeSingle();
-
-  const { data: files } = brandClient
-    ? await admin
-        .from('file')
-        .select('id, display_name, size_bytes, category, storage_path, uploaded_at')
-        .eq('client_id', brandClient.id)
-        .order('uploaded_at', { ascending: false })
-    : { data: [] };
-
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const enriched = (files ?? []).map((f) => ({
-    ...f,
-    publicUrl: `${supabaseUrl}/storage/v1/object/public/${PUBLIC_BUCKET}/${f.storage_path}`,
-  }));
-
-  const grouped = groupByCategory(enriched);
+  const result = rootId
+    ? await listFolder(folderId, { mode: 'public' })
+    : { ok: false, error: 'GOOGLE_DRIVE_FOLDER_PUBLIC is not set — see DRIVE-SETUP.md.', files: [] };
 
   return (
     <>
@@ -46,84 +27,58 @@ export default async function DownloadsPage() {
         subcopy="Everything you need to put Oxydise out in the world. Logos, fonts, brochures — one click away."
       />
 
-      {enriched.length === 0 ? (
-        <section className="mb-24">
-          <div className="rounded-[20px] bg-panel p-10 text-center">
-            <p className="font-display text-[20px] font-medium text-ink">Nothing to download yet.</p>
-            <p className="mt-2 text-[15px] text-muted">
+      {!result.ok ? (
+        <EmptyState title="Downloads aren't configured yet." body={result.error} />
+      ) : result.files.length === 0 ? (
+        <EmptyState
+          title="Nothing to download yet."
+          body={
+            <>
               Check back soon — or contact us at{' '}
-              <a href="mailto:hello@oxydise.co.uk" className="text-primary hover:underline">hello@oxydise.co.uk</a>.
-            </p>
-          </div>
-        </section>
+              <a href="mailto:hello@oxydise.co.uk" className="text-primary hover:underline">
+                hello@oxydise.co.uk
+              </a>
+              .
+            </>
+          }
+        />
       ) : (
-        <section className="mb-16 space-y-12">
-          {grouped.map((group) => (
-            <div key={group.value}>
-              <h2 className="mb-4 font-display text-[18px] font-medium tracking-[-0.01em] text-ink">{group.label}</h2>
-              <ul className="space-y-4">
-                {group.files.map((f) => (
-                  <li key={f.id}>
-                    <a
-                      href={f.publicUrl}
-                      download={f.display_name}
-                      className="group flex flex-col gap-4 rounded-[20px] bg-panel p-6 transition-colors hover:bg-surface md:flex-row md:items-center md:justify-between md:gap-6 md:p-8"
-                    >
-                      <div className="min-w-0">
-                        <p className="font-display text-[20px] font-medium text-ink md:text-[22px]">{f.display_name}</p>
-                        <p className="mt-1 text-[14px] text-muted">
-                          {categoryLabel(f.category)} · {formatBytes(f.size_bytes)}
-                        </p>
-                      </div>
-                      <span
-                        className="inline-flex h-11 w-fit shrink-0 items-center gap-2 rounded-full bg-transparent px-6 text-[16px] font-medium text-ink transition-colors group-hover:bg-ink group-hover:text-bg"
-                        style={{ border: '1.5px solid currentColor' }}
-                      >
-                        Download
-                        <DownloadIcon />
-                      </span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </section>
+        <FolderBrowser
+          rootId={rootId}
+          currentId={folderId}
+          files={result.files}
+          basePath="/downloads"
+          mode="public"
+        />
       )}
 
       <p className="mb-24 max-w-2xl text-[16px] leading-[1.55] text-muted md:mb-32">
         Internal teams can embed these assets directly in any doc by linking to{' '}
-        <code className="rounded bg-surface px-1.5 py-0.5 text-[16px] text-ink">https://{brand.domain}/downloads</code>.
-        External partners with sign-in access can also use the{' '}
+        <code className="rounded bg-surface px-1.5 py-0.5 text-[16px] text-ink">
+          https://{brand.domain}/downloads
+        </code>
+        . External partners with sign-in access can also use the{' '}
         <a href="/portal" className="text-primary hover:underline">portal</a>.
       </p>
+
+      {rootId && (
+        <p className="mb-24 text-[14px] text-muted">
+          <a href={folderUrl(rootId)} target="_blank" rel="noreferrer" className="hover:text-ink hover:underline">
+            View source folder in Google Drive ↗
+          </a>
+        </p>
+      )}
     </>
   );
 }
 
-function groupByCategory(files) {
-  const buckets = new Map(CATEGORIES.map((c) => [c.value, []]));
-  for (const f of files) {
-    const key = buckets.has(f.category) ? f.category : 'other';
-    buckets.get(key).push(f);
-  }
-  return CATEGORIES
-    .map((c) => ({ value: c.value, label: c.label, files: buckets.get(c.value) }))
-    .filter((g) => g.files.length > 0);
-}
-
-function formatBytes(n) {
-  if (n == null) return '—';
-  if (n < 1024) return `${n} B`;
-  if (n < 1024 * 1024) return `${(n / 1024).toFixed(1)} KB`;
-  if (n < 1024 * 1024 * 1024) return `${(n / 1024 / 1024).toFixed(1)} MB`;
-  return `${(n / 1024 / 1024 / 1024).toFixed(2)} GB`;
-}
-
-function DownloadIcon() {
+function EmptyState({ title, body }) {
   return (
-    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden>
-      <path d="M8 2v9m0 0l-3-3m3 3l3-3M3 14h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <section className="mb-24">
+      <div className="rounded-[20px] bg-panel p-10 text-center">
+        <p className="font-display text-[20px] font-medium text-ink">{title}</p>
+        <p className="mt-2 text-[15px] text-muted">{body}</p>
+      </div>
+    </section>
   );
 }
