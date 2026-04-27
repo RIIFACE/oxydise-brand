@@ -21,9 +21,15 @@ export default async function PortalDashboard({ searchParams }) {
     .select('role, client:client_id(slug, is_internal)')
     .eq('user_id', user.id);
 
-  const isAdmin = (memberships ?? []).some((m) => m.role === 'admin');
-  const hasInternal =
-    isAdmin || (memberships ?? []).some((m) => m.client?.is_internal);
+  const rows = memberships ?? [];
+  const isAdmin = rows.some((m) => m.role === 'admin');
+  const hasInternal = isAdmin || rows.some((m) => m.client?.is_internal);
+  const hasClientAccess = rows.some((m) => !m.client?.is_internal);
+  const hasAnyAccess = isAdmin || hasInternal || hasClientAccess;
+
+  if (!hasAnyAccess) {
+    return <PendingApproval email={user.email} />;
+  }
 
   const requestedSection = String(searchParams?.section ?? '');
   const section =
@@ -123,6 +129,29 @@ function EmptyState({ title, body }) {
     <div className="rounded-[20px] bg-panel p-10 text-center">
       <p className="font-display text-[20px] font-medium text-ink">{title}</p>
       <p className="mt-2 text-[15px] text-muted">{body}</p>
+    </div>
+  );
+}
+
+function PendingApproval({ email }) {
+  return (
+    <div className="mx-auto max-w-xl py-16 text-center md:py-24">
+      <p className="text-[14px] font-medium text-muted">Portal access</p>
+      <h1 className="mt-3 font-display text-[clamp(2rem,5vw,3rem)] font-medium leading-[1.05] tracking-[-0.03em] text-ink">
+        Pending approval.
+      </h1>
+      <p className="mt-5 text-[16px] leading-[1.6] text-muted">
+        You&apos;re signed in as <span className="text-ink">{email}</span>, but
+        you haven&apos;t been granted access to any files yet. An Oxydise admin
+        will review your request and email you when you&apos;re in.
+      </p>
+      <p className="mt-3 text-[15px] text-muted">
+        Need this sorted now? Email{' '}
+        <a href="mailto:hello@oxydise.co.uk" className="text-primary hover:underline">
+          hello@oxydise.co.uk
+        </a>
+        .
+      </p>
     </div>
   );
 }
