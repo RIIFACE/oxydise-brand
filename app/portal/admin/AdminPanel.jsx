@@ -98,8 +98,15 @@ function UploadTab() {
             );
           }
         } catch (e) {
+          // Body size errors arrive here without a clean message — surface a
+          // useful hint based on the file size instead of "Upload failed".
+          const sizeMb = item.file.size / 1024 / 1024;
+          const fallback =
+            sizeMb > 4
+              ? `File is ${sizeMb.toFixed(1)} MB — over the 4 MB upload limit.`
+              : 'Upload failed';
           setQueue((q) =>
-            q.map((x) => (x.id === item.id ? { ...x, status: 'error', error: e.message || 'Upload failed' } : x)),
+            q.map((x) => (x.id === item.id ? { ...x, status: 'error', error: e.message || fallback } : x)),
           );
         }
       }
