@@ -19,18 +19,38 @@ class ActionFailure {
 }
 const fail = (msg) => { throw new ActionFailure(msg); };
 
-async function assertAdmin() {
+// Returns { supabase, user, role } where role is 'admin' | 'manager' | null.
+// Use it to gate actions: assertAdmin() for admin-only, assertManager()
+// for manager-or-admin.
+async function getActingRole() {
   const supabase = getSupabaseServerClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) fail('Unauthenticated');
-  const { data: adminRows } = await supabase
+  const { data: rows } = await supabase
     .from('client_member')
     .select('role')
     .eq('user_id', user.id)
-    .eq('role', 'admin')
-    .limit(1);
-  if ((adminRows?.length ?? 0) === 0) fail('Forbidden — your account is not an admin.');
-  return { supabase, user };
+    .in('role', ['manager', 'admin']);
+  let role = null;
+  for (const r of rows ?? []) {
+    if (r.role === 'admin') { role = 'admin'; break; }
+    if (r.role === 'manager') role = 'manager';
+  }
+  return { supabase, user, role };
+}
+
+async function assertAdmin() {
+  const ctx = await getActingRole();
+  if (ctx.role !== 'admin') fail('Forbidden — admin only.');
+  return ctx;
+}
+
+async function assertManager() {
+  const ctx = await getActingRole();
+  if (ctx.role !== 'admin' && ctx.role !== 'manager') {
+    fail('Forbidden — manager or admin only.');
+  }
+  return ctx;
 }
 
 async function resolveAudienceClient(audience) {
@@ -43,53 +63,13 @@ async function resolveAudienceClient(audience) {
   return row;
 }
 
-export async function inviteMember(formData) {
-  try {
-    await assertAdmin();
-    const admin = getSupabaseAdminClient();
-    const email = String(formData.get('email') ?? '').trim().toLowerCase();
-    const audience = String(formData.get('audience') ?? 'client');
-    if (!email) fail('Email required');
-
-    const target = await resolveAudienceClient(audience);
-    // Invites grant 'client' role on whichever client they're added to.
-    // Admin promotion is a separate action (toggleAdmin) so role escalation
-    // is always explicit.
-    const role = 'client';
-
-    const { data: invited, error: inviteErr } = await admin.auth.admin.inviteUserByEmail(email, {
-      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || ''}/portal/auth/callback`,
-    });
-    if (inviteErr && !/already registered/i.test(inviteErr.message)) {
-      fail(`Invite: ${inviteErr.message}`);
-    }
-
-    let userId = invited?.user?.id;
-    if (!userId) {
-      const { data: list } = await admin.auth.admin.listUsers();
-      userId = list?.users?.find((u) => u.email === email)?.id;
-    }
-    if (!userId) fail('Could not resolve user');
-
-    const { error } = await admin
-      .from('client_member')
-      .upsert({ user_id: userId, client_id: target.id, role }, { onConflict: 'user_id,client_id' });
-    if (error) fail(`DB: ${error.message}`);
-    revalidatePath('/portal/admin');
-    return { ok: true };
-  } catch (e) {
-    if (e instanceof ActionFailure) return { ok: false, error: e.message };
-    return { ok: false, error: e?.message || 'Unknown error' };
-  }
-}
-
 // ----- User management ------------------------------------------------------
 
 // Returns every authenticated user and their current memberships, so the
 // admin Users tab can show pending (unmembered) users alongside active ones.
 export async function listPortalUsers() {
   try {
-    await assertAdmin();
+    await assertManager();
     const admin = getSupabaseAdminClient();
 
     const { data: usersData, error: usersErr } = await admin.auth.admin.listUsers({ perPage: 200 });
@@ -125,6 +105,7 @@ export async function listPortalUsers() {
           isInternal: !!m.client?.is_internal,
         })),
         isAdmin: ms.some((m) => m.role === 'admin'),
+        isManager: ms.some((m) => m.role === 'manager'),
         isInternal: ms.some((m) => m.client?.is_internal),
         hasClientAccess: ms.some((m) => !m.client?.is_internal),
       };
@@ -148,7 +129,7 @@ export async function listPortalUsers() {
 // audience: 'client' | 'internal'
 export async function grantAccess(formData) {
   try {
-    await assertAdmin();
+    await assertManager();
     const admin = getSupabaseAdminClient();
     const userId = String(formData.get('userId') ?? '');
     const audience = String(formData.get('audience') ?? 'client');
@@ -256,6 +237,166 @@ export async function deletePortalUser(formData) {
 
     const { error } = await admin.auth.admin.deleteUser(userId);
     if (error) fail(`Auth: ${error.message}`);
+
+    revalidatePath('/portal/admin');
+    return { ok: true };
+  } catch (e) {
+    if (e instanceof ActionFailure) return { ok: false, error: e.message };
+    return { ok: false, error: e?.message || 'Unknown error' };
+  }
+}
+
+// ----- Manager role ---------------------------------------------------------
+
+// Promotes/demotes manager role on the user's internal membership.
+// Admin-only. Last-admin / self-demote guards are unnecessary because
+// 'manager' isn't a privilege chain, but we still refuse self-promotion
+// when the caller is only a manager (caught upstream by assertAdmin).
+export async function setManagerRole(formData) {
+  try {
+    const { user: actingUser } = await assertAdmin();
+    const admin = getSupabaseAdminClient();
+    const userId = String(formData.get('userId') ?? '');
+    const promote = String(formData.get('promote') ?? '') === '1';
+    if (!userId) fail('User id required');
+    if (!promote && userId === actingUser.id) fail("You can't demote yourself.");
+
+    const internal = await resolveAudienceClient('internal');
+
+    if (promote) {
+      const { error } = await admin
+        .from('client_member')
+        .upsert(
+          { user_id: userId, client_id: internal.id, role: 'manager' },
+          { onConflict: 'user_id,client_id' },
+        );
+      if (error) fail(`DB: ${error.message}`);
+    } else {
+      const { error } = await admin
+        .from('client_member')
+        .update({ role: 'client' })
+        .eq('user_id', userId)
+        .eq('role', 'manager');
+      if (error) fail(`DB: ${error.message}`);
+    }
+
+    revalidatePath('/portal/admin');
+    return { ok: true };
+  } catch (e) {
+    if (e instanceof ActionFailure) return { ok: false, error: e.message };
+    return { ok: false, error: e?.message || 'Unknown error' };
+  }
+}
+
+// ----- Allowlist + access requests ------------------------------------------
+
+export async function listAllowedEmails() {
+  try {
+    await assertManager();
+    const admin = getSupabaseAdminClient();
+    const { data, error } = await admin
+      .from('allowed_email')
+      .select('email, added_at, note')
+      .order('added_at', { ascending: false });
+    if (error) fail(`DB: ${error.message}`);
+    return { ok: true, emails: data ?? [] };
+  } catch (e) {
+    if (e instanceof ActionFailure) return { ok: false, error: e.message, emails: [] };
+    return { ok: false, error: e?.message || 'Unknown error', emails: [] };
+  }
+}
+
+export async function addAllowedEmail(formData) {
+  try {
+    const { user } = await assertManager();
+    const admin = getSupabaseAdminClient();
+    const email = String(formData.get('email') ?? '').trim().toLowerCase();
+    const note = String(formData.get('note') ?? '').trim() || null;
+    if (!email) fail('Email required');
+    if (!email.includes('@')) fail('That doesn’t look like an email');
+
+    const { error } = await admin
+      .from('allowed_email')
+      .upsert({ email, added_by: user.id, note }, { onConflict: 'email' });
+    if (error) fail(`DB: ${error.message}`);
+
+    // Clear any matching pending access request — the allowlist now covers it.
+    await admin.from('access_request').delete().eq('email', email);
+
+    revalidatePath('/portal/admin');
+    return { ok: true };
+  } catch (e) {
+    if (e instanceof ActionFailure) return { ok: false, error: e.message };
+    return { ok: false, error: e?.message || 'Unknown error' };
+  }
+}
+
+export async function removeAllowedEmail(formData) {
+  try {
+    await assertManager();
+    const admin = getSupabaseAdminClient();
+    const email = String(formData.get('email') ?? '').trim().toLowerCase();
+    if (!email) fail('Email required');
+
+    const { error } = await admin.from('allowed_email').delete().eq('email', email);
+    if (error) fail(`DB: ${error.message}`);
+
+    revalidatePath('/portal/admin');
+    return { ok: true };
+  } catch (e) {
+    if (e instanceof ActionFailure) return { ok: false, error: e.message };
+    return { ok: false, error: e?.message || 'Unknown error' };
+  }
+}
+
+export async function listAccessRequests() {
+  try {
+    await assertManager();
+    const admin = getSupabaseAdminClient();
+    const { data, error } = await admin
+      .from('access_request')
+      .select('id, email, requested_at, status')
+      .eq('status', 'pending')
+      .order('requested_at', { ascending: false });
+    if (error) fail(`DB: ${error.message}`);
+    return { ok: true, requests: data ?? [] };
+  } catch (e) {
+    if (e instanceof ActionFailure) return { ok: false, error: e.message, requests: [] };
+    return { ok: false, error: e?.message || 'Unknown error', requests: [] };
+  }
+}
+
+export async function approveAccessRequest(formData) {
+  try {
+    const { user } = await assertManager();
+    const admin = getSupabaseAdminClient();
+    const email = String(formData.get('email') ?? '').trim().toLowerCase();
+    if (!email) fail('Email required');
+
+    const { error: addErr } = await admin
+      .from('allowed_email')
+      .upsert({ email, added_by: user.id }, { onConflict: 'email' });
+    if (addErr) fail(`DB: ${addErr.message}`);
+
+    await admin.from('access_request').delete().eq('email', email);
+
+    revalidatePath('/portal/admin');
+    return { ok: true };
+  } catch (e) {
+    if (e instanceof ActionFailure) return { ok: false, error: e.message };
+    return { ok: false, error: e?.message || 'Unknown error' };
+  }
+}
+
+export async function rejectAccessRequest(formData) {
+  try {
+    await assertManager();
+    const admin = getSupabaseAdminClient();
+    const email = String(formData.get('email') ?? '').trim().toLowerCase();
+    if (!email) fail('Email required');
+
+    const { error } = await admin.from('access_request').delete().eq('email', email);
+    if (error) fail(`DB: ${error.message}`);
 
     revalidatePath('/portal/admin');
     return { ok: true };

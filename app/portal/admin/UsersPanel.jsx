@@ -5,12 +5,14 @@ import {
   grantAccess,
   revokeAccess,
   setAdminRole,
+  setManagerRole,
   deletePortalUser,
 } from './_actions';
 
-export default function UsersPanel({ users, currentUserId }) {
+export default function UsersPanel({ users, currentUserId, callerRole }) {
   const pending = users.filter((u) => u.memberships.length === 0);
   const active = users.filter((u) => u.memberships.length > 0);
+  const isAdmin = callerRole === 'admin';
 
   return (
     <div className="space-y-12">
@@ -25,7 +27,13 @@ export default function UsersPanel({ users, currentUserId }) {
         {pending.length === 0 ? null : (
           <ul className="divide-y divide-line">
             {pending.map((u) => (
-              <UserRow key={u.id} user={u} currentUserId={currentUserId} variant="pending" />
+              <UserRow
+                key={u.id}
+                user={u}
+                currentUserId={currentUserId}
+                callerIsAdmin={isAdmin}
+                variant="pending"
+              />
             ))}
           </ul>
         )}
@@ -33,14 +41,24 @@ export default function UsersPanel({ users, currentUserId }) {
 
       <Section
         title="Members"
-        subtitle="Everyone with portal access. Promote, demote, revoke, or delete."
+        subtitle={
+          isAdmin
+            ? 'Everyone with portal access. Promote, demote, revoke, or delete.'
+            : 'Everyone with portal access. Promote-to-admin and delete are admin-only.'
+        }
       >
         {active.length === 0 ? (
           <p className="text-[15px] text-muted">No active members yet.</p>
         ) : (
           <ul className="divide-y divide-line">
             {active.map((u) => (
-              <UserRow key={u.id} user={u} currentUserId={currentUserId} variant="active" />
+              <UserRow
+                key={u.id}
+                user={u}
+                currentUserId={currentUserId}
+                callerIsAdmin={isAdmin}
+                variant="active"
+              />
             ))}
           </ul>
         )}
@@ -61,7 +79,7 @@ function Section({ title, subtitle, children }) {
   );
 }
 
-function UserRow({ user, currentUserId, variant }) {
+function UserRow({ user, currentUserId, callerIsAdmin, variant }) {
   const [error, setError] = useState('');
   const [isPending, startTransition] = useTransition();
   const isSelf = user.id === currentUserId;
@@ -96,9 +114,11 @@ function UserRow({ user, currentUserId, variant }) {
             <Btn onClick={() => run(grantAccess, { audience: 'internal' })} disabled={isPending}>
               Grant — Internal
             </Btn>
-            <Btn variant="danger" onClick={() => run(deletePortalUser)} disabled={isPending || isSelf}>
-              Reject
-            </Btn>
+            {callerIsAdmin && (
+              <Btn variant="danger" onClick={() => run(deletePortalUser)} disabled={isPending || isSelf}>
+                Reject
+              </Btn>
+            )}
           </>
         )}
 
@@ -114,19 +134,41 @@ function UserRow({ user, currentUserId, variant }) {
                 + Internal
               </Btn>
             )}
-            {user.isAdmin ? (
-              <Btn
-                onClick={() => run(setAdminRole, { promote: '0' })}
-                disabled={isPending || isSelf}
-                title={isSelf ? "You can't demote yourself." : undefined}
-              >
-                Remove admin
-              </Btn>
-            ) : (
-              <Btn onClick={() => run(setAdminRole, { promote: '1' })} disabled={isPending}>
-                Make admin
-              </Btn>
+
+            {/* Manager toggle — admin only */}
+            {callerIsAdmin && !user.isAdmin && (
+              user.isManager ? (
+                <Btn
+                  onClick={() => run(setManagerRole, { promote: '0' })}
+                  disabled={isPending || isSelf}
+                  title={isSelf ? "You can't demote yourself." : undefined}
+                >
+                  Remove manager
+                </Btn>
+              ) : (
+                <Btn onClick={() => run(setManagerRole, { promote: '1' })} disabled={isPending}>
+                  Make manager
+                </Btn>
+              )
             )}
+
+            {/* Admin toggle — admin only */}
+            {callerIsAdmin && (
+              user.isAdmin ? (
+                <Btn
+                  onClick={() => run(setAdminRole, { promote: '0' })}
+                  disabled={isPending || isSelf}
+                  title={isSelf ? "You can't demote yourself." : undefined}
+                >
+                  Remove admin
+                </Btn>
+              ) : (
+                <Btn onClick={() => run(setAdminRole, { promote: '1' })} disabled={isPending}>
+                  Make admin
+                </Btn>
+              )
+            )}
+
             <Btn
               variant="danger"
               onClick={() => run(revokeAccess)}
@@ -154,6 +196,7 @@ function userSummary(u) {
   }
   const labels = [];
   if (u.isAdmin) labels.push('Admin');
+  else if (u.isManager) labels.push('Manager');
   if (u.isInternal) labels.push('Internal');
   if (u.hasClientAccess) labels.push('Client');
   return labels.join(' · ');

@@ -3,9 +3,13 @@ import { redirect } from 'next/navigation';
 import { getSupabaseServerClient } from '@/lib/supabase/server';
 import { listFolder, folderUrl } from '@/lib/drive/server';
 import FolderBrowser from '@/components/FolderBrowser';
-import InvitePanel from './InvitePanel';
 import UsersPanel from './UsersPanel';
-import { listPortalUsers } from './_actions';
+import AccessPanel from './AccessPanel';
+import {
+  listPortalUsers,
+  listAllowedEmails,
+  listAccessRequests,
+} from './_actions';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,7 +18,7 @@ const TABS = [
   { value: 'internal', label: 'Internal', env: 'GOOGLE_DRIVE_FOLDER_INTERNAL', mode: 'private' },
   { value: 'clients',  label: 'Clients',  env: 'GOOGLE_DRIVE_FOLDER_CLIENTS',  mode: 'private' },
   { value: 'users',    label: 'Users' },
-  { value: 'invite',   label: 'Invite' },
+  { value: 'access',   label: 'Access' },
 ];
 
 export default async function AdminPage({ searchParams }) {
@@ -22,13 +26,17 @@ export default async function AdminPage({ searchParams }) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/portal/login');
 
-  const { data: adminRows } = await supabase
+  const { data: roleRows } = await supabase
     .from('client_member')
     .select('role')
     .eq('user_id', user.id)
-    .eq('role', 'admin')
-    .limit(1);
-  if ((adminRows?.length ?? 0) === 0) redirect('/portal');
+    .in('role', ['manager', 'admin']);
+  let callerRole = null;
+  for (const r of roleRows ?? []) {
+    if (r.role === 'admin') { callerRole = 'admin'; break; }
+    if (r.role === 'manager') callerRole = 'manager';
+  }
+  if (!callerRole) redirect('/portal');
 
   const requestedTab = String(searchParams?.tab ?? 'public');
   const tab = TABS.find((t) => t.value === requestedTab) ? requestedTab : 'public';
@@ -37,7 +45,14 @@ export default async function AdminPage({ searchParams }) {
     <>
       <header className="mb-10 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-[16px] text-muted">Admin</p>
+          <p className="text-[16px] text-muted">
+            Admin
+            {callerRole === 'manager' && (
+              <span className="ml-2 inline-flex h-5 items-center rounded-full bg-surface px-2 text-[11px] font-medium text-ink">
+                Manager
+              </span>
+            )}
+          </p>
           <h1 className="mt-2 font-display text-[clamp(2rem,5vw,3rem)] font-medium leading-[1.05] tracking-[-0.03em] text-ink">
             Drop files in Drive,<br />
             <span className="text-muted">they appear here.</span>
@@ -67,10 +82,10 @@ export default async function AdminPage({ searchParams }) {
         ))}
       </nav>
 
-      {tab === 'invite' ? (
-        <InvitePanel />
+      {tab === 'access' ? (
+        <AccessTab />
       ) : tab === 'users' ? (
-        <UsersTab currentUserId={user.id} />
+        <UsersTab currentUserId={user.id} callerRole={callerRole} />
       ) : (
         <DriveTab tab={tab} searchParams={searchParams} />
       )}
@@ -78,7 +93,7 @@ export default async function AdminPage({ searchParams }) {
   );
 }
 
-async function UsersTab({ currentUserId }) {
+async function UsersTab({ currentUserId, callerRole }) {
   const result = await listPortalUsers();
   if (!result.ok) {
     return (
@@ -88,7 +103,17 @@ async function UsersTab({ currentUserId }) {
       </div>
     );
   }
-  return <UsersPanel users={result.users} currentUserId={currentUserId} />;
+  return <UsersPanel users={result.users} currentUserId={currentUserId} callerRole={callerRole} />;
+}
+
+async function AccessTab() {
+  const [allowed, requests] = await Promise.all([listAllowedEmails(), listAccessRequests()]);
+  return (
+    <AccessPanel
+      allowedEmails={allowed.ok ? allowed.emails : []}
+      accessRequests={requests.ok ? requests.requests : []}
+    />
+  );
 }
 
 async function DriveTab({ tab, searchParams }) {
@@ -114,7 +139,7 @@ async function DriveTab({ tab, searchParams }) {
       <div className="rounded-[20px] bg-panel p-10 text-center">
         <p className="font-display text-[20px] font-medium text-ink">This folder is empty.</p>
         <p className="mt-2 text-[15px] text-muted">
-          Drop files into the source folder in Drive and they'll appear here.{' '}
+          Drop files into the source folder in Drive and they&apos;ll appear here.{' '}
           {rootId && (
             <a href={folderUrl(rootId)} target="_blank" rel="noreferrer" className="text-primary hover:underline">
               Open in Drive ↗
