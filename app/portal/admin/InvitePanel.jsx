@@ -35,6 +35,17 @@ export default function InvitePanel() {
         They&apos;ll get a magic-link email. Clients see the shared Clients folder. Internal members also see the Internal folder.
       </p>
 
+      <p className="mt-3 rounded-[14px] bg-surface p-4 text-[13px] leading-[1.6] text-muted">
+        <span className="font-medium text-ink">Tip:</span> you can skip
+        the email entirely. Send them{' '}
+        <code className="rounded bg-bg px-1.5 py-0.5 text-[12px] text-ink">
+          /portal/login
+        </code>
+        , let them request a link with their own email, then approve
+        them in the <span className="text-ink">Users</span> tab when
+        they appear under Pending requests.
+      </p>
+
       <form action={handleSubmit} className="mt-6 space-y-5">
         <div>
           <p className="mb-3 text-[13px] font-medium text-ink">Role</p>
@@ -67,7 +78,21 @@ export default function InvitePanel() {
           {isPending ? 'Sending…' : 'Send invite'}
         </button>
 
-        {error && <p className="text-[13px]" style={{ color: '#E5484D' }}>{error}</p>}
+        {error && (
+          <div className="text-[13px]" style={{ color: '#E5484D' }}>
+            <p>{error}</p>
+            {/rate limit/i.test(error) && (
+              <p className="mt-2 text-muted">
+                Supabase&apos;s built-in email is rate-limited (30/hr, 4/hr per
+                address). Use the tip above instead — send them{' '}
+                <code className="rounded bg-bg px-1.5 py-0.5 text-[12px] text-ink">
+                  /portal/login
+                </code>{' '}
+                and approve them in Users when they appear.
+              </p>
+            )}
+          </div>
+        )}
         {success && <p className="text-[13px] text-ink">{success}</p>}
       </form>
     </div>
