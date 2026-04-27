@@ -4,6 +4,8 @@ import { getSupabaseServerClient } from '@/lib/supabase/server';
 import { listFolder, folderUrl } from '@/lib/drive/server';
 import FolderBrowser from '@/components/FolderBrowser';
 import InvitePanel from './InvitePanel';
+import UsersPanel from './UsersPanel';
+import { listPortalUsers } from './_actions';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,6 +13,7 @@ const TABS = [
   { value: 'public',   label: 'Public',   env: 'GOOGLE_DRIVE_FOLDER_PUBLIC',   mode: 'public' },
   { value: 'internal', label: 'Internal', env: 'GOOGLE_DRIVE_FOLDER_INTERNAL', mode: 'private' },
   { value: 'clients',  label: 'Clients',  env: 'GOOGLE_DRIVE_FOLDER_CLIENTS',  mode: 'private' },
+  { value: 'users',    label: 'Users' },
   { value: 'invite',   label: 'Invite' },
 ];
 
@@ -64,9 +67,28 @@ export default async function AdminPage({ searchParams }) {
         ))}
       </nav>
 
-      {tab === 'invite' ? <InvitePanel /> : <DriveTab tab={tab} searchParams={searchParams} />}
+      {tab === 'invite' ? (
+        <InvitePanel />
+      ) : tab === 'users' ? (
+        <UsersTab currentUserId={user.id} />
+      ) : (
+        <DriveTab tab={tab} searchParams={searchParams} />
+      )}
     </>
   );
+}
+
+async function UsersTab({ currentUserId }) {
+  const result = await listPortalUsers();
+  if (!result.ok) {
+    return (
+      <div className="rounded-[20px] bg-panel p-10 text-center">
+        <p className="font-display text-[20px] font-medium text-ink">Couldn’t load users.</p>
+        <p className="mt-2 text-[15px] text-muted">{result.error}</p>
+      </div>
+    );
+  }
+  return <UsersPanel users={result.users} currentUserId={currentUserId} />;
 }
 
 async function DriveTab({ tab, searchParams }) {
