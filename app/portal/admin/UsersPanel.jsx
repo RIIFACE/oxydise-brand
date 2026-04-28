@@ -7,7 +7,9 @@ import {
   setAdminRole,
   setManagerRole,
   deletePortalUser,
+  resetUserPassword,
 } from './_actions';
+import CredentialsCard from './CredentialsCard';
 
 export default function UsersPanel({ users, currentUserId, callerRole }) {
   const pending = users.filter((u) => u.memberships.length === 0);
@@ -81,6 +83,7 @@ function Section({ title, subtitle, children }) {
 
 function UserRow({ user, currentUserId, callerIsAdmin, variant }) {
   const [error, setError] = useState('');
+  const [creds, setCreds] = useState(null);
   const [isPending, startTransition] = useTransition();
   const isSelf = user.id === currentUserId;
 
@@ -92,6 +95,20 @@ function UserRow({ user, currentUserId, callerIsAdmin, variant }) {
       for (const [k, v] of Object.entries(fields ?? {})) fd.set(k, v);
       const result = await action(fd);
       if (!result?.ok) setError(result?.error || 'Action failed');
+    });
+  }
+
+  function resetPassword() {
+    setError('');
+    startTransition(async () => {
+      const fd = new FormData();
+      fd.set('userId', user.id);
+      const result = await resetUserPassword(fd);
+      if (!result?.ok) {
+        setError(result?.error || 'Could not reset password');
+        return;
+      }
+      setCreds({ email: result.email || user.email, password: result.password });
     });
   }
 
@@ -169,6 +186,10 @@ function UserRow({ user, currentUserId, callerIsAdmin, variant }) {
               )
             )}
 
+            <Btn onClick={resetPassword} disabled={isPending}>
+              Reset password
+            </Btn>
+
             <Btn
               variant="danger"
               onClick={() => run(revokeAccess)}
@@ -180,6 +201,11 @@ function UserRow({ user, currentUserId, callerIsAdmin, variant }) {
         )}
       </div>
 
+      {creds && (
+        <div className="col-span-12">
+          <CredentialsCard email={creds.email} password={creds.password} onDismiss={() => setCreds(null)} />
+        </div>
+      )}
       {error && (
         <p className="col-span-12 text-[12px]" style={{ color: '#E5484D' }}>
           {error}

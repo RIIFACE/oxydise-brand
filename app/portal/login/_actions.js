@@ -1,22 +1,26 @@
 'use server';
 
-import { getSupabaseAdminClient } from '@/lib/supabase/server';
+import { getSupabaseServerClient, getSupabaseAdminClient } from '@/lib/supabase/server';
 import { isOxydiseDomain, normaliseEmail } from '@/lib/portal/access';
 
-// Server-side login gate. Returns:
-//   { ok: true,  status: 'sent'    }  → magic link sent to inbox
-//   { ok: true,  status: 'pending' }  → email not allowed, request logged
-//   { ok: false, error }              → something went wrong
+// Server-side login. Returns:
+//   { ok: true,  status: 'signed-in' }  → session set, redirect client-side
+//   { ok: true,  status: 'pending'   }  → email not allowed, request logged
+//   { ok: false, error }                → bad credentials or other failure
 //
-// Allowed = matches an Oxydise domain OR is in the `allowed_email`
-// table. Anything else gets a row written to `access_request` so the
-// admin can see the request and approve from /portal/admin.
-export async function requestMagicLink(formData) {
+// Policy:
+//   - Email matches an Oxydise domain OR is in `allowed_email` → try
+//     signing in with the supplied password.
+//   - Anything else → write to `access_request`, return 'pending'.
+//   - Password mismatch / no account yet → return a generic
+//     "Invalid email or password" so we don't leak which side is wrong.
+export async function signInWithPassword(formData) {
   const email = normaliseEmail(formData.get('email'));
-  const next = String(formData.get('next') ?? '/portal');
+  const password = String(formData.get('password') ?? '');
 
   if (!email) return { ok: false, error: 'Email required' };
   if (!email.includes('@')) return { ok: false, error: 'That doesn’t look like an email' };
+  if (!password) return { ok: false, error: 'Password required' };
 
   const admin = getSupabaseAdminClient();
 
@@ -31,7 +35,6 @@ export async function requestMagicLink(formData) {
   }
 
   if (!allowed) {
-    // Log the request, dedupe on email so repeated attempts don't pile up.
     await admin
       .from('access_request')
       .upsert(
@@ -41,26 +44,11 @@ export async function requestMagicLink(formData) {
     return { ok: true, status: 'pending' };
   }
 
-  // Allowed — send the magic link. inviteUserByEmail creates the
-  // Supabase user on first try and returns "already registered" on
-  // subsequent tries; in that case we fall through to a magic link
-  // generated for the existing user.
-  const redirectTo = `${process.env.NEXT_PUBLIC_SITE_URL || ''}/portal/auth/callback?next=${encodeURIComponent(next)}`;
-
-  const { error: inviteErr } = await admin.auth.admin.inviteUserByEmail(email, { redirectTo });
-  if (inviteErr && !/already registered/i.test(inviteErr.message)) {
-    return { ok: false, error: inviteErr.message };
+  const supabase = getSupabaseServerClient();
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error) {
+    return { ok: false, error: 'Invalid email or password.' };
   }
 
-  if (inviteErr) {
-    // User already exists — generate a magic link instead.
-    const { error: linkErr } = await admin.auth.admin.generateLink({
-      type: 'magiclink',
-      email,
-      options: { redirectTo },
-    });
-    if (linkErr) return { ok: false, error: linkErr.message };
-  }
-
-  return { ok: true, status: 'sent' };
+  return { ok: true, status: 'signed-in' };
 }

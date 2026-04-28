@@ -1,7 +1,19 @@
 'use server';
 
+import { randomBytes } from 'crypto';
 import { revalidatePath } from 'next/cache';
 import { getSupabaseServerClient, getSupabaseAdminClient } from '@/lib/supabase/server';
+
+// Friendly random password — alphanumerics minus visually-similar
+// chars (l, 1, 0, O, I) so admins can read it back over a phone call
+// without "is that an ell or a one?".
+function generatePassword(len = 16) {
+  const chars = 'abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const bytes = randomBytes(len);
+  let out = '';
+  for (let i = 0; i < len; i++) out += chars[bytes[i] % chars.length];
+  return out;
+}
 
 // Storage moved to Google Drive — see DRIVE-SETUP.md. uploadFile and
 // deleteFile are kept as stubs returning a friendly error so any
@@ -366,6 +378,13 @@ export async function listAccessRequests() {
   }
 }
 
+// Approve flow:
+//   1. Add email to allowed_email so future sign-ins clear the gate
+//   2. Create the Supabase auth user (or pick up the existing one) with
+//      a freshly-generated password
+//   3. Clear the pending access_request row
+//   4. Return the password so the admin can share it with the user
+//      out-of-band (Slack, manual email, anything reliable)
 export async function approveAccessRequest(formData) {
   try {
     const { user } = await assertManager();
@@ -378,10 +397,70 @@ export async function approveAccessRequest(formData) {
       .upsert({ email, added_by: user.id }, { onConflict: 'email' });
     if (addErr) fail(`DB: ${addErr.message}`);
 
+    const password = generatePassword();
+
+    // Try to find an existing auth user; create one if not.
+    const { data: list } = await admin.auth.admin.listUsers({ perPage: 200 });
+    const existing = list?.users?.find((u) => u.email === email);
+
+    if (existing) {
+      const { error } = await admin.auth.admin.updateUserById(existing.id, { password });
+      if (error) fail(`Auth: ${error.message}`);
+    } else {
+      const { error } = await admin.auth.admin.createUser({
+        email,
+        password,
+        email_confirm: true,
+      });
+      if (error) fail(`Auth: ${error.message}`);
+    }
+
     await admin.from('access_request').delete().eq('email', email);
 
     revalidatePath('/portal/admin');
-    return { ok: true };
+    return { ok: true, email, password };
+  } catch (e) {
+    if (e instanceof ActionFailure) return { ok: false, error: e.message };
+    return { ok: false, error: e?.message || 'Unknown error' };
+  }
+}
+
+// Generate a fresh password for an existing user (or create them if
+// missing) — useful when a client forgets theirs or you want to rotate.
+// Returns the new password so the admin can share it.
+export async function resetUserPassword(formData) {
+  try {
+    await assertManager();
+    const admin = getSupabaseAdminClient();
+    const userId = String(formData.get('userId') ?? '');
+    const emailInput = String(formData.get('email') ?? '').trim().toLowerCase();
+    if (!userId && !emailInput) fail('User id or email required');
+
+    const password = generatePassword();
+    let email = emailInput;
+
+    if (userId) {
+      const { data, error } = await admin.auth.admin.updateUserById(userId, { password });
+      if (error) fail(`Auth: ${error.message}`);
+      email = data?.user?.email || email;
+    } else {
+      const { data: list } = await admin.auth.admin.listUsers({ perPage: 200 });
+      const existing = list?.users?.find((u) => u.email === emailInput);
+      if (existing) {
+        const { error } = await admin.auth.admin.updateUserById(existing.id, { password });
+        if (error) fail(`Auth: ${error.message}`);
+      } else {
+        const { error } = await admin.auth.admin.createUser({
+          email: emailInput,
+          password,
+          email_confirm: true,
+        });
+        if (error) fail(`Auth: ${error.message}`);
+      }
+    }
+
+    revalidatePath('/portal/admin');
+    return { ok: true, email, password };
   } catch (e) {
     if (e instanceof ActionFailure) return { ok: false, error: e.message };
     return { ok: false, error: e?.message || 'Unknown error' };
