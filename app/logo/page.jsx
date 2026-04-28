@@ -166,26 +166,13 @@ export default function LogoPage() {
           Keep at least the height of the wordmark as clear space on every side. Nothing lives
           inside that zone — not type, not edges, not other marks.
         </p>
-        <div className="flex items-center justify-center rounded-[20px] bg-panel p-10 md:p-16">
-          <div
-            className="flex items-center justify-center px-12 py-12 md:px-20 md:py-16"
-            style={{ outline: '1px dashed rgb(var(--color-line))' }}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/logos/oxydise-black.svg"
-              alt=""
-              aria-hidden
-              className="block h-12 w-auto md:h-16 dark:hidden"
-            />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/logos/oxydise-white.svg"
-              alt=""
-              aria-hidden
-              className="hidden h-12 w-auto md:h-16 dark:block"
-            />
-          </div>
+        <div className="overflow-hidden rounded-[20px] bg-panel">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logos/clear-space.jpg"
+            alt="The Oxydise lockup with a grid showing the minimum clear space on every side."
+            className="block h-auto w-full"
+          />
         </div>
       </section>
 
