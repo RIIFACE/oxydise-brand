@@ -10,11 +10,12 @@ export default function LoginPage() {
         Sign in.
       </h1>
       <p className="mt-4 text-[16px] leading-[1.55] text-muted">
-        Enter the email Oxydise invited you with. We&apos;ll send a one-time link — no password needed.
+        Enter the email and password Oxydise gave you.
       </p>
       <p className="mt-2 text-[14px] leading-[1.55] text-muted">
-        New here? You can still request a link, but access is approved by
-        an admin — you&apos;ll see a pending screen until they let you in.
+        New here? Sign in with your email — if it&apos;s recognised, an admin
+        will see your request and send you a password. Otherwise reach
+        us at <a href="mailto:hello@oxydise.co.uk" className="text-primary hover:underline">hello@oxydise.co.uk</a>.
       </p>
       <Suspense fallback={null}>
         <LoginForm />

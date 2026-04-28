@@ -7,6 +7,7 @@ import {
   approveAccessRequest,
   rejectAccessRequest,
 } from './_actions';
+import CredentialsCard from './CredentialsCard';
 
 export default function AccessPanel({ allowedEmails, accessRequests }) {
   return (
@@ -164,14 +165,29 @@ function AllowedRow({ entry }) {
 
 function RequestRow({ request }) {
   const [error, setError] = useState('');
+  const [creds, setCreds] = useState(null);
   const [isPending, startTransition] = useTransition();
 
-  function run(action) {
+  function approve() {
     setError('');
     const fd = new FormData();
     fd.set('email', request.email);
     startTransition(async () => {
-      const result = await action(fd);
+      const result = await approveAccessRequest(fd);
+      if (!result?.ok) {
+        setError(result?.error || 'Action failed');
+        return;
+      }
+      setCreds({ email: result.email, password: result.password });
+    });
+  }
+
+  function reject() {
+    setError('');
+    const fd = new FormData();
+    fd.set('email', request.email);
+    startTransition(async () => {
+      const result = await rejectAccessRequest(fd);
       if (!result?.ok) setError(result?.error || 'Action failed');
     });
   }
@@ -187,7 +203,7 @@ function RequestRow({ request }) {
       <div className="col-span-12 flex flex-wrap items-center gap-2 md:col-span-5 md:justify-end">
         <button
           type="button"
-          onClick={() => run(approveAccessRequest)}
+          onClick={approve}
           disabled={isPending}
           className="inline-flex h-8 items-center rounded-full bg-ink px-3.5 text-[13px] font-medium text-bg transition-opacity hover:opacity-90 disabled:opacity-50"
         >
@@ -195,13 +211,18 @@ function RequestRow({ request }) {
         </button>
         <button
           type="button"
-          onClick={() => run(rejectAccessRequest)}
+          onClick={reject}
           disabled={isPending}
           className="inline-flex h-8 items-center rounded-full border border-line px-3.5 text-[13px] font-medium text-muted transition-colors hover:border-[#E5484D]/40 hover:text-[#E5484D] disabled:opacity-50"
         >
           Reject
         </button>
       </div>
+      {creds && (
+        <div className="col-span-12">
+          <CredentialsCard email={creds.email} password={creds.password} onDismiss={() => setCreds(null)} />
+        </div>
+      )}
       {error && (
         <p className="col-span-12 text-[12px]" style={{ color: '#E5484D' }}>{error}</p>
       )}
