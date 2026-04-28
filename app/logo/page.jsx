@@ -200,7 +200,7 @@ export default function LogoPage() {
         </div>
       </section>
 
-      <section className="mb-24 md:mb-32">
+      <section className="mb-14">
         <h2 className="mb-3 font-display text-[16px] font-medium tracking-[-0.01em] text-ink">Don&apos;t crop</h2>
         <p className="mb-5 max-w-2xl text-[16px] leading-[1.55] text-muted">
           The lockup is whole or not at all. Never trim edges to fit a layout, and never
@@ -230,6 +230,45 @@ export default function LogoPage() {
               <p className="mt-4 text-[16px] text-ink">{m.label}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section className="mb-24 md:mb-32">
+        <h2 className="mb-3 font-display text-[16px] font-medium tracking-[-0.01em] text-ink">The only way to crop</h2>
+        <p className="mb-5 max-w-2xl text-[16px] leading-[1.55] text-muted">
+          Never crop the top of the Oxydise logo. Side cropping is permitted when required,
+          with minimal cropping allowed at the bottom. Ensure the logo remains clear, balanced,
+          and fully legible at all times.
+        </p>
+        <div className="overflow-hidden rounded-[20px] bg-panel">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logos/only-way-to-crop.jpg"
+            alt="Diagram showing the only acceptable way to crop the Oxydise logo: sides freely, bottom slightly, never the top."
+            className="block h-auto w-full"
+          />
+        </div>
+
+        <h3 className="mt-10 mb-3 font-display text-[16px] font-medium tracking-[-0.01em] text-muted">In practice</h3>
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="overflow-hidden rounded-[20px] bg-panel">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logos/manuals.png"
+              alt="The Oxydise logo cropped on the side, applied to a manual cover."
+              className="block h-auto w-full"
+            />
+            <p className="px-6 py-4 text-[16px] text-ink">Manuals</p>
+          </div>
+          <div className="overflow-hidden rounded-[20px] bg-panel">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logos/business-cards.png"
+              alt="The Oxydise logo cropped on the side, applied to a business card."
+              className="block h-auto w-full"
+            />
+            <p className="px-6 py-4 text-[16px] text-ink">Business cards</p>
+          </div>
         </div>
       </section>
     </>
