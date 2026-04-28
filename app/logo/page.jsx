@@ -20,10 +20,10 @@ const misuses = [
 ];
 
 const cropMisuses = [
-  { label: "Don't crop the left edge", clipPath: 'inset(0 0 0 22%)' },
-  { label: "Don't crop the right edge", clipPath: 'inset(0 22% 0 0)' },
-  { label: "Don't crop vertically", clipPath: 'inset(30% 0 30% 0)' },
-  { label: "Don't crop a corner", clipPath: 'polygon(0 0, 75% 0, 75% 60%, 100% 60%, 100% 100%, 0 100%)' },
+  { label: "Don't crop the top",          clipPath: 'inset(40% 0 0 0)' },
+  { label: "Don't crop deep at the bottom", clipPath: 'inset(0 0 50% 0)' },
+  { label: "Don't crop into the letters", clipPath: 'inset(15% 8% 15% 8%)' },
+  { label: "Don't crop a corner",         clipPath: 'polygon(0 0, 75% 0, 75% 60%, 100% 60%, 100% 100%, 0 100%)' },
 ];
 
 const mediaTiles = [
@@ -201,10 +201,11 @@ export default function LogoPage() {
       </section>
 
       <section className="mb-14">
-        <h2 className="mb-3 font-display text-[16px] font-medium tracking-[-0.01em] text-ink">Don&apos;t crop</h2>
+        <h2 className="mb-3 font-display text-[16px] font-medium tracking-[-0.01em] text-ink">Crop misuse</h2>
         <p className="mb-5 max-w-2xl text-[16px] leading-[1.55] text-muted">
-          The lockup is whole or not at all. Never trim edges to fit a layout, and never
-          let another element overlap it. If space is tight, use the halo instead.
+          Side crops are allowed when the layout calls for it (see the next section), but
+          the top of the lockup is sacred and bottom crops should stay minimal. Anything
+          that cuts into the wordmark or breaks the balance is off-limits.
         </p>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {cropMisuses.map((m) => (
